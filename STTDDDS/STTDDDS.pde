@@ -61,7 +61,7 @@ void ButtonUpdate(){
 void ButtonDraw(){
     for (int i = 0; i < buttons.size(); i++) {
     Button butt = buttons.get(i);
-    if (butt.clickable == true){
+    if (butt.visible == true){
     butt.draw();  
     }
   }

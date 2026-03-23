@@ -7,7 +7,7 @@ class Button{
   boolean isHovered;
   String clickAction;
   
-  
+
   Button(int x, int y, int w, int h, String text, boolean clickable, boolean visible, String clickAction){
    position.x = x; 
    position.y = y; 
@@ -27,13 +27,16 @@ class Button{
     noStroke();
     rectMode(CORNER);
     textAlign(CENTER);
-    fill(255);
-    if (isHovered == true){ rect(position.x-3,position.y-3,size.x+6,size.y+6, 8);}
-    fill(200);
-
+   
+    if (isHovered == true){ 
+      fill(255);
+      rect(position.x-3,position.y-3,size.x+6,size.y+6, 8);
+    }
+    if (clickable == false) {fill(80); }
+    else fill(200);
    rect(position.x,position.y,size.x,size.y,8);
-  fill(10);
-  textSize(20);
+   fill(10);
+   textSize(20);
    text(text,position.x +size.x/2,position.y+size.y/2+5);  
      
 }
@@ -54,8 +57,11 @@ boolean checkHovered(){
          mouseY < position.y + size.y;
 }
 
+
+
+
 void buttonClicked(){
-  println("button");
+
   switch(clickAction) {
     
     case "SWITCH_MAIN":
