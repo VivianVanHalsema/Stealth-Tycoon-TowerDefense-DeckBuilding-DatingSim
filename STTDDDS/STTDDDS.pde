@@ -4,6 +4,9 @@ float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
 
+ArrayList<BaseGuest> enemies = new ArrayList<BaseGuest>(); 
+ArrayList<BaseActor> towers = new ArrayList<BaseActor>(); 
+
 void setup(){
 
  size(1280,720); 
@@ -70,6 +73,7 @@ void ButtonDraw(){
 //SCREEN FUNCTIONS
 
 void switchScreens(){
+  
 titleScreen = null;
 mainScreen = null;
 
