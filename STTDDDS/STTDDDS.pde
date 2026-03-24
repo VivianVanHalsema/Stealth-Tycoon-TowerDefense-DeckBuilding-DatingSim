@@ -4,9 +4,9 @@ float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
 
-ArrayList<BaseGuest> enemies = new ArrayList<BaseGuest>(); 
-ArrayList<BaseActor> towers = new ArrayList<BaseActor>(); 
-
+ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
+ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
+ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 void setup(){
 
  size(1280,720); 
@@ -39,10 +39,11 @@ void mousePressed(){
     Button butt = buttons.get(i);
     if(butt.checkClicked()){
       butt.buttonClicked();
-      break;
+      return;
     }
   }
-  
+  //debug
+  createNewGuest();
 }
 
 
@@ -97,4 +98,13 @@ void calcDeltaTime() {
   float currTime = millis();
   dt = (currTime - prevTime) / 1000.0;
   prevTime = currTime;
+}
+
+//MISC FUNCTIONS
+
+void createNewGuest(){
+  println("creating new guest");
+  BaseGuest newGuest = new BaseGuest(mouseX,mouseY);
+  guests.add(newGuest);
+  
 }

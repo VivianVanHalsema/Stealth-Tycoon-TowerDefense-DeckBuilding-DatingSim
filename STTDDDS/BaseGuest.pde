@@ -18,6 +18,8 @@ class BaseGuest {
   
   void update(){
     
+    // this is just debugging I wanted to make sure that actors could track the position of guests
+    position.y += 20*dt;
     
     
   }
