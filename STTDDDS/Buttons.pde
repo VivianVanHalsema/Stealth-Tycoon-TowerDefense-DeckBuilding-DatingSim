@@ -1,4 +1,4 @@
-class Button{
+public class Button{
   PVector position = new PVector();
   PVector size = new PVector();
   String text;
@@ -8,7 +8,7 @@ class Button{
   String clickAction;
   
 
-  Button(int x, int y, int w, int h, String text, boolean clickable, boolean visible, String clickAction){
+  public Button(int x, int y, int w, int h, String text, boolean clickable, boolean visible, String clickAction){
    position.x = x; 
    position.y = y; 
    size.x = w;
@@ -19,11 +19,11 @@ class Button{
    this.clickAction = clickAction;
   }
   
-  void update(float dt){
+  public void update(float dt){
       isHovered = checkHovered();
   }
   
-  void draw(){
+  public void draw(){
     noStroke();
     rectMode(CORNER);
     textAlign(CENTER);
