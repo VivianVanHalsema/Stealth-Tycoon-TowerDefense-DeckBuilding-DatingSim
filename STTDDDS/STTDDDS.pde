@@ -9,7 +9,7 @@ ArrayList<BaseActor> actors = new ArrayList<BaseActor>();
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 void setup(){
 
- size(1280,720); 
+ size(1920,1080); 
  windowTitle("Stealth Tycoon Tower Defense Deck Building Dating Sim");
  switchToTitle();
 }
@@ -99,7 +99,19 @@ void calcDeltaTime() {
   dt = (currTime - prevTime) / 1000.0;
   prevTime = currTime;
 }
+//HELPER FUNCTIONS
 
+boolean pointInRadius(float x,float y,float circleX, float circleY, int r){
+  float distX = x-circleX;
+  float distY = y-circleY;
+  float dis = lineLength(distX,distY);
+  if (dis <=r){return true;}
+  return false;
+}
+
+float lineLength(float x, float y){
+return sqrt((x*x)+(y*y));
+}
 //MISC FUNCTIONS
 
 void createNewGuest(){

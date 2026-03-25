@@ -1,16 +1,21 @@
+
+//im formatting my child actors by putting the child class in its own tab with its associated child projectile (if applicable)
+
 class BaseActor {
   ArrayList<BaseGuest> guestsInRange = new ArrayList<BaseGuest>(); 
   PVector position = new PVector();
-  PVector size = new PVector();
-  float angle;
+  PVector size = new PVector(64,64);
+  float angle = (PI/2);
   float attackCooldown;
+  float maxAttackCooldown = 1;
+  
   
   
   
   //variables changed in child classes
-  float scareRange;
+  float scareRange =160;
   PImage sprite;
-  float attackSpeed; // attack speed of 1 is every second, 2 is twice a second, .5 is every 2 seconds
+  float attackSpeed = 1; // attack speed of 1 is every second, 2 is twice a second, .5 is every 2 seconds
   
   
   BaseActor(int x, int y){
@@ -18,14 +23,8 @@ class BaseActor {
   //input variables
   position.x = x;
   position.y = y;
-  //default variables
-  size.x = 64;
-  size.y = 64;
-  angle = 0;
-  //child variables
-  scareRange = 160;
   sprite = loadImage("sprites/vampire.png");
-  attackSpeed = 1;
+
   
     
   }
@@ -38,6 +37,7 @@ class BaseActor {
   }
   
   void draw() {
+    noStroke();
     rectMode(CENTER);
     imageMode(CENTER);
     //draw attack range
@@ -80,6 +80,9 @@ class BaseActor {
  
  
  //gets the actor closest to the bottom of the map AKA the end (used for the direction to look at
+ 
+ //In the future maybe we could have a more specific variable on the guest side thats 
+ //percentage of path done or something? In case a path goes down but goes back up later in the path
  BaseGuest getFrontGuestInRange(){
     if (guestsInRange.isEmpty()) return null; 
    float frontmostDistance = -10000;
@@ -105,7 +108,7 @@ void lookAtFrontGuestInRange(){
   if (diff > PI) diff -= TWO_PI;
   if (diff < -PI) diff += TWO_PI;
   
-  angle = angle +diff * .2;
+  angle = angle +diff * .3;
   }
   
   

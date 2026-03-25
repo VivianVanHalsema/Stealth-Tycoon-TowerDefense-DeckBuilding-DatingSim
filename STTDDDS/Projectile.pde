@@ -13,9 +13,7 @@ class Projectile {
    this.size.y = 20;
    this.angle = angle;
    lifetime = 5;
-   float projectileSpeed = 5; //if you change the projectile speed you also need to recalc the velocity too
-    this.velocity.x = cos(angle) * projectileSpeed;
-    this.velocity.y = sin(angle) * projectileSpeed;
+   projectileSpeed = 5;
  }
   
   void update(){
@@ -23,17 +21,19 @@ class Projectile {
     if (lifetime < 0){
      isAlive = false;
     }
+    this.velocity.x = cos(angle) * projectileSpeed;
+    this.velocity.y = sin(angle) * projectileSpeed;
     position.x += velocity.x;
     position.y += velocity.y; 
     checkCollision();
   }
   
     void draw() {
-      
+    noStroke();
+    rectMode(CENTER);
     pushMatrix();
     translate(position.x, position.y);
     rotate(angle);  // Rotate the projectile to face its direction
-    rectMode(CENTER);
     fill(255, 0, 0);
     rect(0, 0, size.x, size.y);
     popMatrix();
@@ -41,11 +41,39 @@ class Projectile {
   
  void checkCollision () {
    
-   
+   ///lol ill get to it
    
    
  }
  
+  //get all guests on a line- the x and y input are the second cordinate, since I assume the first is always the position
+  //it also presumes that dx and dy are located on your tower, so it doesn't check if that end of the line is located
+  //in the circle. just duplicated the first condition and switch up the x and y if you need that
+  ArrayList checkLineCollision(float x, float y, float lineWidth){
+    ArrayList<BaseGuest> colliding = new ArrayList<BaseGuest>();
+    
+     float dx = this.position.x;
+     float dy = this.position.y;
+     float distX = x-dx;
+     float distY = y-dy;
+     float len = lineLength(distX,distY);
+     
+     for (BaseGuest guest : guests) {
+       
+     float gx= guest.position.x;
+     float gy= guest.position.y;
+     boolean lineEndCollision = pointInRadius(gx, gy, x, y, guest.size);
+   
+   if (lineEndCollision) {
+     colliding.add(guest);
+     continue;
+     }
+     
+   
+   //float dot = ( ((gx-
+  }
  
-  
+  return colliding;
+}
+
 }
