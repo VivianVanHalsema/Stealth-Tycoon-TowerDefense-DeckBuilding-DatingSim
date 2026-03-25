@@ -9,7 +9,7 @@ ArrayList<BaseActor> actors = new ArrayList<BaseActor>();
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 void setup(){
 
- size(1920,1080); 
+ size(1280,720); 
  windowTitle("Stealth Tycoon Tower Defense Deck Building Dating Sim");
  switchToTitle();
 }

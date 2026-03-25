@@ -40,7 +40,6 @@ class MovingDashboard extends Button {
         position.y = lerp(position.y, baseLocation.y, a);
       }
       
-      
     for (int i = 0; i < attachedButtons.size(); i++) {
       Button b = attachedButtons.get(i);
       if (isHovered && a < 1) {
@@ -50,6 +49,7 @@ class MovingDashboard extends Button {
         b.position.x = lerp(b.position.x, buttonBaseLocations.get(i).x, a);
         b.position.y = lerp(b.position.y, buttonBaseLocations.get(i).y, a);
       }
+      println(a);
     }
     
     
