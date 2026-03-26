@@ -18,7 +18,8 @@ class MovingDashboard extends Button {
     
     
     for (Button b : attachedButtons) {
-      buttonBaseLocations.add(b.position);
+      PVector buttonLocation = new PVector(b.position.x, b.position.y);
+      buttonBaseLocations.add(buttonLocation);
       buttonOverlappedLocations.add(new PVector(b.position.x + distanceToTravel.x, b.position.y + distanceToTravel.y));
     }
     
