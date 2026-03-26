@@ -54,9 +54,8 @@ class Projectile {
     
      float dx = this.position.x;
      float dy = this.position.y;
-     float distX = x-dx;
-     float distY = y-dy;
-     float len = lineLength(distX,distY);
+
+     float len = dist(x,y,dx,dy);
      
      for (BaseGuest guest : guests) {
        
@@ -70,7 +69,9 @@ class Projectile {
      }
      
    
-   //float dot = ( ((gx-
+   float dot = ( ((gx-x)*(dx-x)) +((gy-y)*(dx-y)) )/pow(len,2);
+   float closestX = x + (dot * (dx-x));
+   float closestY = y + (dot * (dy-y));
   }
  
   return colliding;
