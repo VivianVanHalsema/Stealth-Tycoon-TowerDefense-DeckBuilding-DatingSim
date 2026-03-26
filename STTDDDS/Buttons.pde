@@ -8,15 +8,38 @@ public class Button{
   String clickAction;
   
 
-  public Button(int x, int y, int w, int h, String text, boolean clickable, boolean visible, String clickAction){
+  public Button(int x, int y, String clickAction){
    position.x = x; 
    position.y = y; 
-   size.x = w;
-   size.y = h;
-   this.text = text;
-   this.clickable = clickable;
-   this.visible = visible;
+   this.clickable = true;
+   this.visible = true;
    this.clickAction = clickAction;
+   switch(clickAction) {
+    
+    case "SWITCH_MAIN":
+    text = "Go to main";
+    size.x=140;
+    size.y=60;
+    break;
+    
+    case "SWITCH_TITLE":
+    text = "Go to title";
+    size.x=140;
+    size.y=60;
+    break;
+    
+    case "TOGGLE_DASHBOARD_LOCK":
+    text = "lock";
+    size.x=60;
+    size.y=60;
+    break;
+    
+    case "DASHBOARD":
+    text = "";
+    size.x=500;
+    size.y=height;
+    break;
+    }
   }
   
   public void update(float dt){

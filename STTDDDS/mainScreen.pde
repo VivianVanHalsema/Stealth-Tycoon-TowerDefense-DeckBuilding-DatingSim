@@ -11,9 +11,9 @@ class MainScreen{
   MainScreen(){
     
   //Button Initializations go here!!
-  titleButton = new Button(width + 240, 20, 140, 60, "Switch to title",true, true,"SWITCH_TITLE");
+  titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
   buttons.add(titleButton);
-  dashLockButton = new Button(width - 50, 0, 50, 50, "Lock", true, true, "TOGGLE_DASHBOARD_LOCK");
+  dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
   buttons.add(dashLockButton);
   
   //Scare Actor Initialization goes here!!
@@ -32,8 +32,8 @@ class MainScreen{
   buttonsToAttachToDashboard.add(titleButton);
   buttonsToAttachToDashboard.add(dashLockButton);
   
-  //------------------------------width, height, visibility, location(tostart), ----------location(toend), -------------------Stored Button Elements
-  uiDashboard = new MovingDashboard(500, height, true, new PVector(width - 50, 0), new PVector(width - 450, 0), buttonsToAttachToDashboard);
+  //------------------------------, location(tostart), ----------location(toend), -------------------Stored Button Elements
+  uiDashboard = new MovingDashboard( new PVector(width - 50, 0), new PVector(width - 450, 0), buttonsToAttachToDashboard);
 
   
   }

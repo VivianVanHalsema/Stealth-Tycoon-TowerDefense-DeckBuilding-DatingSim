@@ -4,7 +4,7 @@ class TitleScreen{
   
   
   TitleScreen(){
-  mainButton =  new Button(width/2-100, height/2-100, 140, 60, "Switch to main",true,true,"SWITCH_MAIN");
+  mainButton =  new Button(width/2-100, height/2-100, "SWITCH_MAIN");
   buttons.add(mainButton);
 
   }

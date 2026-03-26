@@ -10,8 +10,8 @@ class MovingDashboard extends Button {
   ArrayList<PVector> buttonOverlappedLocations = new ArrayList<PVector>();
   PImage photo;
   
-  MovingDashboard(int w, int h, boolean visible, PVector baseLocationInput, PVector overlappedLocationInput, ArrayList<Button> buttonsToAttach) {
-    super(int(baseLocationInput.x), int(baseLocationInput.y), w, h, "", false, visible, "");
+  MovingDashboard(PVector baseLocationInput, PVector overlappedLocationInput, ArrayList<Button> buttonsToAttach) {
+    super(int(baseLocationInput.x), int(baseLocationInput.y), "DASHBOARD");
     photo = loadImage("sprites/exampleFolder.png");
     baseLocation = baseLocationInput;
     overlappedLocation = overlappedLocationInput;
@@ -55,8 +55,6 @@ class MovingDashboard extends Button {
         }
       }
     }
-    
-    println(mouseX + "   " +mouseY);
     pIsHovered = isHovered;
   }
   
