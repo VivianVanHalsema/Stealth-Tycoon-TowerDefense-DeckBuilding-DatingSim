@@ -28,29 +28,30 @@ class MovingDashboard extends Button {
   @Override void update(float dt) {
     isHovered = checkHovered();
     
-    a += 0.04;
-    if (pIsHovered != isHovered) {
-      a = 0;
-    }
-    if (a > 1) a = 1;
-    if (isHovered && a < 1) {
-        position.x = lerp(position.x, overlappedLocation.x, a);
-        position.y = lerp(position.y, overlappedLocation.y, a);
-      } else if (!isHovered && a < 1) {
-        position.x = lerp(position.x, baseLocation.x, a);
-        position.y = lerp(position.y, baseLocation.y, a);
+    if (!isLocked) {
+      a += 0.04;
+      if (pIsHovered != isHovered) {
+        a = 0;
       }
-      
-    for (int i = 0; i < attachedButtons.size(); i++) {
-      Button b = attachedButtons.get(i);
+      if (a > 1) a = 1;
       if (isHovered && a < 1) {
-        b.position.x = lerp(b.position.x, buttonOverlappedLocations.get(i).x, a);
-        b.position.y = lerp(b.position.y, buttonOverlappedLocations.get(i).y, a);
-      } else if (!isHovered && a < 1) {
-        b.position.x = lerp(b.position.x, buttonBaseLocations.get(i).x, a);
-        b.position.y = lerp(b.position.y, buttonBaseLocations.get(i).y, a);
+          position.x = lerp(position.x, overlappedLocation.x, a);
+          position.y = lerp(position.y, overlappedLocation.y, a);
+        } else if (!isHovered && a < 1) {
+          position.x = lerp(position.x, baseLocation.x, a);
+          position.y = lerp(position.y, baseLocation.y, a);
+        }
+        
+      for (int i = 0; i < attachedButtons.size(); i++) {
+        Button b = attachedButtons.get(i);
+        if (isHovered && a < 1) {
+          b.position.x = lerp(b.position.x, buttonOverlappedLocations.get(i).x, a);
+          b.position.y = lerp(b.position.y, buttonOverlappedLocations.get(i).y, a);
+        } else if (!isHovered && a < 1) {
+          b.position.x = lerp(b.position.x, buttonBaseLocations.get(i).x, a);
+          b.position.y = lerp(b.position.y, buttonBaseLocations.get(i).y, a);
+        }
       }
-      println(a);
     }
     
     

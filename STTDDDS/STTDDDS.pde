@@ -3,6 +3,7 @@ ArrayList<Button> buttons = new ArrayList<Button>();
 float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
+MovingDashboard uiDashboard;
 
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
@@ -119,4 +120,14 @@ void createNewGuest(){
   BaseGuest newGuest = new BaseGuest(mouseX,mouseY);
   guests.add(newGuest);
   
+}
+
+void toggleDashboardLock() {
+  if (uiDashboard != null) {
+    if (uiDashboard.isLocked) {
+      uiDashboard.isLocked = false;
+    } else {
+      uiDashboard.isLocked = true;
+    }
+  }
 }

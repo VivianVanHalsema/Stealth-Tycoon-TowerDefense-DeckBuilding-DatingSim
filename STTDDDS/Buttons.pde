@@ -71,6 +71,10 @@ void buttonClicked(){
     case "SWITCH_TITLE":
     switchToTitle();
     break;
+    
+    case "TOGGLE_DASHBOARD_LOCK":
+    toggleDashboardLock();
+    break;
     }
    }
 }
