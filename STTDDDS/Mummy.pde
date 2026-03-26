@@ -5,7 +5,7 @@ class Mummy extends BaseActor {
   Mummy(int x,int y){
     super(x,y);
     sprite = loadImage("sprites/mummy.png");
-    attackSpeed = .9;
+    attackSpeed = .8;
     scareRange = 240;
     
   }

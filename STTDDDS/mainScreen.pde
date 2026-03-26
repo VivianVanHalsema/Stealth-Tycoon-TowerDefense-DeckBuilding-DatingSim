@@ -86,9 +86,14 @@ class MainScreen{
     
     //-------------------------------------UI DRAWING Layer---------------------------------
     //UI Dashboard is drawn here before buttons so the buttons stay visible on the dashboard
+    textAlign(LEFT);
+    fill (255);
+    text("$MONEY",1000, 30);
     uiDashboard.draw();
    
     ButtonDraw();
+    
+    
 }
 
 }
