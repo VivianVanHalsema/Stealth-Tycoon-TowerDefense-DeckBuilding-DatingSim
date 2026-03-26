@@ -18,6 +18,15 @@ class MainScreen{
   testGuest = new BaseGuest(400,330);
   guests.add(testGuest);
   
+  
+  
+  
+  //Dashboard buttons
+  
+  titleButton = new Button(width + 240, 20, 140, 60, "Switch to title",true, true,"SWITCH_TITLE");
+  buttons.add(titleButton);
+  
+  
   buttonsToAttachToDashboard.add(titleButton);
   //------------------------------width, height, visibility, location(tostart), ----------location(toend), -------------------Stored Button Elements
   uiDashboard = new MovingDashboard(500, height, true, new PVector(width - 50, 0), new PVector(width - 450, 0), buttonsToAttachToDashboard);
@@ -46,6 +55,9 @@ class MainScreen{
   }
   
  void draw() {
+   textAlign(LEFT);
+   
+   text("$MONEY",1000, 30);
     uiDashboard.draw();
    
     ButtonDraw();
@@ -58,6 +70,8 @@ class MainScreen{
     for (BaseActor actor : actors) {
       actor.draw();
     }
+    fill (255);
+    
 }
 
 }

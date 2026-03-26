@@ -8,9 +8,11 @@ class MovingDashboard extends Button {
   ArrayList<Button> attachedButtons = new ArrayList<Button>();
   ArrayList<PVector> buttonBaseLocations = new ArrayList<PVector>();
   ArrayList<PVector> buttonOverlappedLocations = new ArrayList<PVector>();
+  PImage photo;
   
   MovingDashboard(int w, int h, boolean visible, PVector baseLocationInput, PVector overlappedLocationInput, ArrayList<Button> buttonsToAttach) {
     super(int(baseLocationInput.x), int(baseLocationInput.y), w, h, "", false, visible, "");
+    photo = loadImage("sprites/exampleFolder.png");
     baseLocation = baseLocationInput;
     overlappedLocation = overlappedLocationInput;
     attachedButtons = buttonsToAttach;
@@ -18,7 +20,7 @@ class MovingDashboard extends Button {
     
     
     for (Button b : attachedButtons) {
-      buttonBaseLocations.add(b.position);
+      buttonBaseLocations.add( new PVector(b.position.x, b.position.y));
       buttonOverlappedLocations.add(new PVector(b.position.x + distanceToTravel.x, b.position.y + distanceToTravel.y));
     }
     
@@ -49,29 +51,22 @@ class MovingDashboard extends Button {
         b.position.x = lerp(b.position.x, buttonBaseLocations.get(i).x, a);
         b.position.y = lerp(b.position.y, buttonBaseLocations.get(i).y, a);
       }
-      println(a);
     }
     
-    
+    println(mouseX + "   " +mouseY);
     pIsHovered = isHovered;
   }
   
   @Override void draw() {
     noStroke();
     rectMode(CORNER);
-    textAlign(CENTER);
-   
-    if (isHovered == true){ 
-      fill(0);
-      rect(position.x-3,position.y-3,size.x+6,size.y+6, 8);
-    }
+    imageMode(CORNER);
     
    fill(#B4972C);
-   rect(position.x,position.y,size.x,size.y,8);
-   fill(10);
-   textSize(20);
-   text(text,position.x +size.x/2,position.y+size.y/2+5);  
-    
+   push();
+   translate(position.x,position.y);
+   image(photo,0,0);
+   pop();  
   }
 
   
