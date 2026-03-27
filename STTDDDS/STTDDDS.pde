@@ -6,6 +6,7 @@ float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
 MovingDashboard uiDashboard;
+boolean keyEnter = false;
 
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
@@ -31,7 +32,7 @@ void draw(){
     if(mainScreen != null) mainScreen.draw(); 
   }
   
-  
+  Keyboard.update();
 }
 
 //MOUSE FUNCTIONS (we can change these to a proper input handler later if we'd like)
@@ -54,6 +55,14 @@ void mousePressed(){
 void mouseReleased(){
 
   
+}
+
+void keyPressed(){
+  //println(keyCode);
+  Keyboard.handleKeyDown(keyCode);
+}
+void keyReleased(){
+  Keyboard.handleKeyUp(keyCode);
 }
 
 //BUTTON FUNCTIONS
@@ -139,5 +148,6 @@ void toggleDashboardLock() {
     } else {
       uiDashboard.isLocked = true;
     }
+    //uiDashboard.a = round(uiDashboard.a);// does NOT work figure out why later
   }
 }

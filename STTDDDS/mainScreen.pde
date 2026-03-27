@@ -25,18 +25,20 @@ class MainScreen{
   dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
   buttons.add(dashLockButton);
   
-  hireButton = new TabButton(width-50, 30,"SWITCH_TABS", dashboardTabs.HIRE, uiDashboard);
+  
+  //Tab buttons initializations go here!!!!
+  hireButton = new TabButton(width-40, (height/8*1),"SWITCH_TABS", dashboardTabs.HIRE);
   buttons.add(hireButton);
-  upgradeButton = new TabButton(width-50, 60,"SWITCH_TABS", dashboardTabs.UPGRADE, uiDashboard);
+  upgradeButton = new TabButton(width-40,(height/8*3),"SWITCH_TABS", dashboardTabs.UPGRADE);
   buttons.add(upgradeButton);
-  statsButton = new TabButton(width-50, 90,"SWITCH_TABS", dashboardTabs.STATS, uiDashboard);
+  statsButton = new TabButton(width-40, (height/8*5),"SWITCH_TABS", dashboardTabs.STATS);
   buttons.add(statsButton);
-  settingsButton = new TabButton(width-50, 120,"SWITCH_TABS", dashboardTabs.SETTINGS, uiDashboard);
+  settingsButton = new TabButton(width-40, (height/8*7),"SWITCH_TABS", dashboardTabs.SETTINGS);
   buttons.add(settingsButton);
   
-  //Shop Button initializations go here!!!!
+  //Dashboard button initializations go here!!!!
  // moneySystem = new MoneySystem();
-  mummyButton = new ShopButton(width+50, 100,"GET_TOWER");
+  mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE);
   buttons.add(mummyButton);
   
   //Scare Actor Initialization goes here!!

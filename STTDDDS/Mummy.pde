@@ -6,7 +6,7 @@ class Mummy extends BaseActor {
     super(x,y);
     sprite = loadImage("sprites/mummy.png");
     attackSpeed = .8;
-    scareRange = 240;
+    scareRange = 430;
     
   }
   
@@ -52,7 +52,7 @@ class MummyProjectile extends LineProjectile {
   MummyProjectile (float x, float y, float angle){
     super(x,y,angle);
     lineWidth = 10;
-    lifetime = .8;
+    lifetime = .6;
     projectileSpeed = 6;
     damage = 20;
     debuffs.add(debuffTypes.SLOWNESS); //dont forget to add

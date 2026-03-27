@@ -8,6 +8,8 @@ class BaseGuest {
   color baseColor,currentColor;
   boolean terrified = false;
   boolean isCultist = false;
+  boolean bandaged = false;
+  PImage bandages;
   //debuff variables ENUMS BELOW  BASE GUEST CLASS
   
   //contains all debuffs with their leftover time
@@ -19,6 +21,7 @@ class BaseGuest {
   //I just did this so I could make sure they were being hit, I want to wait to add timers until 
   //we discuss how we want to handle debuffs
   BaseGuest(int x, int y){
+  bandages = loadImage("sprites/bandages.png");
   position.x = x;
   position.y = y;
   baseColor = color(100,100,100);
@@ -87,8 +90,8 @@ class BaseGuest {
      switch(debuff){
        case SLOWNESS:
        //slows the guest down
-       slowness = .7;
-       currentColor = color (100,100,200);
+       slowness = .65;
+       bandaged = true;
        break;
        case CULTJARGON:
        //chance to make a cult member, need to ask if we want this to be temp or permanent
@@ -118,7 +121,7 @@ class BaseGuest {
     switch(debuffType) {
         case SLOWNESS:
             slowness = 1;
-            currentColor = baseColor;
+            bandaged = false;
             break;
         case CULTJARGON:
              
@@ -144,6 +147,14 @@ class BaseGuest {
     noStroke();
     fill(currentColor);
     ellipse(position.x,position.y,size, size);
+    if (bandaged){
+    pushMatrix();
+    translate(position.x+3, position.y);
+    imageMode(CENTER);
+    bandages.resize(int(size+20), int(size+20)); //changes to make temp sprite look better
+    image(bandages, 0, 0);
+    popMatrix();
+    }
     
     
   } ///truly just a test Guest for detecting by tower, delete it or do whatever you want with it Ry

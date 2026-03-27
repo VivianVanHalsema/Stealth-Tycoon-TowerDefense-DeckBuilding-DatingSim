@@ -102,17 +102,20 @@ void buttonClicked(){
     case "GET_TOWER"://
     //moneySystem.buyTower(actor);
     break;
+    case "SWITCH_TABS":
+    
+    break;
    }
   }
 }
 
 
-class ShopButton extends Button {
+class ShopButton extends DashBoardButton {
   int price; 
   actorTypes actor;
   
-  ShopButton(int x, int y, String clickAction) {
-   super(x,y, clickAction); 
+  ShopButton(int x, int y, String clickAction, dashboardTabs tab) {
+   super(x,y, clickAction, tab); 
     switch(clickAction) {
     
     case "GET_TOWER":
@@ -148,10 +151,46 @@ class TabButton extends Button {
 dashboardTabs thisTab; 
 MovingDashboard owner;
   
-  TabButton(int x, int y, String clickAction, dashboardTabs tab, MovingDashboard owner) {
+  TabButton(int x, int y, String clickAction, dashboardTabs tab) {
    super(x,y, clickAction); 
     thisTab = tab;
-    this.owner = owner;
+    owner = uiDashboard;
+    text = "";
+    size.x = 60;
+    size.y = 80;
+    
+  }
+  
+  void update () {
+    super.update();
+    if (owner == null){
+     owner = uiDashboard;
+    }
+ 
+  }
+  
+  
+  void draw () {
+   super.draw(); 
+    
+  }
+  
+  void buttonClicked(){
+
+    owner.currentTab = thisTab;    
+  }
+
+  
+}
+
+class DashBoardButton extends Button {
+  
+dashboardTabs thisTab; 
+MovingDashboard owner;
+  
+  DashBoardButton(int x, int y, String clickAction, dashboardTabs tab) {
+   super(x,y, clickAction); 
+    thisTab = tab;
     text = "";
     size.x = 40;
     size.y = 80;
@@ -170,6 +209,7 @@ MovingDashboard owner;
   }
   
   void buttonClicked(){
+
     owner.currentTab = thisTab;    
   }
 
