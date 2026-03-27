@@ -9,10 +9,14 @@ class MovingDashboard extends Button {
   ArrayList<PVector> buttonBaseLocations = new ArrayList<PVector>();
   ArrayList<PVector> buttonOverlappedLocations = new ArrayList<PVector>();
   PImage photo;
+  dashboardTabs currentTab;
   
   MovingDashboard(PVector baseLocationInput, PVector overlappedLocationInput, ArrayList<Button> buttonsToAttach) {
+    
     super(int(baseLocationInput.x), int(baseLocationInput.y), "DASHBOARD");
     photo = loadImage("sprites/exampleFolder.png");
+    currentTab = dashboardTabs.HIRE;
+    
     baseLocation = baseLocationInput;
     overlappedLocation = overlappedLocationInput;
     attachedButtons = buttonsToAttach;
@@ -59,10 +63,8 @@ class MovingDashboard extends Button {
   }
   
   @Override void draw() {
-    noStroke();
-    rectMode(CORNER);
-    imageMode(CORNER);
-    
+   noStroke();
+   imageMode(CORNER);
    fill(#B4972C);
    push();
    translate(position.x,position.y);
@@ -70,6 +72,11 @@ class MovingDashboard extends Button {
    pop();  
   }
 
-  
-  
 }
+
+enum dashboardTabs {
+  HIRE, //get actors
+  UPGRADE,// get global upgrades
+  STATS, // I think this would be useful for if each tower needs to get paid each night, so u can see ur current overhead, who's putting out the most damage etc also obvs needs a jason talk/click counter obvs
+  SETTINGS //volume, quit to menu
+};

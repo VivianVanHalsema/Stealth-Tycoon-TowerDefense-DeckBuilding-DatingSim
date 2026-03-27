@@ -1,7 +1,12 @@
 class MainScreen{
-  
+  //buttons
   Button titleButton;
   Button dashLockButton;
+  TabButton hireButton;
+  TabButton upgradeButton;
+  TabButton statsButton;
+  TabButton settingsButton;
+  //shopButtons
   ShopButton mummyButton;
   
   
@@ -19,6 +24,15 @@ class MainScreen{
   buttons.add(titleButton);
   dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
   buttons.add(dashLockButton);
+  
+  hireButton = new TabButton(width-50, 30,"SWITCH_TABS", dashboardTabs.HIRE, uiDashboard);
+  buttons.add(hireButton);
+  upgradeButton = new TabButton(width-50, 60,"SWITCH_TABS", dashboardTabs.UPGRADE, uiDashboard);
+  buttons.add(upgradeButton);
+  statsButton = new TabButton(width-50, 90,"SWITCH_TABS", dashboardTabs.STATS, uiDashboard);
+  buttons.add(statsButton);
+  settingsButton = new TabButton(width-50, 120,"SWITCH_TABS", dashboardTabs.SETTINGS, uiDashboard);
+  buttons.add(settingsButton);
   
   //Shop Button initializations go here!!!!
  // moneySystem = new MoneySystem();
@@ -41,7 +55,10 @@ class MainScreen{
   buttonsToAttachToDashboard.add(titleButton);
   buttonsToAttachToDashboard.add(dashLockButton);
   buttonsToAttachToDashboard.add(mummyButton);
-  
+  buttonsToAttachToDashboard.add(hireButton);
+  buttonsToAttachToDashboard.add(upgradeButton);
+  buttonsToAttachToDashboard.add(statsButton);
+  buttonsToAttachToDashboard.add(settingsButton);
   //------------------------------, location(tostart), ----------location(toend), -------------------Stored Button Elements
   uiDashboard = new MovingDashboard( new PVector(width - 50, 0), new PVector(width - 450, 0), buttonsToAttachToDashboard);
 

@@ -47,7 +47,7 @@ class CultistProjectile extends AOE {
    speed= 120;
    damage = 10;
    lifetime = 5;
-   lengthOfDebuff =1;
+   lengthOfDebuff =20;
    debuffs.add(debuffTypes.CULTJARGON);
    }
   

@@ -59,6 +59,8 @@ class BaseGuest {
   
   //handles all attacks and debuffs
   void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){
+    
+    //checks if this attack has already hit guest
    if (hitAttacks.containsKey(attacker)) {
 
         return; // Already hit by this attack
@@ -73,9 +75,9 @@ class BaseGuest {
      
      if (debuff == debuffTypes.CULTJARGON) {
        float randomCultistChance = random(0,50);
-       if (randomCultistChance <= 30){ 
+       if (randomCultistChance <= 40){ 
          println("not swayed");
-         //if smaller than 30, guest is not convinced
+         //if smaller than 40, guest is not convinced
        continue;
        }
      }

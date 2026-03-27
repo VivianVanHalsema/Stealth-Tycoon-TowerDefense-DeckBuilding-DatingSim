@@ -39,7 +39,7 @@ public class Button{
     size.x=500;
     size.y=height;
     break;
-    }
+   }
   }
   
   public void update(){
@@ -102,8 +102,8 @@ void buttonClicked(){
     case "GET_TOWER"://
     //moneySystem.buyTower(actor);
     break;
-    }
    }
+  }
 }
 
 
@@ -141,10 +141,37 @@ class ShopButton extends Button {
   
   
   
+}
+
+class TabButton extends Button {
+  
+dashboardTabs thisTab; 
+MovingDashboard owner;
+  
+  TabButton(int x, int y, String clickAction, dashboardTabs tab, MovingDashboard owner) {
+   super(x,y, clickAction); 
+    thisTab = tab;
+    this.owner = owner;
+    text = "";
+    size.x = 40;
+    size.y = 80;
+    
+  }
+  
+  void update () {
+    super.update();
+ 
+  }
   
   
+  void draw () {
+   super.draw(); 
+    
+  }
   
-  
-  
+  void buttonClicked(){
+    owner.currentTab = thisTab;    
+  }
+
   
 }

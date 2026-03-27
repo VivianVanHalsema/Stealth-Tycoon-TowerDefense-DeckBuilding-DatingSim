@@ -38,11 +38,11 @@ class Attack {
  ArrayList checkCircleCollision (float x, float y, float size) {
     
     ArrayList<BaseGuest> colliding = new ArrayList<BaseGuest>();
-    for (BaseGuest guest : guests) {
+   for (BaseGuest guest : guests) {
         float gx = guest.position.x;
         float gy = guest.position.y;
         float dis = dist (x,y, gx, gy);
-   if (dis  <= size + guest.size) { 
+   if (dis  <= size + guest.size/2) { 
        colliding.add(guest);
        continue;
    }
