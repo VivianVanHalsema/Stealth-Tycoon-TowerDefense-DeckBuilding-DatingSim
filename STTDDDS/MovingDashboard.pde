@@ -27,7 +27,7 @@ class MovingDashboard extends Button {
     
   }
   
-  @Override void update(float dt) {
+  @Override void update() {
     isHovered = checkHovered();
     
     if (!isLocked) {

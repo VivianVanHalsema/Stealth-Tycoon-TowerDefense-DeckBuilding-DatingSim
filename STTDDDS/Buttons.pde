@@ -42,7 +42,7 @@ public class Button{
     }
   }
   
-  public void update(float dt){
+  public void update(){
       isHovered = checkHovered();
   }
   
@@ -98,6 +98,53 @@ void buttonClicked(){
     case "TOGGLE_DASHBOARD_LOCK":
     toggleDashboardLock();
     break;
+    
+    case "GET_TOWER"://
+    //moneySystem.buyTower(actor);
+    break;
     }
    }
+}
+
+
+class ShopButton extends Button {
+  int price; 
+  actorTypes actor;
+  
+  ShopButton(int x, int y, String clickAction) {
+   super(x,y, clickAction); 
+    switch(clickAction) {
+    
+    case "GET_TOWER":
+    
+    text = "Mummy";
+    actor = actorTypes.MUMMY;
+    price = 100;
+    size.x=80;
+    size.y=60;
+    break;
+    
+    }
+  }
+  
+  void update () {
+    super.update();
+    if (currentMoney < price){
+     clickable = false; 
+    } else clickable = true;}
+  
+  
+  void draw () {
+   super.draw(); 
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 }

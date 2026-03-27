@@ -2,9 +2,13 @@ class MainScreen{
   
   Button titleButton;
   Button dashLockButton;
-  BaseActor testActor;
+  ShopButton mummyButton;
+  
+  
   BaseGuest testGuest;
   Mummy mummyTest;
+  Cultist cultistTest;
+  //MoneySystem moneySystem;
   ArrayList<Button> buttonsToAttachToDashboard = new ArrayList<Button>();
   
   
@@ -16,9 +20,14 @@ class MainScreen{
   dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
   buttons.add(dashLockButton);
   
+  //Shop Button initializations go here!!!!
+ // moneySystem = new MoneySystem();
+  mummyButton = new ShopButton(width+50, 100,"GET_TOWER");
+  buttons.add(mummyButton);
+  
   //Scare Actor Initialization goes here!!
-  testActor = new BaseActor(400,400);
-  actors.add(testActor);
+  cultistTest = new Cultist(400,400);
+  actors.add(cultistTest);
   mummyTest = new Mummy(600,300);
   actors.add(mummyTest);
   
@@ -31,6 +40,7 @@ class MainScreen{
   //----it in here using the buttonsToAttachToDashboard array list like shown below
   buttonsToAttachToDashboard.add(titleButton);
   buttonsToAttachToDashboard.add(dashLockButton);
+  buttonsToAttachToDashboard.add(mummyButton);
   
   //------------------------------, location(tostart), ----------location(toend), -------------------Stored Button Elements
   uiDashboard = new MovingDashboard( new PVector(width - 50, 0), new PVector(width - 450, 0), buttonsToAttachToDashboard);
@@ -40,17 +50,17 @@ class MainScreen{
   
   void update() {
     //UI Dashboard updates before buttons for movement and organization
-    uiDashboard.update(dt);
+    uiDashboard.update();
     
    ButtonUpdate();
    
    
-   for (Projectile p : projectiles) {
+   for (Attack p : attacks) {
       p.update();
    }
-      for (int i = projectiles.size() - 1; i >= 0; i--) {
-    if (!projectiles.get(i).isAlive) {
-      projectiles.remove(i);
+      for (int i = attacks.size() - 1; i >= 0; i--) {
+    if (!attacks.get(i).isAlive) {
+      attacks.remove(i);
       }
     }
    for (BaseGuest guest : guests) {
@@ -70,7 +80,7 @@ class MainScreen{
    
    
    //-----------------------------------Character Drawing Layer-----------------------------
-     for (Projectile p : projectiles) {
+     for (Attack p : attacks) {
       p.draw();
     }
     for (BaseGuest guest : guests) {
@@ -88,7 +98,7 @@ class MainScreen{
     //UI Dashboard is drawn here before buttons so the buttons stay visible on the dashboard
     textAlign(LEFT);
     fill (255);
-    text("$MONEY",1000, 30);
+    text(("$"+ floor(currentMoney)),1000, 30);
     uiDashboard.draw();
    
     ButtonDraw();

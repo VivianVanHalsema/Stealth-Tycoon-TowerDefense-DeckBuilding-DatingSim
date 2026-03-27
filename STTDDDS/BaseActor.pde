@@ -56,6 +56,7 @@ class BaseActor {
  void getAllInRange(){
   guestsInRange.clear();
   for (BaseGuest guest:guests) {
+    if (guest.isCultist == true || guest.terrified == true){ continue;}
     float dis = dist(guest.position.x, guest.position.y, this.position.x, this.position.y);
     if(dis < scareRange/2 + guest.size/2){
        guestsInRange.add(guest);
@@ -81,11 +82,11 @@ class BaseActor {
  
  //gets the actor closest to the bottom of the map AKA the end (used for the direction to look at
  
- //In the future maybe we could have a more specific variable on the guest side thats 
+ //In the future maybe we could have a more specific variable on the guest side that is
  //percentage of path done or something? In case a path goes down but goes back up later in the path
  BaseGuest getFrontGuestInRange(){
     if (guestsInRange.isEmpty()) return null; 
-   float frontmostDistance = -10000;
+   float frontmostDistance = MIN_FLOAT;
    BaseGuest frontmostGuest = guestsInRange.get(0);
   for (BaseGuest guest:guestsInRange){
     if (guest.position.y > frontmostDistance) {
@@ -115,3 +116,11 @@ void lookAtFrontGuestInRange(){
 }
 
 }
+
+
+static enum actorTypes
+  {
+    CULTIST,
+    MUMMY,
+   VAMPIRE
+  };

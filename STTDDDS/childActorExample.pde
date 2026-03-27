@@ -4,7 +4,11 @@ class ChildActorExample extends BaseActor  {
   
   ChildActorExample(int x, int y){
     super(x,y);
-    
+    /* customizable variables
+    sprite = loadImage("sprites/mummy.png");
+    attackSpeed = .8;
+    scareRange = 240;
+    */
   }
   
   
@@ -15,7 +19,7 @@ class ChildActorExample extends BaseActor  {
       if (!guestsInRange.isEmpty()) {
          exampleAttack();// here is where you put your special custom attack
       }
-      else { attackCooldown = .8;} //this gives the
+      else { attackCooldown = .8;} //this gives the tower time to turn when a new guest enters their range
     }
    
     
@@ -28,7 +32,7 @@ class ChildActorExample extends BaseActor  {
   
   
   void exampleAttack() {
-    // IF your actor uses projectiles, create your projectile, add it to the projectile arraylist, 
+    // IF your actor uses attacks, create your projectile, add it to the projectile arraylist, 
     //else you'll have you''ll have to figure it out on your own for now unless I get to it
     attackCooldown = maxAttackCooldown;
     

@@ -9,7 +9,7 @@ MovingDashboard uiDashboard;
 
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
-ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+ArrayList<Attack> attacks = new ArrayList<Attack>();
 void setup(){
 
  size(1280,720); 
@@ -61,7 +61,7 @@ void mouseReleased(){
 void ButtonUpdate(){
     for (int i = 0; i < buttons.size(); i++) {
     Button butt = buttons.get(i);
-    butt.update(dt);  
+    butt.update();  
   }
 }
 
@@ -124,11 +124,9 @@ boolean pointOnLine(float x1, float y1, float x2, float y2, float px, float py){
 }
 
 
-
 //MISC FUNCTIONS
 
 void createNewGuest(){
-  println("creating new guest");
   BaseGuest newGuest = new BaseGuest(mouseX,mouseY);
   guests.add(newGuest);
   

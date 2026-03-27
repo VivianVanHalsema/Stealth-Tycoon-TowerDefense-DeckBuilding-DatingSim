@@ -4,13 +4,15 @@ class BaseGuest {
   int size= 40;
   float scareRange;
   float speed = 20;
-  int health = 10;
+  int health = 100;
   color baseColor,currentColor;
   boolean terrified = false;
+  boolean isCultist = false;
   //debuff variables ENUMS BELOW  BASE GUEST CLASS
   
   //contains all debuffs with their leftover time
   HashMap<debuffTypes,Float> currentDebuffs = new HashMap<debuffTypes, Float>();
+  HashMap<Attack,Float> hitAttacks= new HashMap<Attack, Float>();
   float slowness = 1;
   
   //right now when the mummy shoots a guest their slowness and color are changed permanently
@@ -24,7 +26,11 @@ class BaseGuest {
   }
   
   void update(){
-    if (health <= 0) {terrified = true;}
+    if (health <= 0 && terrified != true) {
+      terrified = true;
+      speed = 40;
+      currentMoney += 10;
+  }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     position.y += speed*dt *slowness;
     
@@ -35,8 +41,15 @@ class BaseGuest {
         // Update the timer
         debuff.setValue(newTime);
     }
+    for(Map.Entry<Attack,Float> attack : hitAttacks.entrySet()){
+     float currentTime = attack.getValue();
+     float newTime = currentTime-dt;
+        // Update the timer
+        attack.setValue(newTime);
+    }
     //remove all debuffs with less than 0 timer
     removeDeadDebuffs();
+    removeDeadAttacks();
      
     
     
@@ -45,19 +58,28 @@ class BaseGuest {
   
   
   //handles all attacks and debuffs
-  void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Projectile Attacker){
-    
-    
+  void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){
+   if (hitAttacks.containsKey(attacker)) {
+
+        return; // Already hit by this attack
+    }
+
   //first deal damage
     health -=damage;
-    
- //I want to make it so each guest has an array that contains projectiles that have already hit them so one projectile doesn't do 200 damage over 2 frames or whatever 
- //but I also don't want these arrays to get super bloated and slow down the game when alot of guests on screen. Something to ponder, for now get nothing actually :-)
- //maybe remove every projectile check after 3 seconds, aka just do the debuff thing slightly less complicated again
-  
+  //add projectile to hit arraylist so no doublehits
+  hitAttacks.put(attacker,(attacker.lifetime +.5));
   //then add debuffs
    for (debuffTypes debuff: typeOfDebuffs) {
      
+     if (debuff == debuffTypes.CULTJARGON) {
+       float randomCultistChance = random(0,50);
+       if (randomCultistChance <= 30){ 
+         println("not swayed");
+         //if smaller than 30, guest is not convinced
+       continue;
+       }
+     }
+       
      currentDebuffs.put(debuff, lengthOfDebuff);
      
      switch(debuff){
@@ -69,7 +91,8 @@ class BaseGuest {
        case CULTJARGON:
        //chance to make a cult member, need to ask if we want this to be temp or permanent
        
-       
+       currentColor = color (100,200,100);
+       isCultist = true;
        break; 
 
      }
@@ -96,12 +119,24 @@ class BaseGuest {
             currentColor = baseColor;
             break;
         case CULTJARGON:
+             
+             currentColor = baseColor;
             break;
         }
      } 
   }
   
-  
+  void removeDeadAttacks(){
+    ArrayList<Attack> toRemove = new ArrayList<Attack>();
+    
+    for (Map.Entry<Attack,Float> attack : hitAttacks.entrySet()) {
+     if (attack.getValue() <= 0) {toRemove.add(attack.getKey());}
+     }
+    // Remove expired debuffs and reset effects
+    for (Attack attack : toRemove) {
+    hitAttacks.remove(attack);
+     } 
+  }
   
   void draw() {
     noStroke();

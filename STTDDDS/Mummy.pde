@@ -16,7 +16,6 @@ class Mummy extends BaseActor {
     super.update();
     if (attackCooldown < 0) {
       if (!guestsInRange.isEmpty()) {
-        println("i'm attacking!");
          mummyAttack(); 
       }
       else { attackCooldown = .8;} //so the mummy has time to rotate towards next guest if none are there
@@ -37,7 +36,7 @@ class Mummy extends BaseActor {
   
   void mummyAttack(){
     MummyProjectile newProjectile = new MummyProjectile(this.position.x,this.position.y, angle);
-    projectiles.add(newProjectile);
+    attacks.add(newProjectile);
     attackCooldown = maxAttackCooldown;
     
     
@@ -55,7 +54,7 @@ class MummyProjectile extends LineProjectile {
     lineWidth = 10;
     lifetime = .8;
     projectileSpeed = 6;
-    damage = 3;
+    damage = 20;
     debuffs.add(debuffTypes.SLOWNESS); //dont forget to add
   }
   
