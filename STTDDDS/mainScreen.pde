@@ -19,7 +19,7 @@ class MainScreen{
   //Scare Actor Initialization goes here!!
   testActor = new BaseActor(400,400);
   actors.add(testActor);
-  mummyTest = new Mummy(600,600);
+  mummyTest = new Mummy(600,300);
   actors.add(mummyTest);
   
   //Guest Initialization goes here!!

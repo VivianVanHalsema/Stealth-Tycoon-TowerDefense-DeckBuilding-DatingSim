@@ -1,3 +1,5 @@
+import java.util.Map;
+
 
 ArrayList<Button> buttons = new ArrayList<Button>(); 
 float dt, prevTime = 0;
@@ -102,9 +104,22 @@ void calcDeltaTime() {
 }
 //HELPER FUNCTIONS
 
-boolean pointInRadius(float x,float y,float circleX, float circleY, int r){
-  float dis = dist(x,y,circleX,circleY);
+boolean pointInRadius(float x,float y,float cx, float cy, float r){
+  float dis = dist(x,y,cx,cy);
   if (dis <=r){return true;}
+  return false;
+}
+
+boolean pointOnLine(float x1, float y1, float x2, float y2, float px, float py){
+  
+  float dis1 = dist(px,py, x1,y1);
+  float dis2 = dist(px,py, x2,y2);
+  
+  float len = dist(x1,y1,x2,y2);
+  //this makes the point line collision slightly less accurate, but I think that feels a little better
+  float buffer =.2;
+  
+  if (dis1+dis2 >= len-buffer && dis1+dis2 <= len+ buffer){ return true;}
   return false;
 }
 

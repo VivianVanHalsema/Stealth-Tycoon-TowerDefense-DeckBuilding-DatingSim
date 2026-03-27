@@ -21,7 +21,7 @@ class Mummy extends BaseActor {
       }
       else { attackCooldown = .8;} //so the mummy has time to rotate towards next guest if none are there
     }
-    
+   
     
     
   }
@@ -46,19 +46,17 @@ class Mummy extends BaseActor {
 }
 
 
-class MummyProjectile extends Projectile {
-  PVector startPosition = new PVector();
+class MummyProjectile extends LineProjectile {
   
+  
+ 
   MummyProjectile (float x, float y, float angle){
     super(x,y,angle);
-    startPosition.x = x;
-    startPosition.y = y;
-    size.x = 50;
-    size.y = 20;
+    lineWidth = 10;
     lifetime = .8;
     projectileSpeed = 6;
-    this.velocity.x = cos(angle) * projectileSpeed;
-    this.velocity.y = sin(angle) * projectileSpeed;
+    damage = 3;
+    debuffs.add(debuffTypes.SLOWNESS); //dont forget to add
   }
   
   void update(){
@@ -67,10 +65,7 @@ class MummyProjectile extends Projectile {
   }
   
   void draw(){
-    stroke(255);
-    strokeWeight(10);
-    strokeCap(SQUARE);
-    line(position.x,position.y,startPosition.x,startPosition.y);
+   super.draw();
   }
  
 
