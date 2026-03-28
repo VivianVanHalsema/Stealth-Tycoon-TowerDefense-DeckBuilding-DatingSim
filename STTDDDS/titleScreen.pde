@@ -11,6 +11,11 @@ class TitleScreen{
   
   
   void update() {
+    
+    if (Mouse.onDown(Mouse.LEFT)) {
+      PrevButtonClickCheck();
+    }
+    
     ButtonUpdate();
     }
   

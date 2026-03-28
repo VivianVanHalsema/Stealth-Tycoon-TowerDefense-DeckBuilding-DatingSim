@@ -1,4 +1,9 @@
 class MainScreen{
+  
+  Camera camera;
+  
+  PVector savedMousePosForCamera;
+  
   //buttons
   Button titleButton;
   Button dashLockButton;
@@ -18,6 +23,8 @@ class MainScreen{
   
   
   MainScreen(){
+    
+  camera = new Camera();
     
   //Button Initializations go here!!
   titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
@@ -68,29 +75,63 @@ class MainScreen{
   }
   
   void update() {
+    
+    if (Mouse.onDown(Mouse.LEFT)) {
+      PrevButtonClickCheck();
+    }
+    
+    if(Mouse.onDown(Mouse.RIGHT)) {
+      savedMousePosForCamera = new PVector(camera.x + mouseX, camera.y + mouseY);
+    }
+    
+    if (Mouse.isDown(Mouse.RIGHT)) {
+      camera.x = savedMousePosForCamera.x - mouseX;
+      camera.y = savedMousePosForCamera.y - mouseY;
+      
+      if (camera.x < -1000) camera.x = -1000;
+      if (camera.x > 1000) camera.x = 1000;
+      if (camera.y < -750) camera.y = -750;
+      if (camera.y > 750) camera.y = 750;
+      
+      camera.tx = camera.x;
+      camera.ty = camera.y;
+    }
+    
+    camera.update();
     //UI Dashboard updates before buttons for movement and organization
     uiDashboard.update();
     
-   ButtonUpdate();
+    ButtonUpdate();
    
    
-   for (Attack p : attacks) {
+    for (Attack p : attacks) {
       p.update();
-   }
-      for (int i = attacks.size() - 1; i >= 0; i--) {
-    if (!attacks.get(i).isAlive) {
-      attacks.remove(i);
+    }
+    for (int i = attacks.size() - 1; i >= 0; i--) {
+      if (!attacks.get(i).isAlive) {
+        attacks.remove(i);
       }
     }
-   for (BaseGuest guest : guests) {
+    for (BaseGuest guest : guests) {
       guest.update();
     }
     for (BaseActor actor : actors) {
       actor.update();
     }
+    
+    
   }
   
  void draw() {
+   
+   //All Objects Past this point Until UI Drawing Layer are moved with camera
+   pushMatrix();
+   translate(width/2, height/2);
+   zoom = lerp(zoom, targetZoom, .08); //zoom smoothing
+   scale(zoom);
+   translate(-width/2 - camera.x, -height/2 - camera.y);
+   // End Camera Code, It now is moving other objects
+   
    //-----------------------------------Background Drawing Layer----------------------------
    
    
@@ -112,7 +153,7 @@ class MainScreen{
     
     //-------------------------------------VFX Drawing Layer---------------------------------
     
-    
+    popMatrix(); //No longer Following Camera
     //-------------------------------------UI DRAWING Layer---------------------------------
     //UI Dashboard is drawn here before buttons so the buttons stay visible on the dashboard
     textAlign(LEFT);

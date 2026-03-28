@@ -8,6 +8,11 @@ MainScreen mainScreen;
 MovingDashboard uiDashboard;
 boolean keyEnter = false;
 
+float zoom;
+float targetZoom = 1;
+float maxZoom = 2;
+float minZoom = 0.5;
+
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
 ArrayList<Attack> attacks = new ArrayList<Attack>();
@@ -32,29 +37,22 @@ void draw(){
     if(mainScreen != null) mainScreen.draw(); 
   }
   
+  
+  
   Keyboard.update();
+  Mouse.update();
 }
 
-//MOUSE FUNCTIONS (we can change these to a proper input handler later if we'd like)
+//--------------------------------CONTROLS---------------------------
 
 void mousePressed(){
-
-  for (int i = 0; i < buttons.size(); i++) {
-    Button butt = buttons.get(i);
-    if(butt.checkClicked()){
-      butt.buttonClicked();
-      return;
-    }
-  }
+  
+  Mouse.handleKeyDown(mouseButton);
   //debug
   createNewGuest();
 }
-
-
-
 void mouseReleased(){
-
-  
+  Mouse.handleKeyUp(mouseButton);
 }
 
 void keyPressed(){
@@ -65,7 +63,24 @@ void keyReleased(){
   Keyboard.handleKeyUp(keyCode);
 }
 
+void mouseWheel(MouseEvent scroll) {
+  float e = scroll.getCount(); // e is only -1, 1, or 0, so we convert into something actually usable with zoom
+  targetZoom += e * -0.1;
+  targetZoom = constrain(targetZoom, minZoom, maxZoom);
+} //Thanks you Vivian from one year ago :-)
+
 //BUTTON FUNCTIONS
+
+void PrevButtonClickCheck() { //This is what was in the mousePressed before I made it into a 
+                              //input handler. needs to be called in all screens with buttons
+      for (int i = 0; i < buttons.size(); i++) {
+        Button butt = buttons.get(i);
+        if(butt.checkClicked()){
+          butt.buttonClicked();
+          return;
+        }
+      }
+}
 
 void ButtonUpdate(){
     for (int i = 0; i < buttons.size(); i++) {
