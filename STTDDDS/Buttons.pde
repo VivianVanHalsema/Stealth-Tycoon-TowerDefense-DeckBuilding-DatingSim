@@ -84,7 +84,7 @@ boolean checkHovered(){
 
 
 void buttonClicked(){
-
+println (clickAction);
   switch(clickAction) {
     
     case "SWITCH_MAIN":
@@ -98,9 +98,8 @@ void buttonClicked(){
     case "TOGGLE_DASHBOARD_LOCK":
     toggleDashboardLock();
     break;
-    
-    case "GET_TOWER"://
-    //moneySystem.buyTower(actor);
+    case "GET_TOWER":
+    println("soTrue!");
     break;
     case "SWITCH_TABS":
     
@@ -116,18 +115,14 @@ class ShopButton extends DashBoardButton {
   
   ShopButton(int x, int y, String clickAction, dashboardTabs tab) {
    super(x,y, clickAction, tab); 
-    switch(clickAction) {
-    
-    case "GET_TOWER":
     
     text = "Mummy";
     actor = actorTypes.MUMMY;
-    price = 100;
+    price = 10;
     size.x=80;
     size.y=60;
-    break;
-    
-    }
+ 
+   
   }
   
   void update () {

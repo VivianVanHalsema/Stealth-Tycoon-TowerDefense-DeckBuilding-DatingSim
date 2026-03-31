@@ -52,6 +52,13 @@ class BaseActor {
     popMatrix();
   }
   
+   boolean checkClicked(){
+  return mouseX > position.x && 
+         mouseX < position.x + size.x && 
+         mouseY > position.y && 
+         mouseY < position.y + size.y;
+ }
+  
   //get every Guest in scareRange
  void getAllInRange(){
   guestsInRange.clear();
