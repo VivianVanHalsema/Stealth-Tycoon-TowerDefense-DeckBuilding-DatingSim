@@ -1,5 +1,6 @@
 class MainScreen{
   
+  
   Camera camera;
   
   PVector savedMousePosForCamera;
@@ -23,6 +24,11 @@ class MainScreen{
   
   
   MainScreen(){
+    
+  //Pathfinding Initialization
+  TileHelper.app = new STTDDDS();
+  level = new Level();
+  pathfinder = new Pathfinder();
     
   camera = new Camera();
     
@@ -88,10 +94,10 @@ class MainScreen{
       camera.x = savedMousePosForCamera.x - mouseX;
       camera.y = savedMousePosForCamera.y - mouseY;
       
-      if (camera.x < -1000) camera.x = -1000;
-      if (camera.x > 1000) camera.x = 1000;
-      if (camera.y < -750) camera.y = -750;
-      if (camera.y > 750) camera.y = 750;
+      if (camera.x < 0) camera.x = 0;
+      if (camera.x > 320) camera.x = 320;
+      if (camera.y < 0) camera.y = 0;
+      if (camera.y > 880) camera.y = 880;
       
       camera.tx = camera.x;
       camera.ty = camera.y;
@@ -133,6 +139,17 @@ class MainScreen{
    // End Camera Code, It now is moving other objects
    
    //-----------------------------------Background Drawing Layer----------------------------
+   background(TileHelper.isHex ? 0 : 127);
+   level.draw();
+   
+   Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
+   Tile tile = level.getTile(g);
+   if (tile != null) { //This is for safety to avoid null pointers with camera stuffs
+     tile.hover = true;
+     PVector m = tile.getCenter();
+     fill(0);
+     ellipse(m.x, m.y, 5, 5);
+   }
    
    
    

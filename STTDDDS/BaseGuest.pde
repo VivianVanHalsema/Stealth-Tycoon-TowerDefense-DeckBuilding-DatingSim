@@ -10,7 +10,16 @@ class BaseGuest {
   boolean isCultist = false;
   boolean bandaged = false;
   PImage bandages;
+  
+  Point gridP = new Point(); // current position
+  Point gridT = new Point(); // target position (pathfinding goal)
   //debuff variables ENUMS BELOW  BASE GUEST CLASS
+  
+  // PIXEL-SPACE COORDINATES:
+  PVector pixlP = new PVector(); // current pixel position
+
+  ArrayList<Tile> path;    // the path to follow to get to the target position
+  boolean findPath = false;
   
   //contains all debuffs with their leftover time
   HashMap<debuffTypes,Float> currentDebuffs = new HashMap<debuffTypes, Float>();
@@ -29,6 +38,7 @@ class BaseGuest {
   }
   
   void update(){
+    teleportTo(gridP);
     if (health <= 0 && terrified != true) {
       terrified = true;
       speed = 40;
@@ -160,6 +170,52 @@ class BaseGuest {
   } ///truly just a test Guest for detecting by tower, delete it or do whatever you want with it Ry
   //okay now do NOT delete it (without warning) I've added a debuff system
   
+  //PATHFINDING FUNCTIONS
+  void teleportTo(Point gridP) {
+    Tile tile = level.getTile(gridP);
+    if (tile != null) {
+      this.gridP = gridP.get();
+      this.gridT = gridP.get();
+      this.pixlP = tile.getCenter();
+    }
+  }
+    
+  void setTargetPosition(Point gridT) {
+    this.gridT = gridT.get();
+    findPath = true;
+  }
+  
+  void findPathAndTakeNextStep() {
+    findPath = false;
+    Tile start = level.getTile(gridP);
+    Tile end = level.getTile(gridT);
+    if (start == end) {
+      path = null;
+      return;
+    }
+    path = pathfinder.findPath(start, end);
+
+    if (path != null && path.size() > 1) { 
+      Tile tile = path.get(1);
+      if(tile.isPassable()) gridP = new Point(tile.X, tile.Y);
+    }
+  }
+  
+  void updateMove() {
+    
+    float snapThreshold = 1;
+    PVector pixlT = level.getTileCenterAt(gridP);
+    PVector diff = PVector.sub(pixlT, pixlP);
+    
+    pixlP.x += diff.x * .2;
+    pixlP.y += diff.y * .2;
+    
+    if (abs(diff.x) < snapThreshold) pixlP.x = pixlT.x;
+    if (abs(diff.y) < snapThreshold) pixlP.y = pixlT.y;
+
+    if (pixlT.x == pixlP.x && pixlT.y == pixlP.y) findPath = true;
+  }
+  
 }
 
 
@@ -169,3 +225,147 @@ static enum debuffTypes
    SLOWNESS,
    CULTJARGON
   };
+  
+  
+  //----------------------------------------------------------------------------------------------------------
+  //---------------------------------------------     PATHFINDER    ------------------------------------------
+  //----------------------------------------------------------------------------------------------------------
+  
+  class Pathfinder {
+
+  boolean useManhattan = false;
+  boolean useDiagonals = false;
+  ArrayList<Tile> opened = new ArrayList<Tile>(); // collection of tiles we can use to solve the algorithm
+  ArrayList<Tile> closed = new ArrayList<Tile>(); // collection of tiles that we've ruled out as NOT part of the solution
+
+  Pathfinder() {
+  }
+
+  ArrayList<Tile> findPath(Tile start, Tile end) {
+
+    // TODO: make the pathfinding algorithm ;)
+    
+    opened.clear();
+    closed.clear();
+    
+    start.resetParent();
+    
+    // Step 1: connect the start and end tiles
+    
+    connectStartToEnd(start, end);
+    
+    // Step 2: Build Path Back to Beginning
+    
+    ArrayList<Tile> path = new ArrayList<Tile>();
+    Tile pathNode = end;
+    while(pathNode != null) {
+      path.add(pathNode);
+      pathNode = pathNode.parent;
+      
+    }
+    
+    // Step 3: Reverse the Collection
+    ArrayList<Tile> rev = new ArrayList<Tile>();
+    int maxIndex = path.size() - 1;
+    for (int i = maxIndex; i >= 0; i--) {
+      rev.add(path.get(i));
+    }
+    
+    
+    return rev;
+  }
+  /**
+   * This method is simply for debugging. It prints out a path to the console.
+   * @param ArrayList<Tile> path  The path to print out.
+   */
+  void outputPath(ArrayList<Tile> path) {
+    println("BEST PATH:");
+    int i = 0;
+    for (Tile t : path) {
+      print("\t" + i + ": " + t.X + ", " + t.Y);
+      if (i == 0) print(" (current location)");
+      println();
+      i++;
+    }
+  }
+  void connectStartToEnd(Tile start, Tile end) {
+
+    // TODO: Make the algorithm
+    opened.add(start);
+
+    while (opened.size() > 0) {
+      // GET THE NODE IN THE OPEN LIST WITH THE LOWEST F VALUE
+      float F = 99999;
+      int index = -1;
+
+      for (int i = 0; i < opened.size(); i++) {
+        Tile temp = opened.get(i);
+        if (temp.F < F) {
+          F = temp.F;
+          index = i;
+        }
+      }
+
+      Tile current = opened.remove(index);
+      closed.add(current);
+
+      if (current == end) {
+        //Path is found!! :3
+        break;
+      }
+
+      // loop through all of current's neighbors:
+      for (int i = 0; i < current.neighbors.size(); i++) {
+        Tile neighbor = current.neighbors.get(i);
+        if (!tileInArray(closed, neighbor)) {
+          if (!tileInArray(opened, neighbor)) {
+            opened.add(neighbor);
+            neighbor.setParent(current);
+            neighbor.doHeuristic(end, useManhattan);
+          } else {
+            if (neighbor.G > current.G + neighbor.getTerrainCost()) {
+              neighbor.setParent(current);
+              neighbor.doHeuristic(end, useManhattan);
+            } //end if
+          } // end else
+        } // end if
+      } // end all neighbors
+    } // end while loop
+  } // end method
+  /**
+   * This method returns true if a particular tile is already in an ArrayList.
+   * @param ArrayList<Tile> a  The haystack to search in.
+   * @param Tile t  The needle to search for.
+   * @return boolean  Whether or not the needle is in the haystack.
+   */
+  boolean tileInArray(ArrayList<Tile> a, Tile t) {
+    for (int i = 0; i < a.size (); i++) {
+      if (a.get(i) == t) return true;
+    }
+    return false;
+  }
+  /*
+   * Changes the heuristic.
+   */
+  void toggleHeuristic() {
+    useManhattan = !useManhattan;
+  }
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
