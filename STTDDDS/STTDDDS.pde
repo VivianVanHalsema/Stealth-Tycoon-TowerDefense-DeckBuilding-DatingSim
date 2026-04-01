@@ -75,14 +75,29 @@ void mouseWheel(MouseEvent scroll) {
 //BUTTON FUNCTIONS
 
 void PrevButtonClickCheck() { //This is what was in the mousePressed before I made it into a 
-                              //input handler. needs to be called in all screens with buttons
+       boolean somethingClicked = false;      //input handler. needs to be called in all screens with buttons
       for (int i = 0; i < buttons.size(); i++) {
         Button butt = buttons.get(i);
         if(butt.checkClicked()){
           butt.buttonClicked();
+          if (mainScreen != null){
+          somethingClicked = true;
+          uiDashboard.actorIsFocused = true;
+          } return;
+        }
+      }
+      for (int i = 0; i < actors.size(); i++) {
+        BaseActor actor = actors.get(i);
+        if(actor.checkClicked()){
+          uiDashboard.actorIsFocused = true; //If an actor is clicked, display their info on the dashboard stats tab
+          uiDashboard.currentFocusedActor = actor;
+          somethingClicked = true;
           return;
         }
       }
+      if (!somethingClicked && mainScreen != null ){ 
+      uiDashboard.actorIsFocused = false;
+      uiDashboard.currentFocusedActor = null;}
 }
 
 void ButtonUpdate(){

@@ -89,7 +89,6 @@ class BaseGuest {
      if (debuff == debuffTypes.CULTJARGON) {
        float randomCultistChance = random(0,50);
        if (randomCultistChance <= 40){ 
-         println("not swayed");
          //if smaller than 40, guest is not convinced
        continue;
        }

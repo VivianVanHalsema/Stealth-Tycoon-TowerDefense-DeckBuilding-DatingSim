@@ -4,6 +4,8 @@ class MovingDashboard extends Button {
   PVector baseLocation, overlappedLocation;
   boolean isLocked;
   boolean pIsHovered;
+  boolean actorIsFocused = false;
+  BaseActor  currentFocusedActor;
   PVector distanceToTravel;
   ArrayList<Button> attachedButtons = new ArrayList<Button>();
   ArrayList<PVector> buttonBaseLocations = new ArrayList<PVector>();
@@ -32,7 +34,7 @@ class MovingDashboard extends Button {
   }
   
   @Override void update() {
-    isHovered = (checkHovered()||Keyboard.isDown(Keyboard.Ctrl));
+    isHovered = (checkHovered()||Keyboard.isDown(Keyboard.Ctrl) || actorIsFocused);
     if(Keyboard.onDown(Keyboard.Z)) toggleDashboardLock();
     
     if (!isLocked) {
@@ -96,7 +98,6 @@ class MovingDashboard extends Button {
 }
 
 enum dashboardTabs {
-  ALL,// buttons that show on all tabs
   HIRE, //get actors
   UPGRADE,// get global upgrades
   STATS, // I think this would be useful for if each tower needs to get paid each night, so u can see ur current overhead, who's putting out the most damage etc also obvs needs a jason talk/click counter obvs
