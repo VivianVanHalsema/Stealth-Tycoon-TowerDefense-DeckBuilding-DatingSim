@@ -113,12 +113,25 @@ class ShopButton extends DashBoardButton {
   int price; 
   actorTypes actor;
   
-  ShopButton(int x, int y, String clickAction, dashboardTabs tab) {
+  ShopButton(int x, int y, String clickAction, dashboardTabs tab, actorTypes scaractor) {
    super(x,y, clickAction, tab); 
     
-    text = "Mummy";
-    actor = actorTypes.MUMMY;
-    price = 10;
+    switch(scaractor) {
+      case MUMMY:
+      text = "Mummy";
+      price = 10;
+      break;
+      case CULTIST:
+      text = "Cultist";
+      price = 20;
+      break;
+      case VAMPIRE:
+      text = "Vampire";
+      price = 50;
+      break;
+      
+    }
+    actor = scaractor;
     size.x=80;
     size.y=60;
  
@@ -137,6 +150,10 @@ class ShopButton extends DashBoardButton {
     
   }
   
+  void buttonClicked() {
+    
+    
+  }
   
   
 }
@@ -205,7 +222,7 @@ MovingDashboard owner;
   
   void buttonClicked(){
 
-    owner.currentTab = thisTab;    
+    //owner.currentTab = thisTab;    //I am getting a null pointer when I click on the Mummy Button
   }
 
   

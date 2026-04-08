@@ -131,3 +131,45 @@ static enum actorTypes
     MUMMY,
    VAMPIRE
   };
+  
+  
+  
+  
+  
+  
+  
+  class PlacingActor { //Had to go before finishing this. Basically this class is to make a small slightly 
+  //---------------------transparent version of the actor sprite attached to the mouse before then placing the actor properly
+    
+    PImage sprite; //At this point due to loading this multiple times I think I would like to make an asset manager later so we don't have to keep running loadImage
+    
+    PlacingActor(actorTypes scaractor) {
+      
+        switch(scaractor) {
+          case MUMMY:
+          sprite = loadImage("sprites/mummy.png");
+          break;
+          
+          case CULTIST:
+          sprite = loadImage("sprites/cultist.png");
+          break;
+          
+          case VAMPIRE:
+          sprite = loadImage("sprites/vampire.png");
+          break;
+        }
+      
+      
+      }
+      
+      void update() {
+      
+      }
+      
+      void draw() {
+        
+      }
+    
+    
+    
+  }
