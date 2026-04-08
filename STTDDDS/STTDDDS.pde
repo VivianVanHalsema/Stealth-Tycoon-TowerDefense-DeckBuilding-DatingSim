@@ -8,6 +8,7 @@ float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
 MovingDashboard uiDashboard;
+PlacingActor actorPlacing;
 boolean keyEnter = false;
 
 float zoom;

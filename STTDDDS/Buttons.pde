@@ -140,20 +140,45 @@ class ShopButton extends DashBoardButton {
   
   void update () {
     super.update();
-    if (currentMoney < price){
+    if (currentMoney < price && actorPlacing == null){
      clickable = false; 
-    } else clickable = true;}
-  
-  
-  void draw () {
-   super.draw(); 
+    } else clickable = true;
     
+  }
+  
+  
+  @Override void draw () {
+    if (actorPlacing == null) {
+      super.draw(); 
+    } else {
+      noStroke();
+      rectMode(CORNER);
+      textAlign(CENTER);
+     
+      if (isHovered == true){ 
+        fill(255);
+        rect(position.x-3,position.y-3,size.x+6,size.y+6, 8);
+      }
+      if (clickable == false) {fill(80); }
+      else fill(200);
+     rect(position.x,position.y,size.x,size.y,8);
+     fill(10);
+     textSize(20);
+     text("Undo",position.x +size.x/2,position.y+size.y/2+5);  
+    
+    }
   }
   
   void buttonClicked() {
+    if (actorPlacing == null) {
+      currentMoney -= price; //Spend Money on click
+      actorPlacing = new PlacingActor(actor, true);
     
-    
-  }
+    } else if (actorPlacing != null && actorPlacing.purchasing == true) {
+      currentMoney += price; //cancel purchase, regain the money spent
+      actorPlacing = null;
+    }
+  } //ButtonClick End
   
   
 }

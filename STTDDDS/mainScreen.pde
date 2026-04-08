@@ -51,7 +51,7 @@ class MainScreen{
   
   //Dashboard button initializations go here!!!!
  // moneySystem = new MoneySystem();
-  mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE);
+  mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
   buttons.add(mummyButton);
   
   //Scare Actor Initialization goes here!!
@@ -84,7 +84,37 @@ class MainScreen{
     
     if (Mouse.onDown(Mouse.LEFT)) {
       PrevButtonClickCheck();
-    }
+      
+      if (actorPlacing != null) {
+        if (actorPlacing.purchasedThisFrame == false) {
+          Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
+          Tile tile = level.getTile(g);
+          PVector placingPosition = tile.getCenter();
+          
+          
+          switch(actorPlacing.actor) {
+            case MUMMY:
+              Mummy mummyToAdd;
+              mummyToAdd = new Mummy(int(placingPosition.x), int(placingPosition.y));
+              actors.add(mummyToAdd);
+            break;
+            
+            case CULTIST:
+            
+            break;
+            
+            case VAMPIRE:
+            
+            break;
+            
+            
+            
+            
+          } //End switch case
+          actorPlacing = null;
+        } //end if not purchased this frame
+      } //actor placing != null
+    } // mouse click!!
     
     if(Mouse.onDown(Mouse.RIGHT)) {
       savedMousePosForCamera = new PVector(camera.x + mouseX, camera.y + mouseY);
@@ -108,6 +138,10 @@ class MainScreen{
     uiDashboard.update();
     
     ButtonUpdate();
+    
+    if (actorPlacing != null) {
+      actorPlacing.update();
+    }
    
    
     for (Attack p : attacks) {
@@ -170,9 +204,16 @@ class MainScreen{
     
     //-------------------------------------VFX Drawing Layer---------------------------------
     
+    
+    
+    
     popMatrix(); //No longer Following Camera
     //-------------------------------------UI DRAWING Layer---------------------------------
     //UI Dashboard is drawn here before buttons so the buttons stay visible on the dashboard
+    
+    
+    
+    
     textAlign(LEFT);
     fill (255);
     text(("$"+ floor(currentMoney)),1000, 30);
@@ -180,6 +221,10 @@ class MainScreen{
    
     ButtonDraw();
     
+    
+    if (actorPlacing != null) {
+      actorPlacing.draw();
+    }
     
 }
 
