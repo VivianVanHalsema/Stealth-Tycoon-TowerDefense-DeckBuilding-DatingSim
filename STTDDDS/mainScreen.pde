@@ -8,6 +8,7 @@ class MainScreen{
   //buttons
   Button titleButton;
   Button dashLockButton;
+  Button waveStartButton;
   TabButton hireButton;
   TabButton upgradeButton;
   TabButton statsButton;
@@ -33,6 +34,8 @@ class MainScreen{
   camera = new Camera();
     
   //Button Initializations go here!!
+  waveStartButton = new Button(20, 40, "WAVE_START");
+  buttons.add(waveStartButton);
   titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
   buttons.add(titleButton);
   dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
@@ -136,7 +139,7 @@ class MainScreen{
     camera.update();
     //UI Dashboard updates before buttons for movement and organization
     uiDashboard.update();
-    
+    waveManager.update();
     ButtonUpdate();
     
     if (actorPlacing != null) {
@@ -217,6 +220,7 @@ class MainScreen{
     textAlign(LEFT);
     fill (255);
     text(("$"+ floor(currentMoney)),1000, 30);
+    text("Current Wave :" + currWave, 20,20);
     uiDashboard.draw();
    
     ButtonDraw();

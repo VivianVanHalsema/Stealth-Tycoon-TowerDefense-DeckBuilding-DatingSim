@@ -39,6 +39,12 @@ public class Button{
     size.x=500;
     size.y=height;
     break;
+    
+    case "WAVE_START":
+    text = "Start Next Wave";
+    size.x = 160;
+    size.y = 30;
+   break; 
    }
   }
   
@@ -103,6 +109,11 @@ println (clickAction);
     break;
     case "SWITCH_TABS":
     
+    break;
+    case "WAVE_START":
+    waveManager.waveStart();
+    this.visible = false;
+    this.clickable = false;
     break;
    }
   }

@@ -41,7 +41,7 @@ class BaseGuest {
     teleportTo(gridP);
     if (health <= 0 && terrified != true) {
       terrified = true;
-      speed = 40;
+      speed = 80;
       currentMoney += 10;
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
