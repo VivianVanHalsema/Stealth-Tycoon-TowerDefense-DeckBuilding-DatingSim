@@ -203,10 +203,4 @@ MovingDashboard owner;
     
   }
   
-  void buttonClicked(){
-
-    owner.currentTab = thisTab;    
-  }
-
-  
 }

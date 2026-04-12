@@ -13,12 +13,20 @@ float targetZoom = 1;
 float maxZoom = 2;
 float minZoom = 0.5;
 
+WaveManager waveManager = new WaveManager();
+XML xml;
+XML[] waves;
+  
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
 ArrayList<Attack> attacks = new ArrayList<Attack>();
 void setup(){
 
  size(1280,720); 
+ 
+ xml = loadXML("Waves.xml"); //unfortunately it seems this MUST happen in setup
+ waves = xml.getChildren("wave");
+   
  windowTitle("Stealth Tycoon Tower Defense Deck Building Dating Sim");
  switchToTitle();
 }
