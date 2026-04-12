@@ -1,5 +1,6 @@
 class MainScreen{
   
+  
   Camera camera;
   
   PVector savedMousePosForCamera;
@@ -24,6 +25,11 @@ class MainScreen{
   
   MainScreen(){
     
+  //Pathfinding Initialization
+  TileHelper.app = new STTDDDS();
+  level = new Level();
+  pathfinder = new Pathfinder();
+    
   camera = new Camera();
     
   //Button Initializations go here!!
@@ -45,7 +51,7 @@ class MainScreen{
   
   //Dashboard button initializations go here!!!!
  // moneySystem = new MoneySystem();
-  mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE);
+  mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
   buttons.add(mummyButton);
   
   //Scare Actor Initialization goes here!!
@@ -78,7 +84,37 @@ class MainScreen{
     
     if (Mouse.onDown(Mouse.LEFT)) {
       PrevButtonClickCheck();
-    }
+      
+      if (actorPlacing != null) {
+        if (actorPlacing.purchasedThisFrame == false) {
+          Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
+          Tile tile = level.getTile(g);
+          PVector placingPosition = tile.getCenter();
+          
+          
+          switch(actorPlacing.actor) {
+            case MUMMY:
+              Mummy mummyToAdd;
+              mummyToAdd = new Mummy(int(placingPosition.x), int(placingPosition.y));
+              actors.add(mummyToAdd);
+            break;
+            
+            case CULTIST:
+            
+            break;
+            
+            case VAMPIRE:
+            
+            break;
+            
+            
+            
+            
+          } //End switch case
+          actorPlacing = null;
+        } //end if not purchased this frame
+      } //actor placing != null
+    } // mouse click!!
     
     if(Mouse.onDown(Mouse.RIGHT)) {
       savedMousePosForCamera = new PVector(camera.x + mouseX, camera.y + mouseY);
@@ -88,10 +124,10 @@ class MainScreen{
       camera.x = savedMousePosForCamera.x - mouseX;
       camera.y = savedMousePosForCamera.y - mouseY;
       
-      if (camera.x < -1000) camera.x = -1000;
-      if (camera.x > 1000) camera.x = 1000;
-      if (camera.y < -750) camera.y = -750;
-      if (camera.y > 750) camera.y = 750;
+      if (camera.x < 0) camera.x = 0;
+      if (camera.x > 320) camera.x = 320;
+      if (camera.y < 0) camera.y = 0;
+      if (camera.y > 880) camera.y = 880;
       
       camera.tx = camera.x;
       camera.ty = camera.y;
@@ -102,6 +138,10 @@ class MainScreen{
     uiDashboard.update();
     
     ButtonUpdate();
+    
+    if (actorPlacing != null) {
+      actorPlacing.update();
+    }
    
    
     for (Attack p : attacks) {
@@ -133,6 +173,17 @@ class MainScreen{
    // End Camera Code, It now is moving other objects
    
    //-----------------------------------Background Drawing Layer----------------------------
+   background(TileHelper.isHex ? 0 : 127);
+   level.draw();
+   
+   Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
+   Tile tile = level.getTile(g);
+   if (tile != null) { //This is for safety to avoid null pointers with camera stuffs
+     tile.hover = true;
+     PVector m = tile.getCenter();
+     fill(0);
+     ellipse(m.x, m.y, 5, 5);
+   }
    
    
    
@@ -153,9 +204,16 @@ class MainScreen{
     
     //-------------------------------------VFX Drawing Layer---------------------------------
     
+    
+    
+    
     popMatrix(); //No longer Following Camera
     //-------------------------------------UI DRAWING Layer---------------------------------
     //UI Dashboard is drawn here before buttons so the buttons stay visible on the dashboard
+    
+    
+    
+    
     textAlign(LEFT);
     fill (255);
     text(("$"+ floor(currentMoney)),1000, 30);
@@ -163,6 +221,10 @@ class MainScreen{
    
     ButtonDraw();
     
+    
+    if (actorPlacing != null) {
+      actorPlacing.draw();
+    }
     
 }
 

@@ -31,6 +31,7 @@ class MovingDashboard extends Button {
       buttonOverlappedLocations.add(new PVector(b.position.x + distanceToTravel.x, b.position.y + distanceToTravel.y));
     }
     
+    
   }
   
   @Override void update() {

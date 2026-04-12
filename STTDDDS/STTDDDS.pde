@@ -1,15 +1,19 @@
 import java.util.Map;
 
+  Level level;
+  Pathfinder pathfinder;
 
 ArrayList<Button> buttons = new ArrayList<Button>(); 
 float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
 MovingDashboard uiDashboard;
+PlacingActor actorPlacing;
 boolean keyEnter = false;
 
 float zoom;
-float targetZoom = 1;
+static float defaultZoom = 1;
+float targetZoom = defaultZoom;
 float maxZoom = 2;
 float minZoom = 0.5;
 
@@ -72,9 +76,9 @@ void keyReleased(){
 }
 
 void mouseWheel(MouseEvent scroll) {
-  float e = scroll.getCount(); // e is only -1, 1, or 0, so we convert into something actually usable with zoom
-  targetZoom += e * -0.1;
-  targetZoom = constrain(targetZoom, minZoom, maxZoom);
+  //float e = scroll.getCount(); // e is only -1, 1, or 0, so we convert into something actually usable with zoom
+  //targetZoom += e * -0.1;
+  //targetZoom = constrain(targetZoom, minZoom, maxZoom);
 } //Thanks you Vivian from one year ago :-)
 
 //BUTTON FUNCTIONS
