@@ -9,8 +9,12 @@ class WaveManager {
   int currWaveTime = 0;
   int maxWaveTime =  60; //60 seconds to spawn the full wave, enemies are split over 3  different times
    Wave currWaveData;
-  
-  
+   boolean lateWaveComplete = false;
+   
+   
+  ArrayList<String> queue = new ArrayList<String>();
+  float currQueueTime;
+  float queueDelay = 1;
   //wave manager  
   //store waves in a csv 31 total waves
    //each wave stores an id, or which wave it is
@@ -19,14 +23,38 @@ class WaveManager {
   //the csv stores the BASE wave. Then the base is multiplied by the entertainment score
   
   
+  /*
+  TODO (cuz im locked out LOL
+  -specify which kind of guest is spawning
+  -reset wave once all enemies are terrifed
+  -spawn middle and late waves
+  
+  
+  
+ */
+  
  WaveManager(){
    currWaveData = waves.get(currWave); //starts with wave 1
  }
  
  
  void update(){
+   
    currWaveTime --; 
- 
+   
+   
+   if (!queue.isEmpty()){
+     currQueueTime -= dt;
+     if (currQueueTime < 0){
+       currQueueTime = queueDelay;
+       spawnGuestAtStart(queue.get(0)); 
+       queue.remove(0);
+     }//queue timer
+   } else if (lateWaveComplete){// we also need to check if all enemies are gone/terrified
+     resetWave(); 
+   }//end wave check
+   
+   //hmm I have to ponder how to do the queue stuff with diff types guest
  }
   
   
@@ -35,6 +63,7 @@ class WaveManager {
   currWave ++;
   nextSetOfGuests("early");
   currWaveTime = maxWaveTime;
+  queueDelay = (1 * ((maxWave-currWave+1)/maxWave)) +.1; // queue time between spawns will decrease as the waves go on
   currWaveData = waves.get(currWave-1);
   }
   
@@ -42,22 +71,31 @@ class WaveManager {
   void nextSetOfGuests(String currentSet) {
   if(currentSet == "early") {
     for(Map.Entry<String, Integer> w : currWaveData.earlyWave.entrySet()) {
-      //spawnGuestAtStart(w.getKey()); 
+     addGuestToQueue(w.getKey());
     }
   }
   else if(currentSet == "middle") {
     for(Map.Entry<String, Integer> w : currWaveData.middleWave.entrySet()) {
-      //spawnGuestAtStart(w.getKey());
+      addGuestToQueue(w.getKey());
     }
   }
   else if(currentSet == "late") {
     for(Map.Entry<String, Integer> w : currWaveData.lateWave.entrySet()) {
-      //spawnGuestAtStart(w.getKey());
+      addGuestToQueue(w.getKey());
     }
   }
 }
   
-  void spawnGuestAtStart(String guestType){
+  void addGuestToQueue( String name){
+    //entertainment factor goes in here?? 
+    //add more if it's higher? do some modulo shit?
+    queue.add(name);
+  }
+  
+ 
+  
+  
+  void spawnGuestAtStart(String name){
      int x = level.tiles[0][0].X +(TileHelper.W)/2;
      int y = level.tiles[0][0].Y +(TileHelper.H)/2;
      BaseGuest newGuest = new BaseGuest(x,y);
@@ -67,9 +105,8 @@ class WaveManager {
   
   void resetWave(){
     
-    
-    
     currWave ++;
+    lateWaveComplete = false;
   }
   
   

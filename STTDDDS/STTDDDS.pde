@@ -17,16 +17,17 @@ float targetZoom = defaultZoom;
 float maxZoom = 2;
 float minZoom = 0.5;
 
-
 XML xml;
 XML[] wavesxml;
 int currWave =0; 
 WaveManager waveManager;
+float currentMoney = 100;
 
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
 ArrayList<Attack> attacks = new ArrayList<Attack>();
 ArrayList<Wave> waves = new ArrayList<Wave>();
+
 
 void setup(){
 

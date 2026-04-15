@@ -57,16 +57,6 @@ class MainScreen{
   mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
   buttons.add(mummyButton);
   
-  //Scare Actor Initialization goes here!!
-  cultistTest = new Cultist(400,400);
-  actors.add(cultistTest);
-  mummyTest = new Mummy(600,300);
-  actors.add(mummyTest);
-  
-  //Guest Initialization goes here!!
-  testGuest = new BaseGuest(400,330);
-  guests.add(testGuest);
-  
   //DASHBOARD INITIALIZATION
   //----Add buttons that should be attached to the dashboard and move with 
   //----it in here using the buttonsToAttachToDashboard array list like shown below

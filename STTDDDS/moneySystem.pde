@@ -1,4 +1,4 @@
-float currentMoney = 0;
+
 
 class MoneySystem {
 actorTypes actor;

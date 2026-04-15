@@ -108,7 +108,7 @@ println (clickAction);
     println("soTrue!");
     break;
     case "SWITCH_TABS":
-    
+    println("soTrue!");
     break;
     case "WAVE_START":
     waveManager.waveStart();
