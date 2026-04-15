@@ -130,7 +130,8 @@ static enum actorTypes
     CULTIST,
     MUMMY,
    VAMPIRE,
-   JASON
+   JASON,
+   WITCHDOCTOR
   };
   
   
@@ -166,8 +167,12 @@ static enum actorTypes
           case JASON: 
           sprite = loadImage("sprites/mummy.png"); //temporary until we get jason sprite in
           break;
+        
+        
+          case WITCHDOCTOR:
+          sprite = loadImage("sprites/mummy.png"); //temporary until we get Witchdoctor sprite 
+          break;
         }
-      
       
       }
       

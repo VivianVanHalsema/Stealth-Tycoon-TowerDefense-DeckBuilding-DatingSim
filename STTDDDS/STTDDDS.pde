@@ -20,7 +20,8 @@ float minZoom = 0.5;
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
 ArrayList<Attack> attacks = new ArrayList<Attack>();
-void setup(){
+ArrayList<Attack> aoeAttacks = new ArrayList<Attack>(); //This is to prevent crashing since it doesn't  like it when attacks.add is called 
+void setup(){                                           //during the main loop is alrady iterating attacks.
 
  size(1280,720); 
  windowTitle("Stealth Tycoon Tower Defense Deck Building Dating Sim");

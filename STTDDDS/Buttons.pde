@@ -133,6 +133,10 @@ class ShopButton extends DashBoardButton {
       text = "Jason";
       price = 50;
       break;
+      case WITCHDOCTOR:
+      text = "Witch Doctor";
+      price = 20;
+      break;
     }
     actor = scaractor;
     size.x=80;

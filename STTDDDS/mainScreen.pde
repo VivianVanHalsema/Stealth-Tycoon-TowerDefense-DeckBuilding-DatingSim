@@ -15,6 +15,7 @@ class MainScreen{
   //shopButtons
   ShopButton mummyButton;
   ShopButton jasonButton;
+  ShopButton witchyButton;
   
   
   BaseGuest testGuest;
@@ -58,6 +59,9 @@ class MainScreen{
   jasonButton = new ShopButton(width+50, 180, "GET_TOWER", dashboardTabs.HIRE, actorTypes.JASON);
   buttons.add(jasonButton);
   
+  witchyButton = new ShopButton(width+50, 260, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WITCHDOCTOR);
+  buttons.add(witchyButton);
+  
   //Scare Actor Initialization goes here!!
   cultistTest = new Cultist(400,400);
   actors.add(cultistTest);
@@ -75,6 +79,7 @@ class MainScreen{
   buttonsToAttachToDashboard.add(dashLockButton);
   buttonsToAttachToDashboard.add(mummyButton);
   buttonsToAttachToDashboard.add(jasonButton);
+  buttonsToAttachToDashboard.add(witchyButton);
   buttonsToAttachToDashboard.add(hireButton);
   buttonsToAttachToDashboard.add(upgradeButton);
   buttonsToAttachToDashboard.add(statsButton);
@@ -118,6 +123,12 @@ class MainScreen{
             
             break;
             
+            case WITCHDOCTOR:
+            WitchDoctor witchDoctorToAdd = new WitchDoctor(int(placingPosition.x), int(placingPosition.y));
+            actors.add(witchDoctorToAdd);
+            break;
+            
+            
             
             
             
@@ -154,10 +165,12 @@ class MainScreen{
       actorPlacing.update();
     }
    
-   
     for (Attack p : attacks) {
       p.update();
     }
+    attacks.addAll(aoeAttacks);
+    aoeAttacks.clear(); //so it doesn't accumulate
+    
     for (int i = attacks.size() - 1; i >= 0; i--) {
       if (!attacks.get(i).isAlive) {
         attacks.remove(i);
