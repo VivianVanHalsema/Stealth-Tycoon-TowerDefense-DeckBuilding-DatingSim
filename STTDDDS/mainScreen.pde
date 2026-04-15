@@ -14,6 +14,7 @@ class MainScreen{
   TabButton settingsButton;
   //shopButtons
   ShopButton mummyButton;
+  ShopButton jasonButton;
   
   
   BaseGuest testGuest;
@@ -54,6 +55,9 @@ class MainScreen{
   mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
   buttons.add(mummyButton);
   
+  jasonButton = new ShopButton(width+50, 180, "GET_TOWER", dashboardTabs.HIRE, actorTypes.JASON);
+  buttons.add(jasonButton);
+  
   //Scare Actor Initialization goes here!!
   cultistTest = new Cultist(400,400);
   actors.add(cultistTest);
@@ -70,6 +74,7 @@ class MainScreen{
   buttonsToAttachToDashboard.add(titleButton);
   buttonsToAttachToDashboard.add(dashLockButton);
   buttonsToAttachToDashboard.add(mummyButton);
+  buttonsToAttachToDashboard.add(jasonButton);
   buttonsToAttachToDashboard.add(hireButton);
   buttonsToAttachToDashboard.add(upgradeButton);
   buttonsToAttachToDashboard.add(statsButton);
@@ -104,6 +109,12 @@ class MainScreen{
             break;
             
             case VAMPIRE:
+            
+            break;
+            
+            case JASON:
+            Jason jasonToAdd = new Jason(int(placingPosition.x), int(placingPosition.y));
+            actors.add(jasonToAdd);
             
             break;
             
