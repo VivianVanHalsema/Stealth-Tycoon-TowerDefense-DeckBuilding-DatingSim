@@ -8,6 +8,7 @@ class MainScreen{
   //buttons
   Button titleButton;
   Button dashLockButton;
+  Button waveStartButton;
   TabButton hireButton;
   TabButton upgradeButton;
   TabButton statsButton;
@@ -39,7 +40,8 @@ class MainScreen{
   buttons.add(titleButton);
   dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
   buttons.add(dashLockButton);
-  
+  waveStartButton = new Button(20, 40, "WAVE_START");
+  buttons.add(waveStartButton);
   
   //Tab buttons initializations go here!!!!
   hireButton = new TabButton(width-40, (height/8*1),"SWITCH_TABS", dashboardTabs.HIRE);
@@ -62,15 +64,6 @@ class MainScreen{
   witchyButton = new ShopButton(width+50, 260, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WITCHDOCTOR);
   buttons.add(witchyButton);
   
-  //Scare Actor Initialization goes here!!
-  cultistTest = new Cultist(400,400);
-  actors.add(cultistTest);
-  mummyTest = new Mummy(600,300);
-  actors.add(mummyTest);
-  
-  //Guest Initialization goes here!!
-  testGuest = new BaseGuest(400,330);
-  guests.add(testGuest);
   
   //DASHBOARD INITIALIZATION
   //----Add buttons that should be attached to the dashboard and move with 
@@ -158,7 +151,7 @@ class MainScreen{
     camera.update();
     //UI Dashboard updates before buttons for movement and organization
     uiDashboard.update();
-    
+    waveManager.update();
     ButtonUpdate();
     
     if (actorPlacing != null) {
@@ -241,8 +234,9 @@ class MainScreen{
     textAlign(LEFT);
     fill (255);
     text(("$"+ floor(currentMoney)),1000, 30);
+    text("Current Wave :" + currWave, 20,20);
     uiDashboard.draw();
-   
+     
     ButtonDraw();
     
     

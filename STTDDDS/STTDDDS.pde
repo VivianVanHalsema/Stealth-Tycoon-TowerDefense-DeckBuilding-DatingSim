@@ -17,13 +17,67 @@ float targetZoom = defaultZoom;
 float maxZoom = 2;
 float minZoom = 0.5;
 
+float currentMoney = 100;
+
+XML xml;
+XML[] wavesxml;
+int currWave =0; 
+WaveManager waveManager;
+
+
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
 ArrayList<Attack> attacks = new ArrayList<Attack>();
-ArrayList<Attack> aoeAttacks = new ArrayList<Attack>(); //This is to prevent crashing since it doesn't  like it when attacks.add is called 
-void setup(){                                           //during the main loop is alrady iterating attacks.
+ArrayList<Attack> aoeAttacks = new ArrayList<Attack>(); //This is to prevent crashing since it doesn't  like it when attacks.add is called  during the main loop is alrady iterating attacks.
+ArrayList<Wave> waves = new ArrayList<Wave>();
 
- size(1280,720); 
+
+
+
+
+
+void setup(){                                          
+
+ size(1280,720);
+ xml = loadXML("Waves.xml");
+ wavesxml = xml.getChildren("wave");
+ 
+  for (int i = 0; i < wavesxml.length; i++) {//iterate through waves
+    Wave thisWave = new Wave();
+    
+    // Get the wave ID
+    thisWave.id = wavesxml[i].getInt("id");
+    
+    // Parse EARLY wave data
+    XML early = wavesxml[i].getChild("early");
+    if (early != null) {
+      thisWave.earlyWave.put("base", early.getInt("base"));
+      thisWave.earlyWave.put("ghost", early.getInt("ghost"));
+      thisWave.earlyWave.put("kid", early.getInt("kid"));
+      thisWave.earlyWave.put("tank", early.getInt("tank"));
+    }
+    
+    // Parse MIDDLE wave data
+    XML middle = wavesxml[i].getChild("middle");
+    if (middle != null) {
+      thisWave.middleWave.put("base", middle.getInt("base"));
+      thisWave.middleWave.put("ghost", middle.getInt("ghost"));
+      thisWave.middleWave.put("kid", middle.getInt("kid"));
+      thisWave.middleWave.put("tank", middle.getInt("tank"));
+    }
+    
+    // Parse LATE wave data
+    XML late = wavesxml[i].getChild("late");
+    if (late != null) {
+      thisWave.lateWave.put("base", late.getInt("base"));
+      thisWave.lateWave.put("ghost", late.getInt("ghost"));
+      thisWave.lateWave.put("kid", late.getInt("kid"));
+      thisWave.lateWave.put("tank", late.getInt("tank"));
+    }
+    
+    waves.add(thisWave);
+  }// i hate that we need to have this big fat paragraph in setup but I don't think we have anyway around it unless im missing something very obvious
+ waveManager = new WaveManager();
  windowTitle("Stealth Tycoon Tower Defense Deck Building Dating Sim");
  switchToTitle();
 }
@@ -54,7 +108,6 @@ void mousePressed(){
   
   Mouse.handleKeyDown(mouseButton);
   //debug
-  createNewGuest();
 }
 void mouseReleased(){
   Mouse.handleKeyUp(mouseButton);
@@ -170,11 +223,6 @@ boolean pointOnLine(float x1, float y1, float x2, float y2, float px, float py){
 
 //MISC FUNCTIONS
 
-void createNewGuest(){
-  BaseGuest newGuest = new BaseGuest(mouseX,mouseY);
-  guests.add(newGuest);
-  
-}
 
 void toggleDashboardLock() {
   if (uiDashboard != null) {
