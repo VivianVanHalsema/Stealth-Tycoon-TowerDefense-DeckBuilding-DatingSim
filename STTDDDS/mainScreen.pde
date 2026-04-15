@@ -8,13 +8,14 @@ class MainScreen{
   //buttons
   Button titleButton;
   Button dashLockButton;
-  Button waveStartButton;
   TabButton hireButton;
   TabButton upgradeButton;
   TabButton statsButton;
   TabButton settingsButton;
   //shopButtons
   ShopButton mummyButton;
+  ShopButton jasonButton;
+  ShopButton witchyButton;
   
   
   BaseGuest testGuest;
@@ -34,8 +35,6 @@ class MainScreen{
   camera = new Camera();
     
   //Button Initializations go here!!
-  waveStartButton = new Button(20, 40, "WAVE_START");
-  buttons.add(waveStartButton);
   titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
   buttons.add(titleButton);
   dashLockButton = new Button(width - 50, 0, "TOGGLE_DASHBOARD_LOCK");
@@ -57,12 +56,30 @@ class MainScreen{
   mummyButton = new ShopButton(width+50, 100,"GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
   buttons.add(mummyButton);
   
+  jasonButton = new ShopButton(width+50, 180, "GET_TOWER", dashboardTabs.HIRE, actorTypes.JASON);
+  buttons.add(jasonButton);
+  
+  witchyButton = new ShopButton(width+50, 260, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WITCHDOCTOR);
+  buttons.add(witchyButton);
+  
+  //Scare Actor Initialization goes here!!
+  cultistTest = new Cultist(400,400);
+  actors.add(cultistTest);
+  mummyTest = new Mummy(600,300);
+  actors.add(mummyTest);
+  
+  //Guest Initialization goes here!!
+  testGuest = new BaseGuest(400,330);
+  guests.add(testGuest);
+  
   //DASHBOARD INITIALIZATION
   //----Add buttons that should be attached to the dashboard and move with 
   //----it in here using the buttonsToAttachToDashboard array list like shown below
   buttonsToAttachToDashboard.add(titleButton);
   buttonsToAttachToDashboard.add(dashLockButton);
   buttonsToAttachToDashboard.add(mummyButton);
+  buttonsToAttachToDashboard.add(jasonButton);
+  buttonsToAttachToDashboard.add(witchyButton);
   buttonsToAttachToDashboard.add(hireButton);
   buttonsToAttachToDashboard.add(upgradeButton);
   buttonsToAttachToDashboard.add(statsButton);
@@ -100,6 +117,18 @@ class MainScreen{
             
             break;
             
+            case JASON:
+            Jason jasonToAdd = new Jason(int(placingPosition.x), int(placingPosition.y));
+            actors.add(jasonToAdd);
+            
+            break;
+            
+            case WITCHDOCTOR:
+            WitchDoctor witchDoctorToAdd = new WitchDoctor(int(placingPosition.x), int(placingPosition.y));
+            actors.add(witchDoctorToAdd);
+            break;
+            
+            
             
             
             
@@ -129,17 +158,19 @@ class MainScreen{
     camera.update();
     //UI Dashboard updates before buttons for movement and organization
     uiDashboard.update();
-    waveManager.update();
+    
     ButtonUpdate();
     
     if (actorPlacing != null) {
       actorPlacing.update();
     }
    
-   
     for (Attack p : attacks) {
       p.update();
     }
+    attacks.addAll(aoeAttacks);
+    aoeAttacks.clear(); //so it doesn't accumulate
+    
     for (int i = attacks.size() - 1; i >= 0; i--) {
       if (!attacks.get(i).isAlive) {
         attacks.remove(i);
@@ -210,7 +241,6 @@ class MainScreen{
     textAlign(LEFT);
     fill (255);
     text(("$"+ floor(currentMoney)),1000, 30);
-    text("Current Wave :" + currWave, 20,20);
     uiDashboard.draw();
    
     ButtonDraw();

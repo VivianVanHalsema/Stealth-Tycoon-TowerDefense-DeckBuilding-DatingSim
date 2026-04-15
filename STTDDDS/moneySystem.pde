@@ -4,6 +4,8 @@ class MoneySystem {
 actorTypes actor;
   MoneySystem (){
    ///uhh i guess i didn't think about what this meant, buying towers? lets call it buying towers for now
+   
+   //it also probably needs to be for buying upgrades and stuff too. -J Leonard :3
   }
   
  void update() {
