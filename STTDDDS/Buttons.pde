@@ -40,6 +40,12 @@ public class Button{
     size.y=height;
     break;
     
+    case "SWITCH_TO_BREAKROOM":
+    text = "Break Room";
+    size.x = 140;
+    size.y = 60;
+    break;
+    
     case "WAVE_START":
     text = "Start Next Wave";
     size.x = 160;
@@ -99,6 +105,10 @@ println (clickAction);
     
     case "SWITCH_TITLE":
     switchToTitle();
+    break;
+    
+    case "SWITCH_TO_BREAKROOM":
+    switchToBreakRoom();
     break;
     
     case "TOGGLE_DASHBOARD_LOCK":

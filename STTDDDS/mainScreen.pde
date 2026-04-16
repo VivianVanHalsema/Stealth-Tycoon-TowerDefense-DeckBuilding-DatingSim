@@ -9,6 +9,7 @@ class MainScreen{
   Button titleButton;
   Button dashLockButton;
   Button waveStartButton;
+  Button breakRoomButton;
   TabButton hireButton;
   TabButton upgradeButton;
   TabButton statsButton;
@@ -42,6 +43,9 @@ class MainScreen{
   buttons.add(dashLockButton);
   waveStartButton = new Button(20, 40, "WAVE_START");
   buttons.add(waveStartButton);
+  breakRoomButton = new Button(20, 80, "SWITCH_TO_BREAKROOM");
+  buttons.add(breakRoomButton);
+  
   
   //Tab buttons initializations go here!!!!
   hireButton = new TabButton(width-40, (height/8*1),"SWITCH_TABS", dashboardTabs.HIRE);
