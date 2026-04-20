@@ -11,6 +11,8 @@ MovingDashboard uiDashboard;
 PlacingActor actorPlacing;
 boolean keyEnter = false;
 
+BreakRoom breakRoom;
+
 float zoom;
 static float defaultZoom = 1;
 float targetZoom = defaultZoom;
@@ -95,6 +97,10 @@ void draw(){
     mainScreen.update();
     if(mainScreen != null) mainScreen.draw(); 
   }
+  else if (breakRoom != null) {
+   breakRoom.update();
+   if(breakRoom != null) breakRoom.draw();
+  }
   
   
   
@@ -135,23 +141,24 @@ void PrevButtonClickCheck() { //This is what was in the mousePressed before I ma
         Button butt = buttons.get(i);
         if(butt.checkClicked()){
           butt.buttonClicked();
-          if (mainScreen != null){
-          somethingClicked = true;
-          uiDashboard.actorIsFocused = true;
+          
+          if (mainScreen != null && uiDashboard != null) { //added uiDashboard !=null here because without it, clicking any button from
+           somethingClicked = true;                        //the title screen crashes bc uiDashboard technically doesn't exist yet, 
+           uiDashboard.actorIsFocused = true;              //actor focusing logic still works the same tho, its just ui dashboard junk. 
           } return;
         }
       }
       for (int i = 0; i < actors.size(); i++) {
-        BaseActor actor = actors.get(i);
-        if(actor.checkClicked()){
-          uiDashboard.actorIsFocused = true; //If an actor is clicked, display their info on the dashboard stats tab
-          uiDashboard.currentFocusedActor = actor;
+        BaseActor actor = actors.get(i);//during a wave uiDashboard is always valid so these lines behave the same as before, 
+        if(actor.checkClicked()){       //the null check is only if the code somehow ever gets reached outside of mainScreen. so its prolly not important :P
+          if(uiDashboard != null)uiDashboard.actorIsFocused = true; //If an actor is clicked, display their info on the dashboard stats tab
+          if(uiDashboard != null)uiDashboard.currentFocusedActor = actor;
           somethingClicked = true;
           return;
         }
       }
-      if (!somethingClicked && mainScreen != null ){ 
-      uiDashboard.actorIsFocused = false;
+      if (!somethingClicked && mainScreen != null && uiDashboard != null ){ //pretty much same as before, just here again in case it gets called from a 
+      uiDashboard.actorIsFocused = false;                                   //screen without a dahsboard or something. 
       uiDashboard.currentFocusedActor = null;}
 }
 
@@ -177,6 +184,7 @@ void switchScreens(){
   
 titleScreen = null;
 mainScreen = null;
+breakRoom = null;
 
 for (int i = buttons.size() - 1; i >= 0; i--) {
     buttons.remove(i);
@@ -193,7 +201,13 @@ switchScreens();
 mainScreen = new MainScreen();
 }
 
+void switchToBreakRoom() {
+ switchScreens();
+ breakRoom = new BreakRoom();
+}
+
 //DELTATIME
+//D...DELTA RUNE??!!
 void calcDeltaTime() {
   float currTime = millis();
   dt = (currTime - prevTime) / 1000.0;
