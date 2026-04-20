@@ -97,7 +97,7 @@ class MainScreen{
           Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
           Tile tile = level.getTile(g);
           PVector placingPosition = tile.getCenter();
-          level.setTile(g, 1);
+          level.setTile(g, 2);
           switch(actorPlacing.actor) {
             case MUMMY:
               Mummy mummyToAdd;

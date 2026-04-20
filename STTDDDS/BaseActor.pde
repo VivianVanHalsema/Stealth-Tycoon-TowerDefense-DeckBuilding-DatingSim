@@ -116,7 +116,7 @@ void lookAtFrontGuestInRange(){
   if (diff > PI) diff -= TWO_PI;
   if (diff < -PI) diff += TWO_PI;
   
-  angle = angle +diff * .3;
+  angle = angle +diff * .6;
   }
   
   

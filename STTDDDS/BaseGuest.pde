@@ -6,7 +6,7 @@ class BaseGuest {
   /*
     I had to change how speed works when implementing pathfinding.
   */
-  float speed = 1; 
+  float speed = 4; //Max Speed value is 8, keep in mind that on terrified, it doubles. basically 4 is base max
   
   int health = 100;
   color baseColor,currentColor;
@@ -43,7 +43,7 @@ class BaseGuest {
   void update(){
     if (health <= 0 && terrified != true) {
       terrified = true;
-      speed = 1;
+      speed *= 2;
       currentMoney += 10;
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
@@ -208,7 +208,7 @@ class BaseGuest {
   
   void updateMove() {
     
-    float snapThreshold = 1;
+    float snapThreshold = 3.5;
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, position);
     PVector normDiff = diff.normalize();
@@ -216,8 +216,8 @@ class BaseGuest {
     position.x += normDiff.x * speed;
     position.y += normDiff.y * speed;
     
-    if (abs(diff.x) < snapThreshold) position.x = pixlT.x; //Currently dealing with an issue with speed. I will update this tomorrow but it likely has to deal with stuff down here if folks wanna take a peek
-    if (abs(diff.y) < snapThreshold) position.y = pixlT.y;
+    if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; //Currently dealing with an issue with speed. I will update this tomorrow but it likely has to deal with stuff down here if folks wanna take a peek
+    if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
 
     if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
   }
