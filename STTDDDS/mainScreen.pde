@@ -140,10 +140,10 @@ class MainScreen{
       camera.x = savedMousePosForCamera.x - mouseX;
       camera.y = savedMousePosForCamera.y - mouseY;
       
-      if (camera.x < 0) camera.x = 0;
-      if (camera.x > 320) camera.x = 320;
-      if (camera.y < 0) camera.y = 0;
-      if (camera.y > 880) camera.y = 880;
+      if (camera.x < -75) camera.x = -75;
+      if (camera.x > -5) camera.x = -5;
+      if (camera.y < -50) camera.y = -50;
+      if (camera.y > 530) camera.y = 530;
       
       camera.tx = camera.x;
       camera.ty = camera.y;
