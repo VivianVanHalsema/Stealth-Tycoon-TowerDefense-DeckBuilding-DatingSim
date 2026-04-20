@@ -26,11 +26,12 @@ class WaveManager {
   
  WaveManager(){
    currWaveData = waves.get(currWave); //starts with wave 1
+
  }
  
  
  void update(){
-   if (waveActive){
+   if (waveActive && (currWave <= maxWave)){
    currWaveTime -=dt; 
    
    //checking when to spawn next queue guest and when to end wave
@@ -74,13 +75,13 @@ class WaveManager {
   
   //triggered by button press, and from there the wave manager is self contained until the next wave needs to start
   void waveStart(){
-  println("wave is starting");
   waveActive = true;
   currWave ++;
   nextSetOfGuests("early");
   currWaveTime = maxWaveTime;
   queueDelay = 1.1 - ((currWave-1)/(maxWave -1)); // queue time between spawns will decrease as the waves go on
   currWaveData = waves.get(currWave-1);
+  println("wave " + currWave + " is starting");
   }
   
   //triggered depending on wave time,, we have 3 types, early who show up when it starts, middle who show up at halfway and late whoshow up near the end
