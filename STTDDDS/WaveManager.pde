@@ -7,11 +7,12 @@ class WaveManager {
   
   //how long into the wave are we
   int currWaveTime = 0;
-  int maxWaveTime =  60; //60 seconds to spawn the full wave, enemies are split over 3  different times
+  int maxWaveTime =  6000; //60 seconds to spawn the full wave, enemies are split over 3  different times
    Wave currWaveData;
+   boolean waveActive = false;
    boolean lateWaveComplete = false;
-   
-   
+   boolean lateWaveStarted = false;
+   boolean middleWaveStarted = false;
   ArrayList<String> queue = new ArrayList<String>();
   float currQueueTime;
   float queueDelay = 1;
@@ -23,36 +24,49 @@ class WaveManager {
   //the csv stores the BASE wave. Then the base is multiplied by the entertainment score
   
   
-  /*
-  TODO (cuz im locked out LOL
-  -specify which kind of guest is spawning
-  -reset wave once all enemies are terrifed
-  -spawn middle and late waves
-  
-  
-  
- */
-  
  WaveManager(){
    currWaveData = waves.get(currWave); //starts with wave 1
  }
  
  
  void update(){
+   if (waveActive){
+   currWaveTime -=dt; 
    
-   currWaveTime --; 
-   
-   
+   //checking when to spawn next queue guest and when to end wave
    if (!queue.isEmpty()){
      currQueueTime -= dt;
      if (currQueueTime < 0){
        currQueueTime = queueDelay;
+       println("Spawning next guest from queue with " + currWaveTime + " left on wave timer");
        spawnGuestAtStart(queue.get(0)); 
        queue.remove(0);
      }//queue timer
-   } else if (lateWaveComplete){// we also need to check if all enemies are gone/terrified
-     resetWave(); 
-   }//end wave check
+   } else{// we also need to check if all enemies are gone/terrified
+   //so if the last part of the wave has started AND the queue is empty, we can check the current guest on the board. If there is none or they are all terrified, this wave can reset
+   boolean allTerrified = true;
+   for (BaseGuest guest : guests) {
+      if (guest.terrified == false){
+       allTerrified = false;
+       break;
+      }
+   }//check if all currently existing guests are terrified
+   
+    if ((!middleWaveStarted && currWaveTime <= (maxWaveTime/2)) ||(!middleWaveStarted && allTerrified) ){ // we need to check if its time to start the middle wave
+   println("middle Wave is Starting at " + currWaveTime);
+      nextSetOfGuests("middle");
+     middleWaveStarted = true;
+   }else if ((!lateWaveStarted && currWaveTime <= ((maxWaveTime/2) - maxWaveTime/4)) || (!lateWaveStarted && allTerrified) ){ // check if its time to start middle of wave
+      println("late Wave is Starting at " + currWaveTime);
+      nextSetOfGuests("late");
+     lateWaveStarted = true;
+     
+   }else if(lateWaveStarted && allTerrified) {
+    println("all guest have been scared! Wave " + currWave + " is complete!");
+     resetWave();
+   }
+   }
+   }
    
    //hmm I have to ponder how to do the queue stuff with diff types guest
  }
@@ -60,10 +74,12 @@ class WaveManager {
   
   //triggered by button press, and from there the wave manager is self contained until the next wave needs to start
   void waveStart(){
+  println("wave is starting");
+  waveActive = true;
   currWave ++;
   nextSetOfGuests("early");
   currWaveTime = maxWaveTime;
-  queueDelay = (1 * ((maxWave-currWave+1)/maxWave)) +.1; // queue time between spawns will decrease as the waves go on
+  queueDelay = 1.1 - ((currWave-1)/(maxWave -1)); // queue time between spawns will decrease as the waves go on
   currWaveData = waves.get(currWave-1);
   }
   
@@ -98,15 +114,37 @@ class WaveManager {
   void spawnGuestAtStart(String name){
      int x = level.tiles[0][0].X +(TileHelper.W)/2;
      int y = level.tiles[0][0].Y +(TileHelper.H)/2;
-     BaseGuest newGuest = new BaseGuest(x,y);
+     BaseGuest newGuest;
+     switch(name){
+       
+     case("base"): //sorry this is incosistent with our out case string formatting it is too late (aka im too lazy to fix it)
+     newGuest = new BaseGuest(x,y);
+     break;
+     case("kid"):
+     newGuest = new BaseGuest(x,y); ///REPLACE WHEN REAL
+     break;
+     case("ghost"):
+     newGuest = new BaseGuest(x,y);///REPLACE WHEN REAL
+     break;
+     case("tank"):
+     newGuest = new BaseGuest(x,y);///REPLACE WHEN REAL
+     break;
+     default:
+     newGuest = new BaseGuest(x,y); //make base guest if not prev
+     break;
+     }//end switch case
      guests.add(newGuest);
    }
      
   
   void resetWave(){
     
-    currWave ++;
-    lateWaveComplete = false;
+   mainScreen.waveStartButton.visible = true;
+   mainScreen.waveStartButton.clickable = true;
+   waveActive = false;
+   lateWaveComplete = false;
+   lateWaveStarted = false;
+   middleWaveStarted = false;
   }
   
   
