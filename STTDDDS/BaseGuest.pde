@@ -3,7 +3,11 @@ class BaseGuest {
   PVector position = new PVector();
   int size= 40;
   float scareRange;
-  float speed = 20;
+  /*
+    I had to change how speed works when implementing pathfinding.
+  */
+  float speed = 1; 
+  
   int health = 100;
   color baseColor,currentColor;
   boolean terrified = false;
@@ -12,11 +16,8 @@ class BaseGuest {
   PImage bandages;
   
   Point gridP = new Point(); // current position
-  Point gridT = new Point(); // target position (pathfinding goal)
+  Point gridT = new Point(15, 14); // target position (pathfinding goal)
   //debuff variables ENUMS BELOW  BASE GUEST CLASS
-  
-  // PIXEL-SPACE COORDINATES:
-  PVector pixlP = new PVector(); // current pixel position
 
   ArrayList<Tile> path;    // the path to follow to get to the target position
   boolean findPath = false;
@@ -31,21 +32,26 @@ class BaseGuest {
   //we discuss how we want to handle debuffs
   BaseGuest(int x, int y){
   bandages = loadImage("sprites/bandages.png");
+  teleportTo(gridP);
   position.x = x;
   position.y = y;
   baseColor = color(100,100,100);
   currentColor = baseColor;
+  setTargetPosition(new Point(14, 15));
   }
   
   void update(){
-    teleportTo(gridP);
     if (health <= 0 && terrified != true) {
       terrified = true;
-      speed = 80;
+      speed = 1;
       currentMoney += 10;
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
-    position.y += speed*dt *slowness;
+    //position.y += speed*dt *slowness;
+    
+    if (findPath) findPathAndTakeNextStep();
+    updateMove();
+    
     
     
     for(Map.Entry<debuffTypes, Float> debuff : currentDebuffs.entrySet()){
@@ -175,7 +181,7 @@ class BaseGuest {
     if (tile != null) {
       this.gridP = gridP.get();
       this.gridT = gridP.get();
-      this.pixlP = tile.getCenter();
+      this.position = tile.getCenter();
     }
   }
     
@@ -204,15 +210,16 @@ class BaseGuest {
     
     float snapThreshold = 1;
     PVector pixlT = level.getTileCenterAt(gridP);
-    PVector diff = PVector.sub(pixlT, pixlP);
+    PVector diff = PVector.sub(pixlT, position);
+    PVector normDiff = diff.normalize();
     
-    pixlP.x += diff.x * .2;
-    pixlP.y += diff.y * .2;
+    position.x += normDiff.x * speed;
+    position.y += normDiff.y * speed;
     
-    if (abs(diff.x) < snapThreshold) pixlP.x = pixlT.x;
-    if (abs(diff.y) < snapThreshold) pixlP.y = pixlT.y;
+    if (abs(diff.x) < snapThreshold) position.x = pixlT.x; //Currently dealing with an issue with speed. I will update this tomorrow but it likely has to deal with stuff down here if folks wanna take a peek
+    if (abs(diff.y) < snapThreshold) position.y = pixlT.y;
 
-    if (pixlT.x == pixlP.x && pixlT.y == pixlP.y) findPath = true;
+    if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
   }
   
 }
@@ -232,7 +239,7 @@ static enum debuffTypes
   
   class Pathfinder {
 
-  boolean useManhattan = false;
+  boolean useManhattan = true;
   boolean useDiagonals = false;
   ArrayList<Tile> opened = new ArrayList<Tile>(); // collection of tiles we can use to solve the algorithm
   ArrayList<Tile> closed = new ArrayList<Tile>(); // collection of tiles that we've ruled out as NOT part of the solution

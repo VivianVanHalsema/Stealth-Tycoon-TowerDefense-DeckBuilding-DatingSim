@@ -97,8 +97,7 @@ class MainScreen{
           Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
           Tile tile = level.getTile(g);
           PVector placingPosition = tile.getCenter();
-          
-          
+          level.setTile(g, 1);
           switch(actorPlacing.actor) {
             case MUMMY:
               Mummy mummyToAdd;
@@ -125,7 +124,9 @@ class MainScreen{
             actors.add(witchDoctorToAdd);
             break;
             
+            case WALL:
             
+            break;
             
             
             
@@ -143,10 +144,10 @@ class MainScreen{
       camera.x = savedMousePosForCamera.x - mouseX;
       camera.y = savedMousePosForCamera.y - mouseY;
       
-      if (camera.x < 0) camera.x = 0;
-      if (camera.x > 320) camera.x = 320;
-      if (camera.y < 0) camera.y = 0;
-      if (camera.y > 880) camera.y = 880;
+      if (camera.x < -75) camera.x = -75;
+      if (camera.x > -5) camera.x = -5;
+      if (camera.y < -50) camera.y = -50;
+      if (camera.y > 530) camera.y = 530;
       
       camera.tx = camera.x;
       camera.ty = camera.y;

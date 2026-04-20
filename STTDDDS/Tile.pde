@@ -2,8 +2,8 @@ static class TileHelper {
 
   static STTDDDS app;
   static boolean isHex = false;
-  final static int W = 100;
-  final static int H = 100;
+  final static int W = 75;
+  final static int H = 75;
   final static int halfW = W / 2;
   final static int halfH = H / 2;
 
@@ -16,6 +16,8 @@ static class TileHelper {
     return v;
   }
   static Point pixelToGrid(PVector v, PVector camera, float zoom) {
+    
+    //Hours Wasted here: 5
     
     
     //The comments are from me experimenting with different versions of getting the scale transform to work with the grid

@@ -1,4 +1,4 @@
-public class Button{
+public class Button {
   PVector position = new PVector();
   PVector size = new PVector();
   String text;
@@ -158,6 +158,10 @@ class ShopButton extends DashBoardButton {
       text = "Witch Doctor";
       price = 20;
       break;
+      case WALL:
+      text = "Wall";
+      price = 5;
+      
     }
     actor = scaractor;
     size.x=80;
