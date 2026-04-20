@@ -4,12 +4,16 @@ class BreakRoom {
  Button backButton;
  
  //room layouts gonna be smaller than the main level since it doesn't need to be that big.
- //im thinking like 6 x 5 rows and columns
+ //im thinking like 6 x 6 rows and columns, will test later to see if I feel differnt
  int tileSize = 64;
  int roomCols = 6;
  int roomRows = 6;
  int roomOffsetX;
  int roomOffsetY;
+ 
+ //new array list for actors in the breakroom to represent their sprites that show up
+ //instead of making a new tab im leaving them here in breakRoom 
+ ArrayList<BreakRoomActor> breakRoomActors = new ArrayList<BreakRoomActor>();
  
  BreakRoom() {
   //center room on the screen here
@@ -18,6 +22,48 @@ class BreakRoom {
   
   backButton = new Button(20, 20, "SWITCH_MAIN");
   buttons.add(backButton);
+  
+  //basically when the room is created, it scans the global actors list and builds one
+  //entry per each unique actor type the player has bought (not each active tower of the same type)
+  //positions are gonna be randomly within the walls of the break room.
+  buildActorList();
+ }
+ 
+ void buildActorList() {
+   
+  //scans global actors list and collects one of each type and loads its sprite. 
+  breakRoomActors.clear();
+  
+  //tracks which types that are already added so it only has one per type instead of multiple
+  //(this ones gonna be hard to test rn since we're short on sprites for each actor lol)
+  ArrayList<actorTypes> seen = new ArrayList<actorTypes>();
+  
+  for (BaseActor actor : actors) {
+   actorTypes type = getActorType(actor);
+   if (type == null) continue; //skips unknown subclasses
+   if (seen.contains(type)) continue; //already has this type so it moves on
+   seen.add(type);
+   
+   int floorCol = int(random(1, roomCols - 1));
+   int floorRow = int(random(1, roomRows - 1));
+   
+   float px = roomOffsetX + floorCol * tileSize + tileSize / 2;
+   float py = roomOffsetY + floorRow * tileSize + tileSize / 2;
+   
+   //reuses same sprite so it doesn't gotta loadImage
+   breakRoomActors.add(new BreakRoomActor(type, actor.sprite, px, py));
+  }
+ } 
+ 
+ //basically figures out which actorTypes enum value matches the given baseActor instance.
+ actorTypes getActorType(BaseActor actor) {
+  if (actor instanceof Mummy) return actorTypes.MUMMY;
+  if (actor instanceof Jason) return actorTypes.JASON;
+  if (actor instanceof WitchDoctor) return actorTypes.WITCHDOCTOR;
+  if (actor instanceof Cultist) return actorTypes.CULTIST;
+  //add here if we add more classes
+  return null;
+    
  }
  
  void update() {
@@ -30,9 +76,12 @@ class BreakRoom {
 void draw() {
  //dark background cuz spoopy
  background(35, 25,40);
+ drawBreakRoomTiles();  //walls and floor stuff
  
- //walls and floor stuff
- drawBreakRoomTiles();
+ //draws each actors sprite, draw AFTER tiles so it appears on top instead of behindj
+ for (BreakRoomActor g : breakRoomActors) {
+   g.draw();
+ }
  
  //Room Title
  fill(220, 180, 255);
@@ -121,4 +170,24 @@ void drawCandle(float x, float y) {
 
     rectMode(CORNER);
   }
+}
+
+//just a container that holds everything the break room needs to know for the actor spawns
+//not meant to be too intense, no update logic or pathfinding or nothing, they don't need functionality here lol
+class BreakRoomActor {
+ actorTypes type;
+ PImage sprite;
+ float x, y;
+ 
+ BreakRoomActor(actorTypes type, PImage sprite, float x, float y) {
+  this.type = type;
+  this.sprite = sprite; 
+  this.x = x; 
+  this.y = y;
+ }
+ 
+ void draw() {
+  imageMode(CENTER);
+  image(sprite, x, y, 45, 45);
+ }
 }
