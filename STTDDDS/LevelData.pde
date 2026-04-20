@@ -6,7 +6,7 @@ static class LevelData {
   static int[][] Level1 =
   { //16 Rows 16 Columns
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //5
@@ -62,6 +62,18 @@ class Level {
     if (tile == null) return false;
     return tile.isPassable();
   }
+  
+  // Added for pathfinding support
+  void setTile(int X, int Y, int newValue) { //if we are on the grid, set the value
+    if (X < 0 || Y < 0) return; //are we off the grid to the left or up?
+    if (Y >= tiles.length || X >= tiles[0].length) return; //are we off the grid to the right or down?
+    level[Y][X] = newValue; 
+    reloadLevel(); //reload level for changes to take effect
+  }
+  void setTile(Point p, int newValue) {
+    setTile(p.x, p.y, newValue);
+  }
+  
 
   void reloadLevel() {
     loadLevel(level);
@@ -70,7 +82,7 @@ class Level {
   void loadLevel(int[][] layout) {
 
     level = layout; // cache the layout (to enable reloading levels)
-
+    
     /*
     TODO: Build the level from the level data.
      

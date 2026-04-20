@@ -129,9 +129,10 @@ static enum actorTypes
   {
     CULTIST,
     MUMMY,
-   VAMPIRE,
-   JASON,
-   WITCHDOCTOR
+    VAMPIRE,
+    JASON,
+    WITCHDOCTOR,
+    WALL
   };
   
   
@@ -140,8 +141,7 @@ static enum actorTypes
   
   
   
-  class PlacingActor { //Had to go before finishing this. Basically this class is to make a small slightly 
-  //---------------------transparent version of the actor sprite attached to the mouse before then placing the actor properly
+  class PlacingActor { 
     boolean purchasedThisFrame;
     boolean purchasing;
     actorTypes actor;
@@ -171,6 +171,10 @@ static enum actorTypes
         
           case WITCHDOCTOR:
           sprite = loadImage("sprites/mummy.png"); //temporary until we get Witchdoctor sprite 
+          break;
+          
+          case WALL:
+          sprite = loadImage("sprites/mummy.png"); //temporary until we get Wall sprite
           break;
         }
       
