@@ -165,12 +165,12 @@ static enum actorTypes
           break;
           
           case JASON: 
-          sprite = loadImage("sprites/mummy.png"); //temporary until we get jason sprite in
+          sprite = loadImage("sprites/jason.png"); //temporary until we get jason sprite in
           break;
         
         
           case WITCHDOCTOR:
-          sprite = loadImage("sprites/mummy.png"); //temporary until we get Witchdoctor sprite 
+          sprite = loadImage("sprites/witchdoctor.png"); //temporary until we get Witchdoctor sprite 
           break;
           
           case WALL:

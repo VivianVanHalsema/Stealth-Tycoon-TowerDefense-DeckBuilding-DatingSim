@@ -5,6 +5,9 @@ class MainScreen{
   
   PVector savedMousePosForCamera;
   
+  //textDisplay
+  TextDisplayComponent textDisplay;
+
   //buttons
   Button titleButton;
   Button dashLockButton;
@@ -35,6 +38,7 @@ class MainScreen{
   pathfinder = new Pathfinder();
     
   camera = new Camera();
+  textDisplay = new TextDisplayComponent(20,height-20);
     
   //Button Initializations go here!!
   titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
@@ -157,6 +161,7 @@ class MainScreen{
     //UI Dashboard updates before buttons for movement and organization
     uiDashboard.update();
     waveManager.update();
+    textDisplay.update();
     ButtonUpdate();
     
     if (actorPlacing != null) {
@@ -241,7 +246,7 @@ class MainScreen{
     text(("$"+ floor(currentMoney)),1000, 30);
     text("Current Wave :" + currWave, 20,20);
     uiDashboard.draw();
-     
+    textDisplay.draw();
     ButtonDraw();
     
     

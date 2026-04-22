@@ -1,9 +1,11 @@
 class WaveManager {
 
-  
-  //what wave are we on
+  /*
+  TODO
+  -when enemy reach the end of pathfinding kill them with hammers, then rate them depending on their completeness.
+  */
 
-  int maxWave = 31;
+  int maxWave = 10;
   
   //how long into the wave are we
   int currWaveTime = 0;
@@ -13,6 +15,7 @@ class WaveManager {
    boolean lateWaveComplete = false;
    boolean lateWaveStarted = false;
    boolean middleWaveStarted = false;
+   boolean allWavesComplete = true;
   ArrayList<String> queue = new ArrayList<String>();
   float currQueueTime;
   float queueDelay = 1;
@@ -65,8 +68,14 @@ class WaveManager {
    }else if(lateWaveStarted && allTerrified) {
     println("all guest have been scared! Wave " + currWave + " is complete!");
      resetWave();
+      if (mainScreen != null){
+       mainScreen.textDisplay.addNewText("Wave " + currWave + "is Complete");
+      }
    }
    }
+   }else if (currWave >= maxWave){
+     allWavesComplete =true;
+     
    }
    
    //hmm I have to ponder how to do the queue stuff with diff types guest

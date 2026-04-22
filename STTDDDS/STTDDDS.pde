@@ -1,5 +1,5 @@
 import java.util.Map;
-
+import java.util.LinkedHashMap;
   Level level;
   Pathfinder pathfinder;
 
@@ -26,6 +26,11 @@ XML[] wavesxml;
 int currWave =0; 
 WaveManager waveManager;
 
+XML xml2;
+XML[] reviewsxml;
+ArrayList<String> oneStarList = new ArrayList<String>();
+ArrayList<String> threeStarList = new ArrayList<String>();
+ArrayList<String> fiveStarList = new ArrayList<String>();
 
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
@@ -41,6 +46,44 @@ ArrayList<Wave> waves = new ArrayList<Wave>();
 void setup(){                                          
 
  size(1280,720);
+ 
+ //REVIEW XML
+ xml2 = loadXML("Reviews.xml");
+ reviewsxml = xml2.getChildren("reviews");
+if (reviewsxml.length > 0) {
+    // Get the onestar, threestar, and fivestar children
+    XML oneStarReviews = reviewsxml[0].getChild("onestar");
+    XML threeStarReviews = reviewsxml[0].getChild("threestar");
+    XML fiveStarReviews = reviewsxml[0].getChild("fivestar");
+    
+    // pasrse one-star reviews
+    if (oneStarReviews != null) {
+      XML[] oneStarReviewsXML = oneStarReviews.getChildren("review");
+      for (int i = 0; i < oneStarReviewsXML.length; i++) {
+        String review = oneStarReviewsXML[i].getContent();
+        oneStarList.add(review);
+      }
+    }
+    
+    // parse three-star reviews
+    if (threeStarReviews != null) {
+      XML[] threeStarReviewsXML = threeStarReviews.getChildren("review");
+      for (int i = 0; i < threeStarReviewsXML.length; i++) {
+        String review = threeStarReviewsXML[i].getContent();
+        threeStarList.add(review);
+      }
+    }
+    
+    // parse five-star reviews
+    if (fiveStarReviews != null) {
+      XML[] fiveStarReviewsXML = fiveStarReviews.getChildren("review");
+      for (int i = 0; i < fiveStarReviewsXML.length; i++) {
+        String review = fiveStarReviewsXML[i].getContent();
+        fiveStarList.add(review);
+      }
+    }
+}
+ ///WAVE XML
  xml = loadXML("Waves.xml");
  wavesxml = xml.getChildren("wave");
  
