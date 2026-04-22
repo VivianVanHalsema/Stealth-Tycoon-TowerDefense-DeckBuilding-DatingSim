@@ -3,7 +3,7 @@ class WaveManager {
   
   //what wave are we on
 
-  int maxWave = 31;
+  int maxWave = 10;
   
   //how long into the wave are we
   int currWaveTime = 0;
@@ -16,6 +16,7 @@ class WaveManager {
   ArrayList<String> queue = new ArrayList<String>();
   float currQueueTime;
   float queueDelay = 1;
+  boolean allWavesComplete = true;
   //wave manager  
   //store waves in a csv 31 total waves
    //each wave stores an id, or which wave it is
@@ -65,8 +66,14 @@ class WaveManager {
    }else if(lateWaveStarted && allTerrified) {
     println("all guest have been scared! Wave " + currWave + " is complete!");
      resetWave();
+     if (mainScreen != null){
+       mainScreen.textDisplay.addNewText("Wave " + currWave + "is Complete");
+      }
    }
    }
+   }else if (currWave >= maxWave){
+     allWavesComplete =true;
+     
    }
    
    //hmm I have to ponder how to do the queue stuff with diff types guest
