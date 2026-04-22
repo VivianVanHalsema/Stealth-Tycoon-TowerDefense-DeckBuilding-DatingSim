@@ -40,7 +40,7 @@ class MainScreen{
     
   camera = new Camera();
   textDisplay = new TextDisplayComponent(20,height-20);  
-  //background = loadImage("sprites/background.png");
+  background = loadImage("sprites/background.png");
   //background.resize(1300, 1300);
     
   //Button Initializations go here!!
@@ -204,7 +204,7 @@ class MainScreen{
    
    //-----------------------------------Background Drawing Layer----------------------------
    background(64, 0, 64);
-   image(background, -50, -50);
+   //image(background, -50, -50);
    level.draw();
    
    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);

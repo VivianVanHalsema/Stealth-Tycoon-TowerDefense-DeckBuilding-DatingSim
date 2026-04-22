@@ -6,9 +6,9 @@ class BaseGuest {
   /*
     I had to change how speed works when implementing pathfinding.
   */
-  float speed = 4; //Max Speed value is 8, keep in mind that on terrified, it doubles. basically 4 is base max
-  
-  int health = 100;
+  float speed = 2; //Max Speed value is 8, keep in mind that on terrified, it doubles. basically 4 is base max
+   int maxHealth = 100; //change this in children not health itself
+  int health = maxHealth;
   color baseColor,currentColor;
   boolean terrified = false;
   boolean isCultist = false;
@@ -45,6 +45,7 @@ class BaseGuest {
       terrified = true;
       speed *= 2;
       currentMoney += 10;
+      addReviewToDisplay();
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
@@ -75,6 +76,28 @@ class BaseGuest {
     
   }
   
+  //on death, call this func to add a review to displayedtext
+  void addReviewToDisplay (){
+    String review;
+     if(terrified){ //5 star reviews
+      int randomIndex = (int) random(fiveStarList.size()); 
+      review = "5/5 Stars: " + fiveStarList.get(randomIndex);
+      
+     }
+     else if (health >= maxHealth/2){ //3 star reviews
+     int randomIndex = (int) random(threeStarList.size()); 
+     review = "3/5 Stars: " + threeStarList.get(randomIndex);
+     
+     }
+     else {//1 star review
+    int randomIndex = (int) random(threeStarList.size()); 
+    review = "1/5 Stars: " + threeStarList.get(randomIndex);
+    
+    }
+     if (mainScreen != null){
+       mainScreen.textDisplay.addNewText(review);
+      }
+  }
   
   //handles all attacks and debuffs
   void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){

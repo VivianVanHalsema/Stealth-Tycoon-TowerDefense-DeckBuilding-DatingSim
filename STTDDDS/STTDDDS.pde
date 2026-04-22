@@ -49,7 +49,7 @@ ArrayList<Wave> waves = new ArrayList<Wave>();
 
 void setup(){                                          
 
- size(1280,720); //CHANGE BACK TO P2D TO DO RY STUFF
+ size(1280,720, P2D); //CHANGE BACK TO P2D TO DO RY STUFF
   //REVIEW XML
  xml2 = loadXML("Reviews.xml");
  reviewsxml = xml2.getChildren("reviews");
