@@ -19,6 +19,8 @@ static class TileHelper {
     
     //Hours Wasted here: 5
     
+    //There is probably no easier way to do this other than matrix math stuffs tbh
+    
     
     //The comments are from me experimenting with different versions of getting the scale transform to work with the grid
     //Until that is cleaned up, the mouse wheel will be disabled.

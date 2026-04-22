@@ -1,5 +1,6 @@
 class MainScreen{
   
+  PImage background;
   
   Camera camera;
   
@@ -35,6 +36,9 @@ class MainScreen{
   pathfinder = new Pathfinder();
     
   camera = new Camera();
+    
+  background = loadImage("sprites/background.png");
+  background.resize(1300, 1300);
     
   //Button Initializations go here!!
   titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
@@ -195,7 +199,8 @@ class MainScreen{
    // End Camera Code, It now is moving other objects
    
    //-----------------------------------Background Drawing Layer----------------------------
-   background(TileHelper.isHex ? 0 : 127);
+   background(64, 0, 64);
+   image(background, -50, -50);
    level.draw();
    
    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
@@ -204,7 +209,6 @@ class MainScreen{
      tile.hover = true;
      PVector m = tile.getCenter();
      fill(0);
-     ellipse(m.x, m.y, 5, 5);
    }
    
    

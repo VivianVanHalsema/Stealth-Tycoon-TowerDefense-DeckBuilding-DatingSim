@@ -1,3 +1,6 @@
+//Additions from other group: Dynamic Characters and UI elements
+//Bouncy characters, particle effects, 
+
 import java.util.Map;
 
   Level level;
@@ -40,7 +43,7 @@ ArrayList<Wave> waves = new ArrayList<Wave>();
 
 void setup(){                                          
 
- size(1280,720);
+ size(1280,720, P2D);
  xml = loadXML("Waves.xml");
  wavesxml = xml.getChildren("wave");
  
