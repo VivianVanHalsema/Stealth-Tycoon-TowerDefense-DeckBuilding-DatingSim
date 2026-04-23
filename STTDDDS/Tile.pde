@@ -79,7 +79,7 @@ class Tile {
     } 
     else {
       PVector p = TileHelper.gridToPixel(X, Y);
-      stroke(0);
+      stroke(128);
       strokeWeight(2);
       rect(p.x, p.y, TileHelper.W, TileHelper.H);
       noStroke();
