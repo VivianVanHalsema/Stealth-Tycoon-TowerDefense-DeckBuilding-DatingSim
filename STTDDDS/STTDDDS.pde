@@ -10,7 +10,7 @@ MainScreen mainScreen;
 MovingDashboard uiDashboard;
 PlacingActor actorPlacing;
 boolean keyEnter = false;
-//test commet change
+//test comment change
 BreakRoom breakRoom;
 
 float zoom;
@@ -20,6 +20,7 @@ float maxZoom = 2;
 float minZoom = 0.5;
 
 float currentMoney = 100;
+float entertainmentValue = 1;
 
 XML xml;
 XML[] wavesxml;

@@ -45,7 +45,7 @@ class BaseGuest {
       terrified = true;
       speed = 1;
       currentMoney += 10;
-      addReviewToDisplay();
+      onDeath();
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
@@ -76,14 +76,20 @@ class BaseGuest {
     
   }
   
+<<<<<<< Updated upstream
   
   //on death, call this func to add a review to displayedtext
   void addReviewToDisplay (){
+=======
+  //on death, call this func on death
+  //-it handles review and changes to entertainmentValue
+  void onDeath (){
+>>>>>>> Stashed changes
     String review;
      if(terrified){ //5 star reviews
       int randomIndex = (int) random(fiveStarList.size()); 
       review = "5/5 Stars: " + fiveStarList.get(randomIndex);
-      
+      entertainmentValue += .1;
      }
      else if (health >= maxHealth/2){ //3 star reviews
      int randomIndex = (int) random(threeStarList.size()); 
@@ -93,15 +99,20 @@ class BaseGuest {
      else {//1 star review
     int randomIndex = (int) random(threeStarList.size()); 
     review = "1/5 Stars: " + threeStarList.get(randomIndex);
-    
+    entertainmentValue -= .2;
+    if (entertainmentValue > 1) entertainmentValue = 1; 
     }
      if (mainScreen != null){
        mainScreen.textDisplay.addNewText(review);
       }
   }
   
+<<<<<<< Updated upstream
  
   
+=======
+
+>>>>>>> Stashed changes
   
   //handles all attacks and debuffs
   void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){

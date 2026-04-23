@@ -26,7 +26,12 @@ class WaveManager {
   
   //the csv stores the BASE wave. Then the base is multiplied by the entertainment score
   
-  
+  //ENTERTAINMENT VALUE THOUGHT PROCESS
+  /*
+  I think that maybe I do a modulo process to get hte extra enemies
+  Like for example 1.5 gets 1 extra guy fro every 3, then 2 is 1 for every 2, 3 is 1 for 1, and then it gets more.
+  THis is some annoying math shit tho so i'll figure it out I guess.
+  */
  WaveManager(){
    currWaveData = waves.get(currWave); //starts with wave 1
 
