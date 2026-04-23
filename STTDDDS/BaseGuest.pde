@@ -76,15 +76,13 @@ class BaseGuest {
     
   }
   
-<<<<<<< Updated upstream
   
   //on death, call this func to add a review to displayedtext
   void addReviewToDisplay (){
-=======
   //on death, call this func on death
   //-it handles review and changes to entertainmentValue
+  }
   void onDeath (){
->>>>>>> Stashed changes
     String review;
      if(terrified){ //5 star reviews
       int randomIndex = (int) random(fiveStarList.size()); 
@@ -107,12 +105,6 @@ class BaseGuest {
       }
   }
   
-<<<<<<< Updated upstream
- 
-  
-=======
-
->>>>>>> Stashed changes
   
   //handles all attacks and debuffs
   void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){
