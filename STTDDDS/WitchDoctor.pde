@@ -9,6 +9,10 @@ class WitchDoctor extends BaseActor {
   }
   
   void update() { 
+    //applies upgrades every frame
+    attackSpeed = 0.4 + UpgradeDump.getWitchAttackSpeedBonus();
+    //Poison pool damage and size are handled in the witchDoctorPool at spawn time
+    
    super.update();
    if(attackCooldown < 0) {
     if (!guestsInRange.isEmpty()){ 
@@ -96,9 +100,13 @@ class WitchDoctorPool extends Attack {
   WitchDoctorPool(float x, float y) {
    super(x, y);
    lifetime = 4.0; //only around for 4 seconds
-   damage = 10;
    lengthOfDebuff = 1.2; //slightly longer than the tick interval, just ot make sure the slow doesn't drop off between ticks
    debuffs.add(debuffTypes.SLOWNESS);
+   
+   //reads the upgrade bonuses at the moment pool spawns so each
+   //pool carries the right stats at time of spawn
+   damage = 10 + int(UpgradeDump.getWitchPoolDamageBonus());
+   radius = 60 + UpgradeDump.getWitchPoolSizeBonus();
   }
   
   void update() {

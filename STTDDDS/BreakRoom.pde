@@ -127,6 +127,12 @@ void draw() {
  
  upgradePanel.draw();
  
+ //money display
+ fill(#B4972C);
+ textAlign(RIGHT);
+ textSize(22);
+ text("$" + floor(currentMoney), width - 20, 35);
+ 
  ButtonDraw();
 }
 
@@ -213,36 +219,36 @@ class BreakRoomActor {
     
     case MUMMY: 
       displayName = "The Mummy";
-      loreDescription = "An ancient egyptian horror unleashed from its tomb.../n" +
-                        "The basement of the building./m" +
-                        "Despite their slow firing speed, their range is considerable/n" +
-                        "wrapping guests in their seemingly endless wrappings slowing their escape/n" + 
-                        "Fun Fact: Despite their looks and inability to speak beyond mumblings,/n" +
+      loreDescription = "An ancient egyptian horror unleashed from its tomb..." +
+                        "The basement of the building." +
+                        "Despite their slow firing speed, their range is considerable," +
+                        "wrapping guests in their seemingly endless wrappings slowing their escape" + 
+                        "Fun Fact: Despite their looks and inability to speak beyond mumblings," +
                         "to their fellow employees, bringing water and snacks on breaks!"; 
-      upgradeNames[0] = "Insert Name Here";
-      upgradeDescriptions[0] = "Insert Name Here";
-      upgradeNames[1] = "Insert Name Here";
-      upgradeDescriptions[1] = "Insert Name Here";
-      upgradeNames [2] = "Insert Name Here";
-      upgradeDescriptions[2] = "Insert Name Here";
+      upgradeNames[0] = "Longer Bandages";
+      upgradeDescriptions[0] = "+80 range on attacks";
+      upgradeNames[1] = "Ancient Bondage";
+      upgradeDescriptions[1] = "+0.5s slow duration";
+      upgradeNames [2] = "Relentless Pursuit";
+      upgradeDescriptions[2] = "+20% attack speed";
       break; 
       
       
       
       case JASON : 
       displayName = "Jason"; 
-      loreDescription = "A stalker of the night... a creature of few words and chainsaws.../n"+
-                        "Also supposedly has camp counselor work on their resume./n" +
-                        "He wields his chainsaw to scare Guests passing him by, /n" +
-                        "Though having to explain to him not to actually *USE* it was...difficult./n" +
-                        "Fun Fact: Despite the chainsaw murder, he is actually quite chill when you get to know him/n" +
-                        "will not stop telling stories about his mother.";
-      upgradeNames[0] = "Insert Name Here";
-      upgradeDescriptions[0] = "Insert Name Here";
-      upgradeNames[1] = "Insert Name Here";
-      upgradeDescriptions[1] = "Insert Name Here";
-      upgradeNames[2] = "Insert Name Here";
-      upgradeDescriptions[2] = "Insert Name Here";
+      loreDescription = "A stalker of the night... a creature of few words and chainsaws..."+
+                        "Also supposedly has camp counselor work on their resume." +
+                        "He wields his chainsaw to scare Guests passing him by, " +
+                        "Though having to explain to him not to actually *USE* it was...difficult." +
+                        "Fun Fact: Despite the chainsaw murder, he is actually quite chill when you get to know him." +
+                        " Will not stop telling stories about his mother.";
+      upgradeNames[0] = "Louder Engine";
+      upgradeDescriptions[0] = "+60 range";
+      upgradeNames[1] = "Hunters Bloodlust";
+      upgradeDescriptions[1] = "+10 damage";
+      upgradeNames[2] = "Relentless Killer";
+      upgradeDescriptions[2] = "+30% attack speed";
       break;
       
       
@@ -250,35 +256,35 @@ class BreakRoomActor {
       case WITCHDOCTOR : 
       displayName = "Witch Doctor"; 
       loreDescription = "From deep in the forest who lures in and seduces passerbys/n"+
-                        "to experiement on them with her various brews, also a harvard grad/n" +
-                        "majoring in chemistry. She throws her (non-toxic she claims...)/n" +
-                        "To scare and slow down passerbys to a crawl, leaving an area of effect for guests./n" +
-                        "Fun Fact: She claims she has a brew that turns people into toads.../n" +
+                        "to experiement on them with her various brews, also a harvard grad" +
+                        "majoring in chemistry. She throws her (non-toxic she claims...)" +
+                        "To scare and slow down passerbys to a crawl, leaving an area of effect for guests." +
+                        "Fun Fact: She claims she has a brew that turns people into toads..." +
                         "Also says she is a pro at DDR.";
-      upgradeNames[0] = "Insert Name Here";
-      upgradeDescriptions[0] = "Insert Name Here";
-      upgradeNames[1] = "Insert Name Here";
-      upgradeDescriptions[1] = "Insert Name Here";
-      upgradeNames[2] = "Insert Name Here";
-      upgradeDescriptions[2] = "Insert Name Here";
+      upgradeNames[0] = "Quick brew";
+      upgradeDescriptions[0] = "+20% attack speed";
+      upgradeNames[1] = "Stronger mixture";
+      upgradeDescriptions[1] = "+8 pool damage";
+      upgradeNames[2] = "Larger flasks";
+      upgradeDescriptions[2] = "+20 pool radius";
       break;
       
       
       
       case CULTIST : 
       displayName = "The Cultist"; 
-      loreDescription = "His profile has very litter concrete info about him, he claims to be a servant/n"+
-                        "of the deity gro-gazhoush, eater of dimensions, but nobody knows what he means by that./n" +
-                        "In spite of this he has an incredibly good wortk ethic and is great at influencing /n" +
-                        "The guests that pass him by, so his presence probably shouldn't hurt...right?/n" +
-                        "He hands out pamphlets to the guests to indoctrinate them into his cult/n" +
+      loreDescription = "His profile has very little concrete info about him, he claims to be a servant"+
+                        "of the deity gro-gazhoush, eater of dimensions, but nobody knows what he means by that." +
+                        "In spite of this he has an incredibly good wortk ethic and is great at influencing" +
+                        "The guests that pass him by, so his presence probably shouldn't hurt...right?" +
+                        "He hands out pamphlets to the guests to indoctrinate them into his cult" +
                         "Fun Fact: They are amazing at baking, however despite how good they look you are hesitant to partake....";
-      upgradeNames[0] = "Insert Name Here";
-      upgradeDescriptions[0] = "Insert Name Here";
-      upgradeNames[1] = "Insert Name Here";
-      upgradeDescriptions[1] = "Insert Name Here";
-      upgradeNames[2] = "Insert Name Here";
-      upgradeDescriptions[2] = "Insert Name Here";
+      upgradeNames[0] = "Persuasive Pamphlet";
+      upgradeDescriptions[0] = "+15% brainwashing chance";
+      upgradeNames[1] = "Godly Devotion";
+      upgradeDescriptions[1] = "+20% attack speed";
+      upgradeNames[2] = "Spread the word";
+      upgradeDescriptions[2] = "+60 range";
       break;
       
      //ADD MORE HERE  
@@ -305,7 +311,7 @@ class UpgradePanel {
   //Panel dimensions and position
   float panelX, panelY;
   float panelW = 280;
-  float panelH = 520;
+  float panelH = 740;
   
   //actor being displayed currently
   BreakRoomActor currentActor = null; 
@@ -323,7 +329,7 @@ class UpgradePanel {
   float upgradeButtonSpacing = 16;
   
   //Y position of first upgrade button 
-  float firstUpgradeButtonY = 280;
+  float firstUpgradeButtonY = 420;
   
   //track which upgrade the mouse is hovering, -1 = nothing
   int hoveredUpgrade = -1;
@@ -358,8 +364,16 @@ class UpgradePanel {
          hoveredUpgrade = i;      
       }
     }
+    
+    if (Mouse.onDown(Mouse.LEFT) && hoveredUpgrade != -1) {
+     int cost = UpgradeDump.getCost(currentActor.type, hoveredUpgrade);
+     if (UpgradeDump.canUpgrade(currentActor.type, hoveredUpgrade) && currentMoney >= cost) {
+      currentMoney -= cost;
+      UpgradeDump.buyUpgrade(currentActor.type, hoveredUpgrade);
+      println("Upgraded " + currentActor.displayName + " slot " + hoveredUpgrade);
+    }
+   }
   }
-  
   void draw() {
    if (!visible || currentActor == null) return;
    
@@ -417,11 +431,11 @@ class UpgradePanel {
     
     fill(180, 165, 200);
     textAlign(LEFT);
-    textSize(12);
-    text(currentActor.loreDescription, loreX, loreY, loreW, 120); //uses processing's text overload to handle wrapping
+    textSize(11);
+    text(currentActor.loreDescription, loreX, loreY, loreW, 160); //uses processing's text overload to handle wrapping
     
     //gold divider for lore
-    float dividerY = loreY + 110;
+    float dividerY = loreY + 175;
     stroke(#B4972C);
     strokeWeight(1);
     line(panelX + portraitPadding, dividerY,
@@ -446,7 +460,13 @@ class UpgradePanel {
     }
     
     //button body
-    fill (70, 55, 90);
+    if (!UpgradeDump.canUpgrade(currentActor.type, i)) {
+        fill(45, 40, 55);
+    } else if (currentMoney < UpgradeDump.getCost(currentActor.type, i)) {
+        fill(50, 42, 60);
+    } else {
+        fill(70, 55, 90);
+    }
     rect(bx, by, upgradeButtonW, upgradeButtonH, 8);
     
     //gold borders on button
@@ -463,14 +483,20 @@ class UpgradePanel {
     
     //Upgrade description in smaller, dimmer text below the name
     fill(160, 145, 180);
-    textSize(11);
-    text(currentActor.upgradeDescriptions[i], bx + 10, by +30);
+    textSize(13);
+    text(currentActor.upgradeDescriptions[i], bx + 10, by +38);
     
-    //placeholder cost tag
+    //cost of upgrade
     fill(#B4972C);
-      textAlign(RIGHT);
-      textSize(13);
-      text("idfk man figure it out", bx + upgradeButtonW - 10, by + 20);
-     }
+    textAlign(RIGHT);
+    textSize(13);
+    if (!UpgradeDump.canUpgrade(currentActor.type, i)) {
+     fill( 100, 90, 110);//dimmed gold for if upgrade is maxxed
+     text( "MAXED", bx + upgradeButtonW - 10, by + 20);     
+    } else {
+     fill(#B4972C);
+     text("$" + UpgradeDump.getCost(currentActor.type, i), bx + upgradeButtonW - 10, by + 20);
+    }
   }
+ }
 }
