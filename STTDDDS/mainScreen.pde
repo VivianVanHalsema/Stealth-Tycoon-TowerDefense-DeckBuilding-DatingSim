@@ -41,7 +41,7 @@ class MainScreen{
   camera = new Camera();
   textDisplay = new TextDisplayComponent(20,height-20);  
   background = loadImage("sprites/background.png");
-  //background.resize(1300, 1300);
+  background.resize(1300, 1300);
     
   //Button Initializations go here!!
   titleButton = new Button(width + 240, 20,"SWITCH_TITLE");
@@ -204,14 +204,15 @@ class MainScreen{
    
    //-----------------------------------Background Drawing Layer----------------------------
    background(64, 0, 64);
-   //image(background, -50, -50);
+   imageMode(CORNER);
+   image(background, -50, -50);
+   imageMode(CENTER);
    level.draw();
    
    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
    Tile tile = level.getTile(g);
    if (tile != null) { //This is for safety to avoid null pointers with camera stuffs
      tile.hover = true;
-     PVector m = tile.getCenter();
      fill(0);
    }
    
