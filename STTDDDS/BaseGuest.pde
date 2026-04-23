@@ -6,8 +6,8 @@ class BaseGuest {
   /*
     I had to change how speed works when implementing pathfinding.
   */
-  float speed = 2; //Max Speed value is 8, keep in mind that on terrified, it doubles. basically 4 is base max
-   int maxHealth = 100; //change this in children not health itself
+  float speed = 1; 
+  int maxHealth = 100; //change this in children not health itself
   int health = maxHealth;
   color baseColor,currentColor;
   boolean terrified = false;
@@ -43,9 +43,9 @@ class BaseGuest {
   void update(){
     if (health <= 0 && terrified != true) {
       terrified = true;
-      speed *= 2;
+      speed = 1;
       currentMoney += 10;
-      addReviewToDisplay();
+      onDeath();
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
@@ -76,13 +76,20 @@ class BaseGuest {
     
   }
   
+<<<<<<< Updated upstream
+  
   //on death, call this func to add a review to displayedtext
   void addReviewToDisplay (){
+=======
+  //on death, call this func on death
+  //-it handles review and changes to entertainmentValue
+  void onDeath (){
+>>>>>>> Stashed changes
     String review;
      if(terrified){ //5 star reviews
       int randomIndex = (int) random(fiveStarList.size()); 
       review = "5/5 Stars: " + fiveStarList.get(randomIndex);
-      
+      entertainmentValue += .1;
      }
      else if (health >= maxHealth/2){ //3 star reviews
      int randomIndex = (int) random(threeStarList.size()); 
@@ -92,12 +99,20 @@ class BaseGuest {
      else {//1 star review
     int randomIndex = (int) random(threeStarList.size()); 
     review = "1/5 Stars: " + threeStarList.get(randomIndex);
-    
+    entertainmentValue -= .2;
+    if (entertainmentValue > 1) entertainmentValue = 1; 
     }
      if (mainScreen != null){
        mainScreen.textDisplay.addNewText(review);
       }
   }
+  
+<<<<<<< Updated upstream
+ 
+  
+=======
+
+>>>>>>> Stashed changes
   
   //handles all attacks and debuffs
   void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){
@@ -231,7 +246,7 @@ class BaseGuest {
   
   void updateMove() {
     
-    float snapThreshold = 3.5;
+    float snapThreshold = 1;
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, position);
     PVector normDiff = diff.normalize();
@@ -239,8 +254,8 @@ class BaseGuest {
     position.x += normDiff.x * speed;
     position.y += normDiff.y * speed;
     
-    if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; //Currently dealing with an issue with speed. I will update this tomorrow but it likely has to deal with stuff down here if folks wanna take a peek
-    if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
+    if (abs(diff.x) < snapThreshold) position.x = pixlT.x; //Currently dealing with an issue with speed. I will update this tomorrow but it likely has to deal with stuff down here if folks wanna take a peek
+    if (abs(diff.y) < snapThreshold) position.y = pixlT.y;
 
     if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
   }
