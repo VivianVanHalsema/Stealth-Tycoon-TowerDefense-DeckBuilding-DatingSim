@@ -358,8 +358,16 @@ class UpgradePanel {
          hoveredUpgrade = i;      
       }
     }
+    
+    if (Mouse.onDown(Mouse.LEFT) && hoveredUpgrade != -1) {
+     int cost = UpgradeDump.getCost(currentActor.type, hoveredUpgrade);
+     if (UpgradeDump.canUpgrade(currentActor.type, hoveredUpgrade) && currentMoney >= cost) {
+      currentMoney -= cost;
+      UpgradeDump.buyUpgrade(currentActor.type, hoveredUpgrade);
+      println("Upgraded " + currentActor.displayName + " slot " + hoveredUpgrade);
+    }
+   }
   }
-  
   void draw() {
    if (!visible || currentActor == null) return;
    
@@ -446,7 +454,13 @@ class UpgradePanel {
     }
     
     //button body
-    fill (70, 55, 90);
+    if (!UpgradeDump.canUpgrade(currentActor.type, i)) {
+        fill(45, 40, 55);
+    } else if (currentMoney < UpgradeDump.getCost(currentActor.type, i)) {
+        fill(50, 42, 60);
+    } else {
+        fill(70, 55, 90);
+    }
     rect(bx, by, upgradeButtonW, upgradeButtonH, 8);
     
     //gold borders on button
@@ -466,11 +480,17 @@ class UpgradePanel {
     textSize(11);
     text(currentActor.upgradeDescriptions[i], bx + 10, by +30);
     
-    //placeholder cost tag
+    //cost of upgrade
     fill(#B4972C);
-      textAlign(RIGHT);
-      textSize(13);
-      text("idfk man figure it out", bx + upgradeButtonW - 10, by + 20);
-     }
+    textAlign(RIGHT);
+    textSize(13);
+    if (!UpgradeDump.canUpgrade(currentActor.type, i)) {
+     fill( 100, 90, 110);//dimmed gold for if upgrade is maxxed
+     text( "MAXED", bx + upgradeButtonW - 10, by + 20);     
+    } else {
+     fill(#B4972C);
+     text("$" + UpgradeDump.getCost(currentActor.type, i), bx + upgradeButtonW - 10, by + 20);
+    }
   }
+ }
 }
