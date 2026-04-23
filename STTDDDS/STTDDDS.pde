@@ -22,7 +22,7 @@ float targetZoom = defaultZoom;
 float maxZoom = 2;
 float minZoom = 0.5;
 
-float currentMoney = 100;
+float currentMoney = 1000;
 
 XML xml;
 XML[] wavesxml;
