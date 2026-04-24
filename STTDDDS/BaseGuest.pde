@@ -13,7 +13,9 @@ class BaseGuest {
   boolean terrified = false;
   boolean isCultist = false;
   boolean bandaged = false;
+  boolean isOffScreen = false;
   PImage bandages;
+  int opacity = 255;
   
   Point gridP = new Point(); // current position
   Point gridT = new Point(15, 14); // target position (pathfinding goal)
@@ -104,6 +106,11 @@ class BaseGuest {
        mainScreen.textDisplay.addNewText(review);
       }
   }
+  void ExitScreen() {
+    //onDeath();
+    isOffScreen = true;
+    
+  }
   
   
   //handles all attacks and debuffs
@@ -191,6 +198,7 @@ class BaseGuest {
   void draw() {
     noStroke();
     fill(currentColor);
+    tint(255, opacity);
     ellipse(position.x,position.y,size, size);
     if (bandaged){
     pushMatrix();
@@ -199,6 +207,7 @@ class BaseGuest {
     bandages.resize(int(size+20), int(size+20)); //changes to make temp sprite look better
     image(bandages, 0, 0);
     popMatrix();
+    noTint();
     }
     
     
@@ -249,8 +258,18 @@ class BaseGuest {
     if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; 
     if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
     
-
-    if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
+    if (path != null) {
+      if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
+    } else if (path == null) {
+      position.y += speed;
+      opacity -= 10;
+      if (opacity <= 10) {
+        ExitScreen();
+      }
+    }
+    
+    
+    
   }
   
 }

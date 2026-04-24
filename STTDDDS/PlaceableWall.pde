@@ -3,12 +3,14 @@ class PlaceableWall extends BaseActor  {
   
   PlaceableWall(int x, int y){
     super(x,y);
-    /* customizable variables
-    sprite = loadImage("sprites/mummy.png");
+    size = new PVector(75, 100);
+    angle = 0;
+    position.x -= 1;
+    position.y -= 12;
+    scareRange = 0;
     attackSpeed = .8;
-    scareRange = 240;
-    */
-    sprite = loadImage("sprites/cultist.png"); //PlaceHolder
+    
+    sprite = loadImage("sprites/wall.png"); //PlaceHolder
   }
   
   

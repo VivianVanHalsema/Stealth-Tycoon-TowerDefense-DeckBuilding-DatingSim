@@ -1,5 +1,10 @@
 //Additions from other group: Dynamic Characters and UI elements
-//Bouncy characters, particle effects, 
+//Bouncy characters, particle effects
+
+import nl.genart.VJMotion.*;
+import nl.genart.VJMotion.arduinocontrols.*;
+import nl.genart.VJMotion.frequencyanalyzer.*;
+import nl.genart.VJMotion.beatsperminute.*;
 
 import java.util.Map;
 

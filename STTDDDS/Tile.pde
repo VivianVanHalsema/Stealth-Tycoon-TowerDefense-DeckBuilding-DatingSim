@@ -81,6 +81,7 @@ class Tile {
       PVector p = TileHelper.gridToPixel(X, Y);
       stroke(128);
       strokeWeight(2);
+      fill(127, 0.5); // don't draw empty tiles
       rect(p.x, p.y, TileHelper.W, TileHelper.H);
       noStroke();
     }

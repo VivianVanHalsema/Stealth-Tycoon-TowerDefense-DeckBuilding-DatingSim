@@ -22,6 +22,7 @@ class MainScreen{
   ShopButton mummyButton;
   ShopButton jasonButton;
   ShopButton witchyButton;
+  ShopButton wallButton;
   
   
   BaseGuest testGuest;
@@ -75,6 +76,9 @@ class MainScreen{
   witchyButton = new ShopButton(width+50, 260, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WITCHDOCTOR);
   buttons.add(witchyButton);
   
+  wallButton = new ShopButton(width+50, 340, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+  buttons.add(wallButton);
+  
   
   //DASHBOARD INITIALIZATION
   //----Add buttons that should be attached to the dashboard and move with 
@@ -84,6 +88,7 @@ class MainScreen{
   buttonsToAttachToDashboard.add(mummyButton);
   buttonsToAttachToDashboard.add(jasonButton);
   buttonsToAttachToDashboard.add(witchyButton);
+  buttonsToAttachToDashboard.add(wallButton);
   buttonsToAttachToDashboard.add(hireButton);
   buttonsToAttachToDashboard.add(upgradeButton);
   buttonsToAttachToDashboard.add(statsButton);
@@ -132,19 +137,22 @@ class MainScreen{
             break;
             
             case WALL:
-            
+            PlaceableWall wallToAdd = new PlaceableWall(int(placingPosition.x), int(placingPosition.y));
+            actors.add(wallToAdd);
             break;
             
             
             
           } //End switch case
           actorPlacing = null;
+          actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
         } //end if not purchased this frame
       } //actor placing != null
     } // mouse click!!
     
     if(Mouse.onDown(Mouse.RIGHT)) {
       savedMousePosForCamera = new PVector(camera.x + mouseX, camera.y + mouseY);
+      actorPlacing = null;
     }
     
     if (Mouse.isDown(Mouse.RIGHT)) {
@@ -182,8 +190,10 @@ class MainScreen{
         attacks.remove(i);
       }
     }
-    for (BaseGuest guest : guests) {
+    for (int i = 0; i < guests.size(); i++) {
+      BaseGuest guest = guests.get(i);
       guest.update();
+      if (guest.isOffScreen) guests.remove(i);
     }
     for (BaseActor actor : actors) {
       actor.update();
@@ -228,6 +238,8 @@ class MainScreen{
     for (BaseGuest guest : guests) {
       guest.draw();
     }
+    
+    
     for (BaseActor actor : actors) {
       actor.draw();
     }
@@ -259,5 +271,30 @@ class MainScreen{
     }
     
 }
+
+  ArrayList<BaseActor> sortObjectsByHeight() { 
+  /*
+  I know this shit is not a very optimal sorting algorithm but it's quick and easy to set up
+  and we are only calling it on the frame a player places something so it shouldn't hurt too bad
+  */
+    ArrayList<BaseActor> sortedByHeightActors = actors;
+    boolean swapped;
+    BaseActor temp;
+    for (int i = 0; i < sortedByHeightActors.size(); i++) {
+      swapped = false;
+      for (int j = 0; j < sortedByHeightActors.size() - i - 1; j++) {
+        if (sortedByHeightActors.get(j).position.y > sortedByHeightActors.get(j+1).position.y) {
+          temp = sortedByHeightActors.get(j);
+          sortedByHeightActors.set(j, sortedByHeightActors.get(j+1));
+          sortedByHeightActors.set(j + 1, temp);
+          swapped = true;
+          
+        }
+      }
+      if (!swapped) break;
+    }
+    
+    return sortedByHeightActors;
+  }
 
 }
