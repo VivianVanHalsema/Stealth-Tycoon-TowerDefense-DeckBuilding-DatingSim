@@ -70,8 +70,8 @@ class Tile {
     strokeWeight(2);
     fill(127, 0.5); // don't draw empty tiles
     if(hover) fill(255, 255, 0, 128 + 128 * bpm.easeBounce());
-    if(hover && actorPlacing != null && !isPassable()) fill(128, 0, 0, 128 + 128 * bpm.easeBounce());
     if(hover && actorPlacing != null && isPassable()) fill(0, 128, 0, 128 + 128 * bpm.easeBounce());
+    if(hover && actorPlacing != null && (!isPassable() || !placeable)) fill(128, 0, 0, 128 + 128 * bpm.easeBounce());
     rect(p.x, p.y, TileHelper.W, TileHelper.H);
     noStroke();
     hover = false;

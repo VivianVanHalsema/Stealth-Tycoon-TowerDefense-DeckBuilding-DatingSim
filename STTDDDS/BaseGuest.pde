@@ -294,6 +294,7 @@ static enum debuffTypes
   boolean useDiagonals = false;
   ArrayList<Tile> opened = new ArrayList<Tile>(); // collection of tiles we can use to solve the algorithm
   ArrayList<Tile> closed = new ArrayList<Tile>(); // collection of tiles that we've ruled out as NOT part of the solution
+  boolean pathBlocked;
 
   Pathfinder() {
   }
@@ -304,6 +305,7 @@ static enum debuffTypes
     
     opened.clear();
     closed.clear();
+    pathBlocked = false;
     
     start.resetParent();
     
@@ -368,6 +370,7 @@ static enum debuffTypes
 
       if (current == end) {
         //Path is found!! :3
+        if (current.G >= 1000) pathBlocked = true;
         break;
       }
 

@@ -5,6 +5,8 @@ class MainScreen {
   Camera camera;
 
   PVector savedMousePosForCamera;
+  
+  Point pPointG;
 
   //textDisplay
   TextDisplayComponent textDisplay;
@@ -38,6 +40,7 @@ class MainScreen {
     TileHelper.app = new STTDDDS();
     level = new Level();
     pathfinder = new Pathfinder();
+    pPointG = new Point(-1, -1);
 
     camera = new Camera();
     textDisplay = new TextDisplayComponent(20, height-20);
@@ -159,6 +162,7 @@ class MainScreen {
     for (BaseActor actor : actors) {
       actor.update();
     }
+    
   }
 
   void draw() {
@@ -183,6 +187,9 @@ class MainScreen {
     if (tile != null) { //This is for safety to avoid null pointers with camera stuffs
       tile.hover = true;
       fill(0);
+    }
+    if ((g.x != pPointG.x) || (g.y != pPointG.y)) {
+      placeable = true;
     }
 
 
@@ -228,6 +235,8 @@ class MainScreen {
     if (actorPlacing != null) {
       actorPlacing.draw();
     }
+    
+    pPointG = g;
   }
   
   void PlacingActorLogic() {
@@ -236,17 +245,26 @@ class MainScreen {
         if (actorPlacing.purchasedThisFrame == false) {
           Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
           Tile tile = level.getTile(g);
-          if (tile.isPassable() == false) {
+          if (tile == null || tile.isPassable() == false) {
           } else {
-            PVector placingPosition = tile.getCenter();
-            level.setTile(g, 2); //Makes the tower be blocked off for other towers and adds to pathfinding walls
-            PlaceActorSwitch(placingPosition); //Gets the actor being placed and places it
-            //End switch case
-            currentMoney -= currentPrice; //Spend money on place
-            actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
+            level.setTile(g, 2);
+            pathfinder.findPath(level.getTile(new Point(0, 0)), level.getTile(new Point(14, 15)));
+            if (pathfinder.pathBlocked == false && !(g.x == 0 && g.y == 0)) {
+              PVector placingPosition = tile.getCenter();
+              PlaceActorSwitch(placingPosition); //Gets the actor being placed and places it
+              //End switch case
+              currentMoney -= currentPrice; //Spend money on place
+              actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
+              
+            } else { //the path is blocked!!
+              level.setTile(g, 0);
+              placeable = false;
+            } //end of pathfinding block check
+            pathfinder.pathBlocked = false;
           } //end tile is not occupied
         } //end if not purchased this frame
       } //actor placing != null
+      
   }
   
 

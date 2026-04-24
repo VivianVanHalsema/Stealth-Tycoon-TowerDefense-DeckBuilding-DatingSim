@@ -33,6 +33,7 @@ float currentMoney = 1000;
 float entertainmentValue = 1;
 float currentPrice;
 float buttonPlaceCooldown = 0;
+boolean placeable;
 
 XML xml;
 XML[] wavesxml;

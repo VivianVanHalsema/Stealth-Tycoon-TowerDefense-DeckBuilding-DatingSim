@@ -32,7 +32,7 @@ class Level {
   boolean useDiagonals = false;
 
   Level() {
-    loadLevel(LevelData.Level1);
+      loadLevel(LevelData.Level1);
   }
   void draw() {
     noStroke();
