@@ -207,10 +207,9 @@ class BaseGuest {
     bandages.resize(int(size+20), int(size+20)); //changes to make temp sprite look better
     image(bandages, 0, 0);
     popMatrix();
-    noTint();
     }
     
-    
+    noTint();
   } ///truly just a test Guest for detecting by tower, delete it or do whatever you want with it Ry
   //okay now do NOT delete it (without warning) I've added a debuff system
   
@@ -255,13 +254,15 @@ class BaseGuest {
     position.x += normDiff.x * speed;
     position.y += normDiff.y * speed;
     
-    if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; 
-    if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
+    
     
     if (path != null) {
+      if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; 
+      if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
+      
       if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
     } else if (path == null) {
-      position.y += speed;
+      position.y += speed * 2;
       opacity -= 10;
       if (opacity <= 10) {
         ExitScreen();
