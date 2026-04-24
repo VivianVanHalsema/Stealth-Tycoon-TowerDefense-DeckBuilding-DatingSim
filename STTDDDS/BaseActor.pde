@@ -48,7 +48,7 @@ class BaseActor {
     rotate(angle);
     imageMode(CENTER);
     sprite.resize(int(size.x), int(size.y));
-    image(sprite, 0, 0);
+    image(sprite, 2 * sin(angle) * bpm.adsr(0.5, 0.5, 0.1, 0.4), 2 * cos(angle) * bpm.adsr(0.5, 0.5, 0.1, 0.4));
     popMatrix();
   }
   

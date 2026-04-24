@@ -197,7 +197,7 @@ class BaseGuest {
   
   void draw() {
     noStroke();
-    fill(currentColor);
+    fill(currentColor, opacity);
     tint(255, opacity);
     ellipse(position.x,position.y,size, size);
     if (bandaged){

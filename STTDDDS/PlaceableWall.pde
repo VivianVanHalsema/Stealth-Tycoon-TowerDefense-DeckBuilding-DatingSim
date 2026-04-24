@@ -29,7 +29,19 @@ class PlaceableWall extends BaseActor  {
   }
   
    void draw(){
-    super.draw();
+    noStroke();
+    rectMode(CENTER);
+    imageMode(CENTER);
+    //draw attack range
+    fill(255,20);
+    ellipse(position.x,position.y, scareRange,scareRange);
+    pushMatrix();
+    translate(position.x, position.y);
+    rotate(angle);
+    imageMode(CENTER);
+    sprite.resize(int(size.x), int(size.y));
+    image(sprite, 0, 0);
+    popMatrix();
   }
   
   
