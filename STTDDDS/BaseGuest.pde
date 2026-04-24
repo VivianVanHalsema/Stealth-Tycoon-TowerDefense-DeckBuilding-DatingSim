@@ -251,8 +251,8 @@ class BaseGuest {
     PVector diff = PVector.sub(pixlT, position);
     PVector normDiff = diff.normalize();
     
-    position.x += normDiff.x * speed;
-    position.y += normDiff.y * speed;
+    position.x += normDiff.x * speed * slowness;
+    position.y += normDiff.y * speed * slowness;
     
     
     
