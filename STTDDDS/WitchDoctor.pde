@@ -50,7 +50,7 @@ class WitchDoctorProjectile extends CircleProjectile {
    super(x, y, angle);
    this.target = target;
    size.x = 15;
-   projectileSpeed = 4;
+   projectileSpeed = 3;
    lifetime = 4;
    damage = 0;
    isColliding = false;

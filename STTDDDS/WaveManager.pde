@@ -134,7 +134,7 @@ class WaveManager {
      newGuest = new BaseGuest(x,y);
      break;
      case("kid"):
-     newGuest = new BaseGuest(x,y); ///REPLACE WHEN REAL
+     newGuest = new ChildGuest(x,y); ///REPLACE WHEN REAL
      break;
      case("ghost"):
      newGuest = new GhostGuest(x,y);///REPLACE WHEN REAL
