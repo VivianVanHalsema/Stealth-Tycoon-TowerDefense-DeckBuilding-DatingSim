@@ -96,7 +96,6 @@ boolean checkHovered(){
 
 
 void buttonClicked(){
-println (clickAction);
   switch(clickAction) {
     
     case "SWITCH_MAIN":
@@ -202,12 +201,11 @@ class ShopButton extends DashBoardButton {
   }
   
   void buttonClicked() {
+    buttonPlaceCooldown = 0.3;
     if (actorPlacing == null) {
-      currentMoney -= price; //Spend Money on click
       actorPlacing = new PlacingActor(actor, true);
-    
+      currentPrice = price;
     } else if (actorPlacing != null && actorPlacing.purchasing == true) {
-      currentMoney += price; //cancel purchase, regain the money spent
       actorPlacing = null;
     }
   } //ButtonClick End
