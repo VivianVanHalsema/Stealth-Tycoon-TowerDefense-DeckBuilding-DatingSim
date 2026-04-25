@@ -1,4 +1,7 @@
 class MainScreen {
+  
+  int maxScaractors = 15;
+  int currentScaractorCount;
 
   PImage background;
 
@@ -226,6 +229,7 @@ class MainScreen {
     textAlign(LEFT);
     fill (255);
     text(("$"+ floor(currentMoney)), 1000, 30);
+    text(("Scaractors: " + currentScaractorCount + "/" + maxScaractors), 1000, 60);
     text("Current Wave :" + currWave, 20, 20);
     uiDashboard.draw();
     textDisplay.draw();
@@ -250,12 +254,14 @@ class MainScreen {
             level.setTile(g, 2);
             pathfinder.findPath(level.getTile(new Point(0, 0)), level.getTile(new Point(14, 15)));
             if (pathfinder.pathBlocked == false && !(g.x == 0 && g.y == 0)) {
+              if (currentMoney >= currentPrice && currentScaractorCount < maxScaractors) {
               PVector placingPosition = tile.getCenter();
               PlaceActorSwitch(placingPosition); //Gets the actor being placed and places it
               //End switch case
               currentMoney -= currentPrice; //Spend money on place
+              currentScaractorCount++;
               actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
-              
+              }
             } else { //the path is blocked!!
               level.setTile(g, 0);
               placeable = false;
