@@ -1,5 +1,13 @@
+//Additions from other group: Dynamic Characters and UI elements
+//Bouncy characters, particle effects
+
+import nl.genart.VJMotion.*;
+import nl.genart.VJMotion.arduinocontrols.*;
+import nl.genart.VJMotion.frequencyanalyzer.*;
+import nl.genart.VJMotion.beatsperminute.*;
+
 import java.util.Map;
-import java.util.LinkedHashMap;
+
   Level level;
   Pathfinder pathfinder;
 
@@ -13,14 +21,19 @@ boolean keyEnter = false;
 //test comment change
 BreakRoom breakRoom;
 
+BeatsPerMinute bpm;
+
 float zoom;
 static float defaultZoom = 1;
 float targetZoom = defaultZoom;
 float maxZoom = 2;
 float minZoom = 0.5;
 
-float currentMoney = 100;
+float currentMoney = 1000;
 float entertainmentValue = 1;
+float currentPrice;
+float buttonPlaceCooldown = 0;
+boolean placeable;
 
 XML xml;
 XML[] wavesxml;
@@ -32,6 +45,7 @@ XML[] reviewsxml;
 ArrayList<String> oneStarList = new ArrayList<String>();
 ArrayList<String> threeStarList = new ArrayList<String>();
 ArrayList<String> fiveStarList = new ArrayList<String>();
+
 
 ArrayList<BaseGuest> guests = new ArrayList<BaseGuest>(); 
 ArrayList<BaseActor> actors = new ArrayList<BaseActor>(); 
@@ -46,9 +60,11 @@ ArrayList<Wave> waves = new ArrayList<Wave>();
 
 void setup(){                                          
 
- size(1280,720);
- 
- //REVIEW XML
+ size(1280,720, P2D); //CHANGE BACK TO P2D TO DO RY STUFF
+ bpm = new BeatsPerMinute(this);
+ bpm.setBPM(90);
+ bpm.disableKeyPress();
+  //REVIEW XML
  xml2 = loadXML("Reviews.xml");
  reviewsxml = xml2.getChildren("reviews");
 if (reviewsxml.length > 0) {
@@ -85,6 +101,7 @@ if (reviewsxml.length > 0) {
     }
 }
  ///WAVE XML
+
  xml = loadXML("Waves.xml");
  wavesxml = xml.getChildren("wave");
  
@@ -252,6 +269,7 @@ void switchToBreakRoom() {
 
 //DELTATIME
 //D...DELTA RUNE??!!
+    //Yup, totally the deltarune function
 void calcDeltaTime() {
   float currTime = millis();
   dt = (currTime - prevTime) / 1000.0;

@@ -6,14 +6,16 @@ class BaseGuest {
   /*
     I had to change how speed works when implementing pathfinding.
   */
-  float speed = 1; 
+  float speed = 2; 
   int maxHealth = 100; //change this in children not health itself
   int health = maxHealth;
   color baseColor,currentColor;
   boolean terrified = false;
   boolean isCultist = false;
   boolean bandaged = false;
+  boolean isOffScreen = false;
   PImage bandages;
+  int opacity = 255;
   
   Point gridP = new Point(); // current position
   Point gridT = new Point(15, 14); // target position (pathfinding goal)
@@ -43,13 +45,9 @@ class BaseGuest {
   void update(){
     if (health <= 0 && terrified != true) {
       terrified = true;
-<<<<<<< Updated upstream
-      speed = 1;
+      speed *= 2;
       currentMoney += 10;
       onDeath();
-=======
-      speed *= 2;
->>>>>>> Stashed changes
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
@@ -80,53 +78,40 @@ class BaseGuest {
     
   }
   
-<<<<<<< Updated upstream
   
   //on death, call this func to add a review to displayedtext
   void addReviewToDisplay (){
-=======
   //on death, call this func on death
   //-it handles review and changes to entertainmentValue
+  }
   void onDeath (){
->>>>>>> Stashed changes
     String review;
      if(terrified){ //5 star reviews
       int randomIndex = (int) random(fiveStarList.size()); 
       review = "5/5 Stars: " + fiveStarList.get(randomIndex);
       entertainmentValue += .1;
-      currentMoney += 10;
      }
      else if (health >= maxHealth/2){ //3 star reviews
      int randomIndex = (int) random(threeStarList.size()); 
      review = "3/5 Stars: " + threeStarList.get(randomIndex);
-     currentMoney += 5;
+     
      }
      else {//1 star review
     int randomIndex = (int) random(threeStarList.size()); 
     review = "1/5 Stars: " + threeStarList.get(randomIndex);
     entertainmentValue -= .2;
-    currentMoney -=5;
     if (entertainmentValue > 1) entertainmentValue = 1; 
     }
      if (mainScreen != null){
        mainScreen.textDisplay.addNewText(review);
       }
   }
-<<<<<<< Updated upstream
-=======
   void ExitScreen() {
-    onDeath();
+    //onDeath();
     isOffScreen = true;
     
   }
->>>>>>> Stashed changes
   
-<<<<<<< Updated upstream
- 
-  
-=======
-
->>>>>>> Stashed changes
   
   //handles all attacks and debuffs
   void handleAttack (int damage, float lengthOfDebuff, ArrayList<debuffTypes> typeOfDebuffs, Attack attacker){
@@ -212,7 +197,8 @@ class BaseGuest {
   
   void draw() {
     noStroke();
-    fill(currentColor);
+    fill(currentColor, opacity);
+    tint(255, opacity);
     ellipse(position.x,position.y,size, size);
     if (bandaged){
     pushMatrix();
@@ -223,14 +209,9 @@ class BaseGuest {
     popMatrix();
     }
     
-<<<<<<< Updated upstream
-    
+    noTint();
   } ///truly just a test Guest for detecting by tower, delete it or do whatever you want with it Ry
   //okay now do NOT delete it (without warning) I've added a debuff system
-=======
-    noTint();
-  } 
->>>>>>> Stashed changes
   
   //PATHFINDING FUNCTIONS
   void teleportTo(Point gridP) {
@@ -265,18 +246,31 @@ class BaseGuest {
   
   void updateMove() {
     
-    float snapThreshold = 1;
+    float snapThreshold = 3.5;
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, position);
     PVector normDiff = diff.normalize();
     
-    position.x += normDiff.x * speed;
-    position.y += normDiff.y * speed;
+    position.x += normDiff.x * speed * slowness;
+    position.y += normDiff.y * speed * slowness;
     
-    if (abs(diff.x) < snapThreshold) position.x = pixlT.x; //Currently dealing with an issue with speed. I will update this tomorrow but it likely has to deal with stuff down here if folks wanna take a peek
-    if (abs(diff.y) < snapThreshold) position.y = pixlT.y;
-
-    if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
+    
+    
+    if (path != null) {
+      if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; 
+      if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
+      
+      if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
+    } else if (path == null) {
+      position.y += speed * 2;
+      opacity -= 10;
+      if (opacity <= 10) {
+        ExitScreen();
+      }
+    }
+    
+    
+    
   }
   
 }
@@ -300,6 +294,7 @@ static enum debuffTypes
   boolean useDiagonals = false;
   ArrayList<Tile> opened = new ArrayList<Tile>(); // collection of tiles we can use to solve the algorithm
   ArrayList<Tile> closed = new ArrayList<Tile>(); // collection of tiles that we've ruled out as NOT part of the solution
+  boolean pathBlocked;
 
   Pathfinder() {
   }
@@ -310,6 +305,7 @@ static enum debuffTypes
     
     opened.clear();
     closed.clear();
+    pathBlocked = false;
     
     start.resetParent();
     
@@ -374,6 +370,7 @@ static enum debuffTypes
 
       if (current == end) {
         //Path is found!! :3
+        if (current.G >= 1000) pathBlocked = true;
         break;
       }
 

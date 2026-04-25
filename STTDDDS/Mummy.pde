@@ -13,6 +13,12 @@ class Mummy extends BaseActor {
   
   
   void update() {
+    //applys upgrade bonuses here each frame so they take effect right away after being purchased
+    //base stats still live in the constructor above though, purely additive bonuses
+    scareRange = 430 + UpgradeDump.getMummyRangeBonus();
+    attackSpeed = 0.8 + UpgradeDump.getMummyAttackSpeedBonus();
+    //The slow duration upgrade is read at attack-time in the mummyProjectile
+    
     super.update();
     if (attackCooldown < 0) {
       if (!guestsInRange.isEmpty()) {
@@ -56,6 +62,9 @@ class MummyProjectile extends LineProjectile {
     projectileSpeed = 6;
     damage = 20;
     debuffs.add(debuffTypes.SLOWNESS); //dont forget to add
+    //reads slow duration upgrade at moment of firing 
+    //this way each projectile carries the correct debuff length as its being made
+    lengthOfDebuff = 1.0 + UpgradeDump.getMummySlowBonus();
   }
   
   void update(){
