@@ -35,7 +35,7 @@ class MovingDashboard extends Button {
   }
   
   @Override void update() {
-    isHovered = (checkHovered()||Keyboard.isDown(Keyboard.Ctrl));
+    isHovered = (checkHovered()||Keyboard.isDown(Keyboard.Ctrl) || actorIsFocused);
     if(Keyboard.onDown(Keyboard.Z)) toggleDashboardLock();
     
     if (!isLocked) {

@@ -48,7 +48,7 @@ class BaseActor {
     rotate(angle);
     imageMode(CENTER);
     sprite.resize(int(size.x), int(size.y));
-    image(sprite, 2 * sin(angle) * bpm.adsr(0.5, 0.5, 0.1, 0.4), 2 * cos(angle) * bpm.adsr(0.5, 0.5, 0.1, 0.4));
+    image(sprite, 0, 0);
     popMatrix();
   }
   
@@ -116,7 +116,7 @@ void lookAtFrontGuestInRange(){
   if (diff > PI) diff -= TWO_PI;
   if (diff < -PI) diff += TWO_PI;
   
-  angle = angle +diff * .8;
+  angle = angle +diff * .3;
   }
   
   
@@ -174,7 +174,7 @@ static enum actorTypes
           break;
           
           case WALL:
-          sprite = loadImage("sprites/wall.png"); //temporary until we get Wall sprite
+          sprite = loadImage("sprites/mummy.png"); //temporary until we get Wall sprite
           break;
         }
       

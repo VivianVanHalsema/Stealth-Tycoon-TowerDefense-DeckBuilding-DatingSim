@@ -8,11 +8,6 @@ class Jason extends BaseActor {
  }
 
  void update() {
-   //apllies upgrade bonuses every frame
-   scareRange = 200 + UpgradeDump.getJasonRangeBonus();
-   attackSpeed = 1.0 + UpgradeDump.getJasonAttackSpeedBonus();
-   //damage is passed onto JasonAOEHit at attack time
-   
   super.update();
   if (attackCooldown < 0) {
   if (!guestsInRange.isEmpty()) {
@@ -52,7 +47,7 @@ class JasonAOEHit extends Attack {
  JasonAOEHit(float x, float y, float radius) {
   super(x, y);
   aoeRadius = radius/2;
-  damage = 25 + int(UpgradeDump.getJasonDamageBonus());
+  damage = 25;
   lifetime = 0.05;
   lengthOfDebuff = 0;
  }

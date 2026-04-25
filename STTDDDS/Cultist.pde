@@ -12,11 +12,6 @@ class Cultist extends BaseActor  {
   
   
   void update() {
-    //Applies upgrades every frame
-    scareRange = 240 + UpgradeDump.getCultistRangeBonus();
-    attackSpeed = 0.4 + UpgradeDump.getCultistAttackSpeedBonus();
-    //brainwashing upgrades are read in cultistProjectile at time of firing. 
-    
     super.update();
     if (attackCooldown < 0) {
       if (!guestsInRange.isEmpty()) {
@@ -52,7 +47,7 @@ class CultistProjectile extends AOE {
    speed= 120;
    damage = 10;
    lifetime = 5;
-   lengthOfDebuff = 20 + (UpgradeDump.getCultistBrainwashBonus() * 20); 
+   lengthOfDebuff =20;
    debuffs.add(debuffTypes.CULTJARGON);
    }
   

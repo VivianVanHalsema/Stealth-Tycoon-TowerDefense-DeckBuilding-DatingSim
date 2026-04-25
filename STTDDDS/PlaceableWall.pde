@@ -3,14 +3,12 @@ class PlaceableWall extends BaseActor  {
   
   PlaceableWall(int x, int y){
     super(x,y);
-    size = new PVector(75, 100);
-    angle = 0;
-    position.x -= 1;
-    position.y -= 12;
-    scareRange = 0;
+    /* customizable variables
+    sprite = loadImage("sprites/mummy.png");
     attackSpeed = .8;
-    
-    sprite = loadImage("sprites/wall.png"); //PlaceHolder
+    scareRange = 240;
+    */
+    sprite = loadImage("sprites/cultist.png"); //PlaceHolder
   }
   
   
@@ -29,19 +27,7 @@ class PlaceableWall extends BaseActor  {
   }
   
    void draw(){
-    noStroke();
-    rectMode(CENTER);
-    imageMode(CENTER);
-    //draw attack range
-    fill(255,20);
-    ellipse(position.x,position.y, scareRange,scareRange);
-    pushMatrix();
-    translate(position.x, position.y);
-    rotate(angle);
-    imageMode(CENTER);
-    sprite.resize(int(size.x), int(size.y));
-    image(sprite, 0, 0);
-    popMatrix();
+    super.draw();
   }
   
   

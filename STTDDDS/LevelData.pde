@@ -6,7 +6,7 @@ static class LevelData {
   static int[][] Level1 =
   { //16 Rows 16 Columns
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //5
@@ -32,7 +32,7 @@ class Level {
   boolean useDiagonals = false;
 
   Level() {
-      loadLevel(LevelData.Level1);
+    loadLevel(LevelData.Level1);
   }
   void draw() {
     noStroke();

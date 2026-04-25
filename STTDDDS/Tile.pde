@@ -19,8 +19,6 @@ static class TileHelper {
     
     //Hours Wasted here: 5
     
-    //There is probably no easier way to do this other than matrix math stuffs tbh
-    
     
     //The comments are from me experimenting with different versions of getting the scale transform to work with the grid
     //Until that is cleaned up, the mouse wheel will be disabled.
@@ -57,7 +55,6 @@ class Tile {
   int Y; // GRID Y
   int TERRAIN = 0; // TERRAIN TYPE
   boolean hover = false;
-  boolean blocked = false;
 
   Tile(int X, int Y) {
     this.X = X;
@@ -65,18 +62,28 @@ class Tile {
   }
   // DRAW THIS TILE:
   void draw() {
-    PVector p = TileHelper.gridToPixel(X, Y);
-    stroke(128);
-    strokeWeight(2);
-    fill(127, 0.5); // don't draw empty tiles
-    if(hover) fill(255, 255, 0, 128 + 128 * bpm.easeBounce());
-    if(hover && actorPlacing != null && isPassable()) fill(0, 128, 0, 128 + 128 * bpm.easeBounce());
-    if(hover && actorPlacing != null && (!isPassable() || !placeable)) fill(128, 0, 0, 128 + 128 * bpm.easeBounce());
-    rect(p.x, p.y, TileHelper.W, TileHelper.H);
-    noStroke();
+    if (TERRAIN == 0) {
+      if (TileHelper.isHex) fill(127);
+      else if(hover) {}
+      else fill(127, 0.5); // don't draw empty tiles
+    }
+    if (TERRAIN == 1) fill(200);
+    if (TERRAIN == 2) fill(255);
+    if(hover) fill(255, 255, 0);
+    
+    if (TileHelper.isHex) {
+      PVector p = getCenter();
+      ellipse(p.x, p.y, TileHelper.W, TileHelper.H);
+    } 
+    else {
+      PVector p = TileHelper.gridToPixel(X, Y);
+      stroke(0);
+      strokeWeight(2);
+      rect(p.x, p.y, TileHelper.W, TileHelper.H);
+      noStroke();
+    }
     hover = false;
   }
-  
   // GET THE CENTER POINT OF THIS TILE IN PIXEL-SPACE:
   PVector getCenter() {
     PVector p = TileHelper.gridToPixel(new Point(X, Y));
@@ -84,7 +91,6 @@ class Tile {
     p.y += TileHelper.halfH;
     return p;
   }
-  
   boolean isPassable(){
     return (TERRAIN != 2); 
   }

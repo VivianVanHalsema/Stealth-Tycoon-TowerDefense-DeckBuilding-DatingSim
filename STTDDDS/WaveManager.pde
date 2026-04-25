@@ -1,7 +1,9 @@
 class WaveManager {
 
-  
-  //what wave are we on
+  /*
+  TODO
+  -when enemy reach the end of pathfinding kill them with hammers, then rate them depending on their completeness.
+  */
 
   int maxWave = 10;
   
@@ -13,10 +15,10 @@ class WaveManager {
    boolean lateWaveComplete = false;
    boolean lateWaveStarted = false;
    boolean middleWaveStarted = false;
+   boolean allWavesComplete = true;
   ArrayList<String> queue = new ArrayList<String>();
   float currQueueTime;
   float queueDelay = 1;
-  boolean allWavesComplete = true;
   //wave manager  
   //store waves in a csv 31 total waves
    //each wave stores an id, or which wave it is
@@ -71,7 +73,7 @@ class WaveManager {
    }else if(lateWaveStarted && allTerrified) {
     println("all guest have been scared! Wave " + currWave + " is complete!");
      resetWave();
-     if (mainScreen != null){
+      if (mainScreen != null){
        mainScreen.textDisplay.addNewText("Wave " + currWave + "is Complete");
       }
    }
@@ -137,7 +139,7 @@ class WaveManager {
      newGuest = new BaseGuest(x,y); ///REPLACE WHEN REAL
      break;
      case("ghost"):
-     newGuest = new GhostGuest(x,y);///REPLACE WHEN REAL
+     newGuest = new BaseGuest(x,y);///REPLACE WHEN REAL
      break;
      case("tank"):
      newGuest = new BaseGuest(x,y);///REPLACE WHEN REAL
