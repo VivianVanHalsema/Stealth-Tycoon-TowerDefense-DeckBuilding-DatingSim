@@ -43,9 +43,13 @@ class BaseGuest {
   void update(){
     if (health <= 0 && terrified != true) {
       terrified = true;
+<<<<<<< Updated upstream
       speed = 1;
       currentMoney += 10;
       onDeath();
+=======
+      speed *= 2;
+>>>>>>> Stashed changes
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
@@ -90,22 +94,32 @@ class BaseGuest {
       int randomIndex = (int) random(fiveStarList.size()); 
       review = "5/5 Stars: " + fiveStarList.get(randomIndex);
       entertainmentValue += .1;
+      currentMoney += 10;
      }
      else if (health >= maxHealth/2){ //3 star reviews
      int randomIndex = (int) random(threeStarList.size()); 
      review = "3/5 Stars: " + threeStarList.get(randomIndex);
-     
+     currentMoney += 5;
      }
      else {//1 star review
     int randomIndex = (int) random(threeStarList.size()); 
     review = "1/5 Stars: " + threeStarList.get(randomIndex);
     entertainmentValue -= .2;
+    currentMoney -=5;
     if (entertainmentValue > 1) entertainmentValue = 1; 
     }
      if (mainScreen != null){
        mainScreen.textDisplay.addNewText(review);
       }
   }
+<<<<<<< Updated upstream
+=======
+  void ExitScreen() {
+    onDeath();
+    isOffScreen = true;
+    
+  }
+>>>>>>> Stashed changes
   
 <<<<<<< Updated upstream
  
@@ -209,9 +223,14 @@ class BaseGuest {
     popMatrix();
     }
     
+<<<<<<< Updated upstream
     
   } ///truly just a test Guest for detecting by tower, delete it or do whatever you want with it Ry
   //okay now do NOT delete it (without warning) I've added a debuff system
+=======
+    noTint();
+  } 
+>>>>>>> Stashed changes
   
   //PATHFINDING FUNCTIONS
   void teleportTo(Point gridP) {

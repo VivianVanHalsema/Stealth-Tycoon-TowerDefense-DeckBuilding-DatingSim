@@ -31,21 +31,18 @@ class TextDisplayComponent {
     
     textSize(18);
     textAlign(LEFT, TOP);
+    noStroke();
     
-    stroke(0, 0, 0, line.visibility);
-    strokeWeight(4);
-    
-    // Draw outline
-    fill(255,255,255, line.visibility);
-    text(line.text, x - 1, y + textOffset - 1);
-    text(line.text, x + 1, y + textOffset + 1);
-    text(line.text, x - 1, y + textOffset + 1);
-    text(line.text, x + 1, y + textOffset - 1);
+    //drawing the highlight
+    float tw = (textWidth(line.text)*2)+10;
+
+    fill(0,0,0,150);
+    rect(x,y+textOffset,tw,30);
     
     // Draw main text
     noStroke();
     fill(200, 0,0, line.visibility);
-    text(line.text, x, y + textOffset);
+    text(line.text, x, y + textOffset-5);
     
     popStyle();
     textOffset -= 30;
