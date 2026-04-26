@@ -1,7 +1,7 @@
 class WitchDoctor extends BaseActor {
  
-  WitchDoctor(int x, int y) {
-   super(x, y);
+  WitchDoctor(int x, int y, actorTypes scaractor) {
+   super(x,y, scaractor);
    sprite = loadImage("sprites/witchdoctor.png"); //will swap out when witch doctor is done (I am yearning)
    attackSpeed = 0.4;
    maxAttackCooldown = 1;

@@ -2,8 +2,8 @@
 //here's a child actor class to walk you through what things to add and change for your own actor/tower
 class ChildActorExample extends BaseActor  {
   
-  ChildActorExample(int x, int y){
-    super(x,y);
+  ChildActorExample(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
     /* customizable variables
     sprite = loadImage("sprites/mummy.png");
     attackSpeed = .8;

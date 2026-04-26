@@ -1,8 +1,8 @@
 
 class Cultist extends BaseActor  {
   
-  Cultist(int x, int y){
-    super(x,y);
+  Cultist(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
     
     sprite = loadImage("sprites/cultist.png");
     attackSpeed = .4;

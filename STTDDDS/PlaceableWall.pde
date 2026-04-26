@@ -1,8 +1,8 @@
 
 class PlaceableWall extends BaseActor  {
   
-  PlaceableWall(int x, int y){
-    super(x,y);
+  PlaceableWall(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
     size = new PVector(75, 100);
     angle = 0;
     position.x -= 1;

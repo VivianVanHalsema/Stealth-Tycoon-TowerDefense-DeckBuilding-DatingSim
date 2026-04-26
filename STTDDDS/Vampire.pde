@@ -3,8 +3,8 @@ class Vampire extends BaseActor {
   
   ArrayList<debuffTypes> debuffs = new ArrayList<debuffTypes>();
   
-  Vampire(int x, int y){
-    super(x,y);
+  Vampire(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
     /* customizable variables
     sprite = loadImage("sprites/mummy.png");
     attackSpeed = .8;

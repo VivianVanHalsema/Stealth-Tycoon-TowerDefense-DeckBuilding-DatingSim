@@ -9,6 +9,8 @@ class BaseActor {
   float attackCooldown;
   float maxAttackCooldown = 1;
   
+  actorTypes actorType;
+  
   
   
   
@@ -18,13 +20,13 @@ class BaseActor {
   float attackSpeed = 1; // attack speed of 1 is every second, 2 is twice a second, .5 is every 2 seconds
   
   
-  BaseActor(int x, int y){
+  BaseActor(int x, int y, actorTypes scaractor){
     
   //input variables
   position.x = x;
   position.y = y;
   sprite = loadImage("sprites/vampire.png");
-
+  actorType = scaractor;
   
     
   }

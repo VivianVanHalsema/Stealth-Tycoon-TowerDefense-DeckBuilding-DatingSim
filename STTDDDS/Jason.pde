@@ -1,6 +1,6 @@
 class Jason extends BaseActor {
- Jason(int x, int y){ 
-   super(x, y);
+ Jason(int x, int y, actorTypes scaractor){ 
+   super(x,y, scaractor);
    sprite = loadImage("sprites/jason.png");
    attackSpeed = 1;
    maxAttackCooldown = 1;

@@ -349,43 +349,43 @@ class MainScreen {
     switch(actorPlacing.actor) {
     case MUMMY:
       Mummy mummyToAdd;
-      mummyToAdd = new Mummy(int(placingPosition.x), int(placingPosition.y));
+      mummyToAdd = new Mummy(int(placingPosition.x), int(placingPosition.y), actorTypes.MUMMY);
       actors.add(mummyToAdd);
       currentScaractorCount++;
       break;
 
     case CULTIST:
       Cultist cultistToAdd;
-      cultistToAdd = new Cultist(int(placingPosition.x), int(placingPosition.y));
+      cultistToAdd = new Cultist(int(placingPosition.x), int(placingPosition.y), actorTypes.CULTIST);
       actors.add(cultistToAdd);
       break;
 
     case VAMPIRE:
       Vampire vampireToAdd;
-      vampireToAdd = new Vampire(int(placingPosition.x), int(placingPosition.y));
+      vampireToAdd = new Vampire(int(placingPosition.x), int(placingPosition.y), actorTypes.VAMPIRE);
       actors.add(vampireToAdd);
       currentScaractorCount++;
       break;
 
     case JASON:
-      Jason jasonToAdd = new Jason(int(placingPosition.x), int(placingPosition.y));
+      Jason jasonToAdd = new Jason(int(placingPosition.x), int(placingPosition.y), actorTypes.JASON);
       actors.add(jasonToAdd);
       currentScaractorCount++;
 
       break;
 
     case WITCHDOCTOR:
-      WitchDoctor witchDoctorToAdd = new WitchDoctor(int(placingPosition.x), int(placingPosition.y));
+      WitchDoctor witchDoctorToAdd = new WitchDoctor(int(placingPosition.x), int(placingPosition.y), actorTypes.WITCHDOCTOR);
       actors.add(witchDoctorToAdd);
       currentScaractorCount++;
       break;
 
     case WALL:
-      PlaceableWall wallToAdd = new PlaceableWall(int(placingPosition.x), int(placingPosition.y));
+      PlaceableWall wallToAdd = new PlaceableWall(int(placingPosition.x), int(placingPosition.y), actorTypes.WALL);
       actors.add(wallToAdd);
       break;
     case WEREWOLF:
-      Werewolf werewolfToAdd = new Werewolf(int(placingPosition.x), int(placingPosition.y));
+      Werewolf werewolfToAdd = new Werewolf(int(placingPosition.x), int(placingPosition.y), actorTypes.WEREWOLF);
       actors.add(werewolfToAdd);
       currentScaractorCount++;
       break;

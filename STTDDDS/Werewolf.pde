@@ -4,8 +4,8 @@ class Werewolf extends BaseActor {
   float displaylifetime = 0;
   float displaylifetimereset = 1.5;
 
-  Werewolf(int x, int y) {
-    super(x, y);
+  Werewolf(int x, int y, actorTypes scaractor) {
+    super(x,y, scaractor);
     /* customizable variables
      sprite = loadImage("sprites/mummy.png");
      attackSpeed = .8;
