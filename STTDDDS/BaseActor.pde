@@ -131,7 +131,6 @@ static enum actorTypes
     CULTIST,
     MUMMY,
     VAMPIRE,
-    WEREWOLF,
     JASON,
     WITCHDOCTOR,
     WALL,

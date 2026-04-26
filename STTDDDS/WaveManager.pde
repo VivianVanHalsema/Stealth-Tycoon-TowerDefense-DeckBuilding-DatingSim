@@ -100,17 +100,17 @@ class WaveManager {
   void nextSetOfGuests(String currentSet) {
   if(currentSet == "early") {
     for(Map.Entry<String, Integer> w : currWaveData.earlyWave.entrySet()) {
-     addGuestToQueue(w.getKey());
+     addGuestToQueue(w.getKey(), 1);
     }
   }
   else if(currentSet == "middle") {
     for(Map.Entry<String, Integer> w : currWaveData.middleWave.entrySet()) {
-      addGuestToQueue(w.getKey());
+      addGuestToQueue(w.getKey(), 1);
     }
   }
   else if(currentSet == "late") {
     for(Map.Entry<String, Integer> w : currWaveData.lateWave.entrySet()) {
-      addGuestToQueue(w.getKey());
+      addGuestToQueue(w.getKey(), 1);
     }
   }
 }

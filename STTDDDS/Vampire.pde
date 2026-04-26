@@ -24,7 +24,7 @@ class Vampire extends BaseActor {
     //super
     getAllInRange();
     lookAtFrontGuestInRange();
-    attackCooldown -= dt; //modified for the purposes of a quick initial attack if an enemy enters range but slower later
+    attackCooldown -= gdt; //modified for the purposes of a quick initial attack if an enemy enters range but slower later
     
     scareRange = 220 + UpgradeDump.getVampireRangeBonus();
     maxAttackCooldown = 3 * (1 * UpgradeDump.getVampireAttackSpeedBonus());
@@ -96,7 +96,7 @@ class VampireProjectile extends CircleProjectile {
   void update(){
     if (firstFrame) {
       super.update();
-    } else lifetime -= dt; 
+    } else lifetime -= gdt; 
     firstFrame = false;
     
     //this should handle collision and be all you need unless ur getting freaky

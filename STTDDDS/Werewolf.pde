@@ -35,7 +35,7 @@ class Werewolf extends BaseActor {
     }
 
 
-    displaylifetime -= dt;
+    displaylifetime -= gdt;
   }
 
   void draw() {
