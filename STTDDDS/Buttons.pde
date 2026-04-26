@@ -78,11 +78,11 @@ public class Button {
     float xbounce = map(bpm.easeBounce(2), 0, 1, 0,8);
     float ybounce = map(bpm.easeBounce(2), 0, 1, position.y-3,position.y+3);
     if (isHovered == true){ 
-      fill(255);
+      fill(255,100);
       rect(position.x-3,ybounce,size.x+6,size.y+6, xbounce);
     }
-    if (clickable == false) {fill(80); }
-    else fill(200);
+    if (clickable == false) {fill(80,100); }
+    else fill(200,100);
    rect(position.x,ybounce,size.x,size.y,xbounce);
    fill(10);
    textSize(20);

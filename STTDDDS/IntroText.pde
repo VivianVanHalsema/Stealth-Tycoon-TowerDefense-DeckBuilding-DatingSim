@@ -3,7 +3,7 @@
 
 class IntroText {
  String[] lines = {
-   "Todays the big day, as long as you can remember you have always wanteds to run your own haunted house.",
+   "Todays the big day, as long as you can remember you have always wanted to run your own haunted house.",
    "But times are tough for a green startup like yourself, so you had to take some loans to cover the cost.",
    "Little did you know that this loan shark turned out to be the grim reaper! ",
    "He may be cruel, but he is fair, he gave you 10 days to pay back his initial loan of 3,000 dollars...",
