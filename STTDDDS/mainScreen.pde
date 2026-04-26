@@ -1,5 +1,7 @@
 class MainScreen {
-
+  
+  IntroText introText;
+  
   PImage background;
 
   Camera camera;
@@ -35,6 +37,8 @@ class MainScreen {
 
 
   MainScreen() {
+    
+    introText = new IntroText(); //initializing the intro text
 
     //Pathfinding Initialization
     TileHelper.app = new STTDDDS();
@@ -105,11 +109,15 @@ class MainScreen {
     buttonPlaceCooldown -= dt;
 
     if (Mouse.onDown(Mouse.LEFT)) {
+      //if intro is still going, advance by clicking left click
+      if (introText != null && introText.active) {
+       introText.advance(); 
+      } else {
       PrevButtonClickCheck();
       PlacingActorLogic();
       
     } // mouse click!!
-
+  }
     if (Mouse.isDown(Mouse.LEFT)) {
       if (buttonPlaceCooldown < 0) PlacingActorLogic();
     }
@@ -235,7 +243,9 @@ class MainScreen {
     if (actorPlacing != null) {
       actorPlacing.draw();
     }
-    
+    if (introText != null && introText.active) {
+     introText.draw(); 
+    }
     pPointG = g;
   }
   
