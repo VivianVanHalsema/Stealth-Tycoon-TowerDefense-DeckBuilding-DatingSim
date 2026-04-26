@@ -99,13 +99,13 @@ class MainScreen {
     wallButton = new ShopButton(width+50, 400, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
     buttons.add(wallButton);
     
-    tombstoneButton = new ShopButton(width+50, 480, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    tombstoneButton = new ShopButton(width+50, 480, "GET_TOWER", dashboardTabs.HIRE, actorTypes.TOMBSTONE);
     buttons.add(tombstoneButton);
     
-    handsButton = new ShopButton(width+240, 400, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    handsButton = new ShopButton(width+240, 400, "GET_TOWER", dashboardTabs.HIRE, actorTypes.HANDS);
     buttons.add(handsButton);
     
-    bloodButton = new ShopButton(width+240, 480, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    bloodButton = new ShopButton(width+240, 480, "GET_TOWER", dashboardTabs.HIRE, actorTypes.BLOOD);
     buttons.add(bloodButton);
 
     vampireButton = new ShopButton(width+50, 260, "GET_TOWER", dashboardTabs.HIRE, actorTypes.VAMPIRE);
@@ -332,10 +332,11 @@ class MainScreen {
       
       if (currentMoney >= currentPrice && currentScaractorCount < maxScaractors) {
         PVector placingPosition = tile.getCenter();
-        PlaceActorSwitch(placingPosition); //Gets the actor being placed and places it
+        PlaceActorSwitch(placingPosition, g); //Gets the actor being placed and places it
         if (!movingVampy) currentMoney -= currentPrice; //Spend money on place
         actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
       }
+
       
     } else { //the path is blocked!!
       level.setTile(g, 0);
@@ -345,7 +346,7 @@ class MainScreen {
   }
 
 
-  void PlaceActorSwitch(PVector placingPosition) {
+  void PlaceActorSwitch(PVector placingPosition, Point g) {
     switch(actorPlacing.actor) {
     case MUMMY:
       Mummy mummyToAdd;
@@ -389,6 +390,23 @@ class MainScreen {
       actors.add(werewolfToAdd);
       currentScaractorCount++;
       break;
+    case BLOOD:
+    
+     level.setTile(g,2);
+     Blood bloodToAdd = new Blood(int(placingPosition.x), int(placingPosition.y), actorTypes.BLOOD);
+      actors.add(bloodToAdd);
+    break;
+    case HANDS:
+    
+     level.setTile(g,2);
+     Hands handsToAdd = new Hands(int(placingPosition.x), int(placingPosition.y), actorTypes.HANDS);
+      actors.add(handsToAdd);
+    break;
+    case TOMBSTONE:
+     level.setTile(g,2);
+     Tombstone tombstoneToAdd = new Tombstone(int(placingPosition.x), int(placingPosition.y), actorTypes.TOMBSTONE);
+      actors.add(tombstoneToAdd);
+    break;
     }
   }
   

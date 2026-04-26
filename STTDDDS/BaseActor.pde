@@ -136,7 +136,10 @@ static enum actorTypes
     JASON,
     WITCHDOCTOR,
     WALL,
-    WEREWOLF
+    WEREWOLF,
+    HANDS,
+    TOMBSTONE,
+    BLOOD
   };
   
   
@@ -183,6 +186,15 @@ static enum actorTypes
           
           case WEREWOLF:
           sprite = loadImage("sprites/werewolf.png");
+          break;
+          case HANDS:
+          sprite = loadImage("sprites/hands.png");
+          break;
+          case BLOOD:
+          sprite = loadImage("sprites/bloodspatter.png");
+          break;
+          case TOMBSTONE:
+          sprite = loadImage("sprites/tombstone.png");
           break;
         }
       

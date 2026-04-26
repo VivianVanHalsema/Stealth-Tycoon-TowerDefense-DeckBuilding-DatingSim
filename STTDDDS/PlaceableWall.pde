@@ -46,3 +46,100 @@ class PlaceableWall extends BaseActor  {
   
   
 }
+
+class Decoration extends BaseActor  {
+  
+  Decoration(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
+    size = new PVector(75, 75);
+    
+    sprite = loadImage("sprites/bloodspatter.png"); //PlaceHolder
+    entertainmentValue += .1;
+  }
+  
+  
+   void draw(){
+    noStroke();
+    imageMode(CENTER);
+    pushMatrix();
+    translate(position.x, position.y);
+    rotate(angle);
+    imageMode(CENTER);
+    sprite.resize(int(size.x), int(size.y));
+    image(sprite, 0, 0);
+    popMatrix();
+
+  }
+  
+  
+}
+class Blood extends BaseActor  {
+  
+  Blood(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
+    
+    sprite = loadImage("sprites/bloodspatter.png"); //PlaceHolder
+
+  }
+  
+  
+   void draw(){
+    noStroke();
+    imageMode(CENTER);
+    pushMatrix();
+    translate(position.x, position.y);
+    rotate(angle);
+    imageMode(CENTER);
+    sprite.resize(int(size.x), int(size.y));
+    image(sprite, 0, 0);
+    popMatrix();
+  }
+  
+}
+  
+  class Hands extends BaseActor  {
+  
+  Hands(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
+    angle = 90;
+    sprite = loadImage("sprites/hands.png"); //PlaceHolder
+
+  }
+  
+  
+   void draw(){
+    noStroke();
+    imageMode(CENTER);
+    pushMatrix();
+    translate(position.x, position.y);
+    rotate(angle);
+    imageMode(CENTER);
+    sprite.resize(int(size.x), int(size.y));
+    image(sprite, 0, 0);
+    popMatrix();
+    }
+  }
+
+class Tombstone extends BaseActor  {
+  
+   Tombstone(int x, int y, actorTypes scaractor){
+    super(x,y, scaractor);
+    angle=0;
+    sprite = loadImage("sprites/tombstone.png"); //PlaceHolder
+
+  }
+  
+  
+   void draw(){
+    noStroke();
+    imageMode(CENTER);
+    pushMatrix();
+    translate(position.x, position.y);
+    rotate(angle);
+    imageMode(CENTER);
+    sprite.resize(int(size.x), int(size.y));
+    image(sprite, 0, 0);
+    popMatrix();
+  }
+  
+}

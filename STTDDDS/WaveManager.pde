@@ -172,7 +172,7 @@ class WaveManager {
      newGuest = new GhostGuest(x,y);///REPLACE WHEN REAL
      break;
      case("tank"):
-     newGuest = new BaseGuest(x,y);///REPLACE WHEN REAL
+     newGuest = new TankGuest(x,y);///REPLACE WHEN REAL
      break;
      default:
      newGuest = new BaseGuest(x,y); //make base guest if not prev
