@@ -24,7 +24,7 @@ class Attack {
   }
   
   void update () {
-   lifetime -= dt;
+   lifetime -= gdt;
     if (lifetime < 0 || isColliding){
      isAlive = false;
     }
@@ -65,7 +65,7 @@ class Projectile extends Attack {
 
   //child variables
   float angle;
-  float projectileSpeed = 5;
+  float projectileSpeed = 5 *gameSpeed;
   
  Projectile (float x, float y, float angle){
    super(x,y);
@@ -250,7 +250,7 @@ class AOE extends Attack {
   
   void update() {
   super.update();
-  size.x += speed * dt;
+  size.x += speed * gdt;
    if (size.x > limit){ 
    isAlive = false;
    size.x = limit;

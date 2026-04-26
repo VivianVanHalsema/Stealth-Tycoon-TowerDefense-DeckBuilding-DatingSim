@@ -64,24 +64,19 @@ class MovingDashboard extends Button {
       }
     }
     
-    for(Button b : attachedButtons){
-    if (b instanceof DashBoardButton){
-      if (currentTab != ((DashBoardButton) b).thisTab){
-        b.clickable = false;
-        b.visible = false;
-      } else {
-       b.clickable = true;
-       b.visible = true;
+    //for(Button b : attachedButtons){
+    //if (b instanceof DashBoardButton){
+    //  if (currentTab != ((DashBoardButton) b).thisTab){
+    //    b.clickable = false;
+    //    b.visible = false;
+    //  } else {
+    //   b.clickable = true;
+    //   b.visible = true;
         
-      }
-    }
-   
-      
-      
-      
-      
-      
-    }
+    //  }
+     
+    //}    
+    //}
     
     pIsHovered = isHovered;
   }
@@ -100,7 +95,6 @@ class MovingDashboard extends Button {
 
 enum dashboardTabs {
   HIRE, //get actors
-  UPGRADE,// get global upgrades
   STATS, // I think this would be useful for if each tower needs to get paid each night, so u can see ur current overhead, who's putting out the most damage etc also obvs needs a jason talk/click counter obvs
   SETTINGS //volume, quit to menu
 };

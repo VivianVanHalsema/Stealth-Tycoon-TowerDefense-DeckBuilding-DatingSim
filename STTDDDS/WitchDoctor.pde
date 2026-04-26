@@ -63,7 +63,7 @@ class WitchDoctorProjectile extends CircleProjectile {
    angle = lerp(angle, targetAngle, 0.2);
   }
   //Call projectile's update but not Circle projectiles collision, keeps deleting before hitting target
-  lifetime -= dt;
+  lifetime -= gdt;
   if (lifetime <0) isAlive = false;
   velocity.x = cos(angle) * projectileSpeed;
   velocity.y = sin(angle) * projectileSpeed;
@@ -111,7 +111,7 @@ class WitchDoctorPool extends Attack {
   
   void update() {
    super.update();
-   tickTimer -= dt;
+   tickTimer -= gdt;
    if (tickTimer <= 0) {
     tickTimer = tickInterval;
     spawnTick();
