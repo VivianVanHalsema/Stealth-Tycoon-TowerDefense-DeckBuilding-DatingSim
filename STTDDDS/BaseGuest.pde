@@ -148,8 +148,12 @@ class BaseGuest {
      switch(debuff){
        case SLOWNESS:
        //slows the guest down
-       slowness = .65;
+       slowness = .60;
        bandaged = true;
+       break;
+       case WRAPPED: 
+       slowness = .40; 
+       bandaged = true; //adds wrapping visual to guests
        break;
        case CULTJARGON:
        //chance to make a cult member, need to ask if we want this to be temp or permanent
@@ -185,6 +189,10 @@ class BaseGuest {
             slowness = 1;
             bandaged = false;
         break;
+        case WRAPPED:
+            slowness = 1;
+            bandaged = false; 
+            break; 
         case CULTJARGON:
              
              currentColor = baseColor;
@@ -303,7 +311,8 @@ static enum debuffTypes
   {
    SLOWNESS,
    CULTJARGON,
-   FLEEING
+   FLEEING,
+   WRAPPED //added a mummy specific slow since its adding the wrappings to the witch doctor slow 
   };
   
   

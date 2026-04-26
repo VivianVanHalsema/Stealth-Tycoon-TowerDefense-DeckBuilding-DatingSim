@@ -58,10 +58,10 @@ class MummyProjectile extends LineProjectile {
   MummyProjectile (float x, float y, float angle){
     super(x,y,angle);
     lineWidth = 10;
-    lifetime = .6;
-    projectileSpeed = 6;
+    lifetime = 1.0;
+    projectileSpeed = 9;
     damage = 20;
-    debuffs.add(debuffTypes.SLOWNESS); //dont forget to add
+    debuffs.add(debuffTypes.WRAPPED); //Adds unique mummy debuff
     //reads slow duration upgrade at moment of firing 
     //this way each projectile carries the correct debuff length as its being made
     lengthOfDebuff = 1.0 + UpgradeDump.getMummySlowBonus();
