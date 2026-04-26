@@ -16,6 +16,7 @@ float dt, prevTime = 0;
 TitleScreen titleScreen;
 MainScreen mainScreen;
 MovingDashboard uiDashboard;
+EndingScreen endingScreen;
 PlacingActor actorPlacing;
 boolean keyEnter = false;
 //test comment change
@@ -162,7 +163,10 @@ void draw(){
    breakRoom.update();
    if(breakRoom != null) breakRoom.draw();
   }
-  
+  else if (endingScreen != null) {
+   endingScreen.update();
+   if (endingScreen != null) endingScreen.draw();
+  }
   
   
   Keyboard.update();
@@ -265,6 +269,11 @@ mainScreen = new MainScreen();
 void switchToBreakRoom() {
  switchScreens();
  breakRoom = new BreakRoom();
+}
+
+void switchToEnding() {
+ switchScreens(); 
+ endingScreen = new EndingScreen(); //picks ending based on current money by end of wave 10
 }
 
 //DELTATIME

@@ -151,7 +151,12 @@ class WaveManager {
      
   
   void resetWave(){
-    
+    //basically if the last wave just finished, takes player to ending screen
+    if (currWave >=maxWave) {
+     switchToEnding();
+     return; //STOP RUNNING RESET WAVE!!!
+    }
+ 
    mainScreen.waveStartButton.visible = true;
    mainScreen.waveStartButton.clickable = true;
    waveActive = false;
