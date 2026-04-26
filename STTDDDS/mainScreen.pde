@@ -1,5 +1,5 @@
 class MainScreen {
-  
+
   int maxScaractors = 15;
   int currentScaractorCount;
 
@@ -8,7 +8,7 @@ class MainScreen {
   Camera camera;
 
   PVector savedMousePosForCamera;
-  
+
   Point pPointG;
 
   //textDisplay
@@ -28,7 +28,9 @@ class MainScreen {
   ShopButton jasonButton;
   ShopButton witchyButton;
   ShopButton wallButton;
-  
+  ShopButton vampireButton;
+  ShopButton werewolfButton;
+
 
   BaseGuest testGuest;
   Mummy mummyTest;
@@ -85,6 +87,12 @@ class MainScreen {
     wallButton = new ShopButton(width+50, 340, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
     buttons.add(wallButton);
 
+    vampireButton = new ShopButton(width+50, 420, "GET_TOWER", dashboardTabs.HIRE, actorTypes.VAMPIRE);
+    buttons.add(vampireButton);
+    
+    werewolfButton = new ShopButton(width+50, 500, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WEREWOLF);
+    buttons.add(werewolfButton);
+
 
     //DASHBOARD INITIALIZATION
     //----Add buttons that should be attached to the dashboard and move with
@@ -95,6 +103,8 @@ class MainScreen {
     buttonsToAttachToDashboard.add(jasonButton);
     buttonsToAttachToDashboard.add(witchyButton);
     buttonsToAttachToDashboard.add(wallButton);
+    buttonsToAttachToDashboard.add(vampireButton);
+    buttonsToAttachToDashboard.add(werewolfButton);
     buttonsToAttachToDashboard.add(hireButton);
     buttonsToAttachToDashboard.add(upgradeButton);
     buttonsToAttachToDashboard.add(statsButton);
@@ -104,17 +114,16 @@ class MainScreen {
   }
 
   void update() {
-    
+
     buttonPlaceCooldown -= dt;
 
     if (Mouse.onDown(Mouse.LEFT)) {
       PrevButtonClickCheck();
-      PlacingActorLogic();
-      
+      PlacingActorLogic(false);
     } // mouse click!!
 
     if (Mouse.isDown(Mouse.LEFT)) {
-      if (buttonPlaceCooldown < 0) PlacingActorLogic();
+      if (buttonPlaceCooldown < 0) PlacingActorLogic(false);
     }
 
     if (Mouse.onDown(Mouse.RIGHT)) {
@@ -165,7 +174,6 @@ class MainScreen {
     for (BaseActor actor : actors) {
       actor.update();
     }
-    
   }
 
   void draw() {
@@ -204,13 +212,13 @@ class MainScreen {
     for (Attack p : attacks) {
       p.draw();
     }
-    for (BaseGuest guest : guests) {
-      guest.draw();
-    }
-
-
+    
     for (BaseActor actor : actors) {
       actor.draw();
+    }
+    
+    for (BaseGuest guest : guests) { //Reordered for ghosties to go over walls and still be visible
+      guest.draw();
     }
 
 
@@ -239,40 +247,40 @@ class MainScreen {
     if (actorPlacing != null) {
       actorPlacing.draw();
     }
-    
+
     pPointG = g;
   }
-  
-  void PlacingActorLogic() {
+
+  void PlacingActorLogic(boolean movingVampy) { //I decided to unnest this a little because it was gross and getting wayyy too many conditions :3
+
+    if (actorPlacing == null) return; //If we aren't in the placing state, don't continue
+    if (actorPlacing.purchasedThisFrame == true) return; //If we just clicked the button, don't continue or else we will insta autoplace a tower behind dash
+
+    //Find our tile
+    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
+    Tile tile = level.getTile(g);
+
+    if (tile == null || tile.isPassable() == false) return;
+
+    level.setTile(g, 2);
+    pathfinder.findPath(level.getTile(new Point(0, 0)), level.getTile(new Point(14, 15)));
     
-    if (actorPlacing != null && actorPlacing.purchasedThisFrame == false) {
-        if (actorPlacing.purchasedThisFrame == false) {
-          Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
-          Tile tile = level.getTile(g);
-          if (tile == null || tile.isPassable() == false) {
-          } else {
-            level.setTile(g, 2);
-            pathfinder.findPath(level.getTile(new Point(0, 0)), level.getTile(new Point(14, 15)));
-            if (pathfinder.pathBlocked == false && !(g.x == 0 && g.y == 0)) {
-              if (currentMoney >= currentPrice && currentScaractorCount < maxScaractors) {
-              PVector placingPosition = tile.getCenter();
-              PlaceActorSwitch(placingPosition); //Gets the actor being placed and places it
-              //End switch case
-              currentMoney -= currentPrice; //Spend money on place
-              currentScaractorCount++;
-              actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
-              }
-            } else { //the path is blocked!!
-              level.setTile(g, 0);
-              placeable = false;
-            } //end of pathfinding block check
-            pathfinder.pathBlocked = false;
-          } //end tile is not occupied
-        } //end if not purchased this frame
-      } //actor placing != null
+    if (pathfinder.pathBlocked == false && !(g.x == 0 && g.y == 0)) { 
       
+      if (currentMoney >= currentPrice && currentScaractorCount < maxScaractors) {
+        PVector placingPosition = tile.getCenter();
+        PlaceActorSwitch(placingPosition); //Gets the actor being placed and places it
+        if (!movingVampy) currentMoney -= currentPrice; //Spend money on place
+        actors = sortObjectsByHeight(); //We use this so walls can be bigger than a tile for faux 3d feels
+      }
+      
+    } else { //the path is blocked!!
+      level.setTile(g, 0);
+      placeable = false;
+    } //end of pathfinding block check
+    pathfinder.pathBlocked = false;
   }
-  
+
 
   void PlaceActorSwitch(PVector placingPosition) {
     switch(actorPlacing.actor) {
@@ -280,6 +288,7 @@ class MainScreen {
       Mummy mummyToAdd;
       mummyToAdd = new Mummy(int(placingPosition.x), int(placingPosition.y));
       actors.add(mummyToAdd);
+      currentScaractorCount++;
       break;
 
     case CULTIST:
@@ -287,23 +296,33 @@ class MainScreen {
       break;
 
     case VAMPIRE:
-
+      Vampire vampireToAdd;
+      vampireToAdd = new Vampire(int(placingPosition.x), int(placingPosition.y));
+      actors.add(vampireToAdd);
+      currentScaractorCount++;
       break;
 
     case JASON:
       Jason jasonToAdd = new Jason(int(placingPosition.x), int(placingPosition.y));
       actors.add(jasonToAdd);
+      currentScaractorCount++;
 
       break;
 
     case WITCHDOCTOR:
       WitchDoctor witchDoctorToAdd = new WitchDoctor(int(placingPosition.x), int(placingPosition.y));
       actors.add(witchDoctorToAdd);
+      currentScaractorCount++;
       break;
 
     case WALL:
       PlaceableWall wallToAdd = new PlaceableWall(int(placingPosition.x), int(placingPosition.y));
       actors.add(wallToAdd);
+      break;
+    case WEREWOLF:
+      Werewolf werewolfToAdd = new Werewolf(int(placingPosition.x), int(placingPosition.y));
+      actors.add(werewolfToAdd);
+      currentScaractorCount++;
       break;
     }
   }
