@@ -38,11 +38,11 @@ class WaveManager {
  
  void update(){
    if (waveActive && (currWave <= maxWave)){
-   currWaveTime -=dt; 
+   currWaveTime -=gdt; 
    
    //checking when to spawn next queue guest and when to end wave
    if (!queue.isEmpty()){
-     currQueueTime -= dt;
+     currQueueTime -= gdt;
      if (currQueueTime < 0){
        currQueueTime = queueDelay;
        println("Spawning next guest from queue with " + currWaveTime + " left on wave timer");
@@ -53,7 +53,7 @@ class WaveManager {
    //so if the last part of the wave has started AND the queue is empty, we can check the current guest on the board. If there is none or they are all terrified, this wave can reset
    boolean allTerrified = true;
    for (BaseGuest guest : guests) {
-      if (guest.terrified == false){
+      if (guest.terrified == false && guest.isCultist ==false){
        allTerrified = false;
        break;
       }
@@ -72,7 +72,7 @@ class WaveManager {
     println("all guest have been scared! Wave " + currWave + " is complete!");
      resetWave();
      if (mainScreen != null){
-       mainScreen.textDisplay.addNewText("Wave " + currWave + "is Complete");
+       mainScreen.textDisplay.addNewText("Wave " + currWave + " is Complete");
       }
    }
    }
@@ -115,11 +115,43 @@ class WaveManager {
   }
 }
   
-  void addGuestToQueue( String name){
-    //entertainment factor goes in here?? 
-    //add more if it's higher? do some modulo shit?
-    queue.add(name);
-  }
+  void addGuestToQueue(String name, int baseAmount) {
+    int totalToSpawn = baseAmount;
+    
+    if (entertainmentValue > 1.0) {
+        // For entertainmentValue of 1.5: spawn 1 extra for every 2 base enemies
+        // Formula: extraEnemies = floor(baseAmount * (entertainmentValue - 1.0))
+
+        
+        float extraRatio = entertainmentValue - 1.0; // 0.5, 1.0, 2.0, etc.
+
+        int extraGuests= 0;
+        
+        if (extraRatio <= 0.5) {
+            // 1.0 - 1.5:  easier scaling
+            extraGuests = floor(baseAmount * extraRatio);
+        } 
+        else if (extraRatio <= 1.0) {
+            // 1.5 - 2.0: medium scaling  
+            extraGuests = floor(baseAmount * extraRatio);
+        }
+        else {
+            // 2.0+: aggressive scaling but with diminishing returns so its not like impossible
+            extraGuests = floor(baseAmount * (1.0 + log(extraRatio)));
+        }
+        
+        totalToSpawn += extraGuests;
+        
+ 
+        if (extraGuests > 2 && mainScreen != null) {
+            mainScreen.textDisplay.addNewText("High entertainment attracts " + extraGuests + " even moreGuests!");
+        }
+    }
+    
+    for (int i = 0; i < totalToSpawn; i++) {
+        queue.add(name);
+    }
+}
   
  
   

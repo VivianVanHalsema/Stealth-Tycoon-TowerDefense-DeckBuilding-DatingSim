@@ -51,6 +51,18 @@ public class Button {
     size.x = 160;
     size.y = 30;
    break; 
+   
+   case "DELETE_ACTOR":
+   text = "Delete Actor?";
+   size.x = 160;
+   size.y = 40;
+   break;
+   
+   case "TOGGLE_SPEED":
+   text = gameSpeed +"x";
+   size.x= 50;
+   size.y = 30;
+   break;
    }
   }
   
@@ -62,17 +74,19 @@ public class Button {
     noStroke();
     rectMode(CORNER);
     textAlign(CENTER);
-   
+    
+    float xbounce = map(bpm.easeBounce(2), 0, 1, 0,8);
+    float ybounce = map(bpm.easeBounce(2), 0, 1, position.y-3,position.y+3);
     if (isHovered == true){ 
       fill(255);
-      rect(position.x-3,position.y-3,size.x+6,size.y+6, 8);
+      rect(position.x-3,ybounce,size.x+6,size.y+6, xbounce);
     }
     if (clickable == false) {fill(80); }
     else fill(200);
-   rect(position.x,position.y,size.x,size.y,8);
+   rect(position.x,ybounce,size.x,size.y,xbounce);
    fill(10);
    textSize(20);
-   text(text,position.x +size.x/2,position.y+size.y/2+5);  
+   text(text,position.x +size.x/2,ybounce+size.y/2+5);  
      
 }
 
@@ -124,7 +138,18 @@ void buttonClicked(){
     this.visible = false;
     this.clickable = false;
     break;
-   }
+    case "DELETE_ACTOR"://I should probably just piggy back on actor placing mode instead but overriding not being able to place over towers seems like a hassle
+    if (mainScreen != null) {
+        mainScreen.toggleDeleteMode();
+    }
+    break;
+   case "TOGGLE_SPEED":
+   println("speedup button clicked");
+   if (mainScreen != null) {
+        mainScreen.toggleSpeedUp();
+    }
+   break;
+  }
   }
 }
 
@@ -163,7 +188,7 @@ class ShopButton extends DashBoardButton {
       
     }
     actor = scaractor;
-    size.x=80;
+    size.x=140;
     size.y=60;
  
    
@@ -258,9 +283,7 @@ MovingDashboard owner;
   DashBoardButton(int x, int y, String clickAction, dashboardTabs tab) {
    super(x,y, clickAction); 
     thisTab = tab;
-    text = "";
-    size.x = 40;
-    size.y = 80;
+
     
   }
   
@@ -276,8 +299,8 @@ MovingDashboard owner;
   }
   
   void buttonClicked(){
-
-    //owner.currentTab = thisTab;    //I am getting a null pointer when I click on the Mummy Button
+    super.buttonClicked();
+ 
   }
 
   

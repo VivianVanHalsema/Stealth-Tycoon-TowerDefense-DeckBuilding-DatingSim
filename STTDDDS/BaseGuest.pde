@@ -47,7 +47,6 @@ class BaseGuest {
       terrified = true;
       speed *= 2;
       currentMoney += 10;
-      onDeath();
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
@@ -59,13 +58,13 @@ class BaseGuest {
     
     for(Map.Entry<debuffTypes, Float> debuff : currentDebuffs.entrySet()){
      float currentTime = debuff.getValue();
-     float newTime = currentTime-dt;
+     float newTime = currentTime-gdt;
         // Update the timer
         debuff.setValue(newTime);
     }
     for(Map.Entry<Attack,Float> attack : hitAttacks.entrySet()){
      float currentTime = attack.getValue();
-     float newTime = currentTime-dt;
+     float newTime = currentTime-gdt;
         // Update the timer
         attack.setValue(newTime);
     }
@@ -80,13 +79,9 @@ class BaseGuest {
   
   
   //on death, call this func to add a review to displayedtext
-  void addReviewToDisplay (){
-  //on death, call this func on death
-  //-it handles review and changes to entertainmentValue
-  }
   void onDeath (){
     String review;
-     if(terrified){ //5 star reviews
+     if(terrified || isCultist){ //5 star reviews
       int randomIndex = (int) random(fiveStarList.size()); 
       review = "5/5 Stars: " + fiveStarList.get(randomIndex);
       entertainmentValue += .1;
@@ -107,7 +102,7 @@ class BaseGuest {
       }
   }
   void ExitScreen() {
-    //onDeath();
+    onDeath();
     isOffScreen = true;
     
   }
@@ -135,6 +130,7 @@ class BaseGuest {
          //if smaller than 40, guest is not convinced
        continue;
        }
+       setTargetPosition(new Point(0,0));
      }
        
      currentDebuffs.put(debuff, lengthOfDebuff);
@@ -147,9 +143,9 @@ class BaseGuest {
        break;
        case CULTJARGON:
        //chance to make a cult member, need to ask if we want this to be temp or permanent
-       
        currentColor = color (100,200,100);
        isCultist = true;
+       
        break; 
 
      }
@@ -174,11 +170,11 @@ class BaseGuest {
         case SLOWNESS:
             slowness = 1;
             bandaged = false;
-            break;
+        break;
         case CULTJARGON:
              
              currentColor = baseColor;
-            break;
+         break;
         }
      } 
   }
@@ -262,7 +258,9 @@ class BaseGuest {
       
       if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
     } else if (path == null) {
-      position.y += speed * 2;
+      if (isCultist){position.y -= speed * 2;}
+      else{position.y += speed * 2;}
+      
       opacity -= 10;
       if (opacity <= 10) {
         ExitScreen();
@@ -411,6 +409,29 @@ static enum debuffTypes
     useManhattan = !useManhattan;
   }
 }
+
+
+class TankGuest extends BaseGuest{
+
+  TankGuest(int x, int y){
+    super(x,y);
+    maxHealth=300;
+    speed = 1.5;
+    baseColor =color(80,80,80);
+  }
+  
+  void update(){
+  super.update();
+    
+  }
+  
+  void draw(){
+    super.draw();
+    
+  }
+  
+
+}
     
     
     
@@ -423,7 +444,7 @@ static enum debuffTypes
     
     
     
-    
+   
     
     
     

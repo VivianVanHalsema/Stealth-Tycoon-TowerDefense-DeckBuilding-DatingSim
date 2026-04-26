@@ -16,25 +16,28 @@ class MainScreen {
   //buttons
   Button titleButton;
   Button dashLockButton;
+  Button deleteActorButton;
   Button waveStartButton;
   Button breakRoomButton;
+  DashBoardButton speedUpButton;
   TabButton hireButton;
-  TabButton upgradeButton;
   TabButton statsButton;
   TabButton settingsButton;
   //shopButtons
   ShopButton mummyButton;
   ShopButton jasonButton;
   ShopButton witchyButton;
+  ShopButton cultistButton;
+  ShopButton vampireButton;
+  ShopButton werewolfButton;
   ShopButton wallButton;
-  
+  ShopButton bloodButton;
+  ShopButton tombstoneButton;
+  ShopButton handsButton;
 
-  BaseGuest testGuest;
-  Mummy mummyTest;
-  Cultist cultistTest;
   //MoneySystem moneySystem;
   ArrayList<Button> buttonsToAttachToDashboard = new ArrayList<Button>();
-
+  boolean isDeletingMode;
 
   MainScreen() {
     
@@ -60,31 +63,45 @@ class MainScreen {
     buttons.add(waveStartButton);
     breakRoomButton = new Button(20, 80, "SWITCH_TO_BREAKROOM");
     buttons.add(breakRoomButton);
+    deleteActorButton = new Button(width+145, 650, "DELETE_ACTOR");
+    buttons.add(deleteActorButton);
+    speedUpButton = new DashBoardButton(width+50, 50, "TOGGLE_SPEED", dashboardTabs.HIRE);
+    buttons.add(speedUpButton);
 
 
     //Tab buttons initializations go here!!!!
-    hireButton = new TabButton(width-40, (height/8*1), "SWITCH_TABS", dashboardTabs.HIRE);
-    buttons.add(hireButton);
-    upgradeButton = new TabButton(width-40, (height/8*3), "SWITCH_TABS", dashboardTabs.UPGRADE);
-    buttons.add(upgradeButton);
-    statsButton = new TabButton(width-40, (height/8*5), "SWITCH_TABS", dashboardTabs.STATS);
-    buttons.add(statsButton);
-    settingsButton = new TabButton(width-40, (height/8*7), "SWITCH_TABS", dashboardTabs.SETTINGS);
-    buttons.add(settingsButton);
+    //hireButton = new TabButton(width-40, (height/8*1), "SWITCH_TABS", dashboardTabs.HIRE);
+    //buttons.add(hireButton);
+    //statsButton = new TabButton(width-40, (height/8*5), "SWITCH_TABS", dashboardTabs.STATS);
+    //buttons.add(statsButton);
+    //settingsButton = new TabButton(width-40, (height/8*7), "SWITCH_TABS", dashboardTabs.SETTINGS);
+    //buttons.add(settingsButton);
 
     //Dashboard button initializations go here!!!!
     // moneySystem = new MoneySystem();
-    mummyButton = new ShopButton(width+50, 100, "GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
+    mummyButton = new ShopButton(width+240, 100, "GET_TOWER", dashboardTabs.HIRE, actorTypes.MUMMY);
     buttons.add(mummyButton);
 
-    jasonButton = new ShopButton(width+50, 180, "GET_TOWER", dashboardTabs.HIRE, actorTypes.JASON);
+    jasonButton = new ShopButton(width+50, 100, "GET_TOWER", dashboardTabs.HIRE, actorTypes.JASON);
     buttons.add(jasonButton);
+    
+    cultistButton = new ShopButton(width+50, 180, "GET_TOWER", dashboardTabs.HIRE, actorTypes.CULTIST);
+    buttons.add(cultistButton);
 
-    witchyButton = new ShopButton(width+50, 260, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WITCHDOCTOR);
+    witchyButton = new ShopButton(width+240, 180, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WITCHDOCTOR);
     buttons.add(witchyButton);
 
-    wallButton = new ShopButton(width+50, 340, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    wallButton = new ShopButton(width+50, 400, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
     buttons.add(wallButton);
+    
+    tombstoneButton = new ShopButton(width+50, 480, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    buttons.add(tombstoneButton);
+    
+    handsButton = new ShopButton(width+240, 400, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    buttons.add(handsButton);
+    
+    bloodButton = new ShopButton(width+240, 480, "GET_TOWER", dashboardTabs.HIRE, actorTypes.WALL);
+    buttons.add(bloodButton);
 
 
     //DASHBOARD INITIALIZATION
@@ -95,11 +112,17 @@ class MainScreen {
     buttonsToAttachToDashboard.add(mummyButton);
     buttonsToAttachToDashboard.add(jasonButton);
     buttonsToAttachToDashboard.add(witchyButton);
+    buttonsToAttachToDashboard.add(cultistButton);
     buttonsToAttachToDashboard.add(wallButton);
-    buttonsToAttachToDashboard.add(hireButton);
-    buttonsToAttachToDashboard.add(upgradeButton);
-    buttonsToAttachToDashboard.add(statsButton);
-    buttonsToAttachToDashboard.add(settingsButton);
+    buttonsToAttachToDashboard.add(tombstoneButton);
+    buttonsToAttachToDashboard.add(handsButton);
+    buttonsToAttachToDashboard.add(bloodButton);
+    buttonsToAttachToDashboard.add(deleteActorButton);
+    //buttonsToAttachToDashboard.add(hireButton);
+    //buttonsToAttachToDashboard.add(statsButton);
+    //buttonsToAttachToDashboard.add(settingsButton);
+    buttonsToAttachToDashboard.add(speedUpButton);
+    
     //------------------------------, location(tostart), ----------location(toend), -------------------Stored Button Elements
     uiDashboard = new MovingDashboard( new PVector(width - 50, 0), new PVector(width - 450, 0), buttonsToAttachToDashboard);
   }
@@ -109,22 +132,32 @@ class MainScreen {
     buttonPlaceCooldown -= dt;
 
     if (Mouse.onDown(Mouse.LEFT)) {
+
       //if intro is still going, advance by clicking left click
       if (introText != null && introText.active) {
        introText.advance(); 
       } else {
+
+       if (isDeletingMode) {
+            // In delete mode, try to delete on click
+            checkDeletionOnClick();
+       }else{
       PrevButtonClickCheck();
       PlacingActorLogic();
-      
+       }
     } // mouse click!!
   }
     if (Mouse.isDown(Mouse.LEFT)) {
       if (buttonPlaceCooldown < 0) PlacingActorLogic();
+   
     }
 
     if (Mouse.onDown(Mouse.RIGHT)) {
       savedMousePosForCamera = new PVector(camera.x + mouseX, camera.y + mouseY);
       actorPlacing = null;
+        if (isDeletingMode) {
+            toggleDeleteMode();
+        }
     }
 
     if (Mouse.isDown(Mouse.RIGHT)) {
@@ -199,6 +232,9 @@ class MainScreen {
     if ((g.x != pPointG.x) || (g.y != pPointG.y)) {
       placeable = true;
     }
+    //draws a little x overlay over actors in delete mode :-)
+    
+    
 
 
 
@@ -220,7 +256,18 @@ class MainScreen {
 
 
     //-------------------------------------VFX Drawing Layer---------------------------------
-
+    //draw a little x over characters so we can delete them :-)
+    if (isDeletingMode) {
+    // Draw a red overlay on tiles with actors
+    for (BaseActor actor : actors) {
+        noFill();
+        stroke(255, 0, 0, 150);
+        strokeWeight(3);    
+        // Draw an X through the actor
+        line(actor.position.x - 25, actor.position.y - 25, actor.position.x + 25, actor.position.y + 25);
+        line(actor.position.x + 25, actor.position.y - 25, actor.position.x - 25, actor.position.y + 25);
+    }
+    }
 
 
 
@@ -287,7 +334,9 @@ class MainScreen {
       break;
 
     case CULTIST:
-
+      Cultist cultistToAdd;
+      cultistToAdd = new Cultist(int(placingPosition.x), int(placingPosition.y));
+      actors.add(cultistToAdd);
       break;
 
     case VAMPIRE:
@@ -311,6 +360,58 @@ class MainScreen {
       break;
     }
   }
+  
+  //
+  void toggleSpeedUp() {
+    if (gameSpeed ==1) {gameSpeed =2;}
+    else if(gameSpeed ==2) {gameSpeed =1;}
+    speedUpButton.text = gameSpeed + "x";
+  }
+  
+  
+  //TOGGLE DELETE MODE TO GET RID OF STUFF
+  void toggleDeleteMode() {
+    isDeletingMode = !isDeletingMode;
+    // Cancel any placing mode when entering delete mode
+    if (isDeletingMode && actorPlacing != null) {
+        actorPlacing = null;
+    }
+    // Update button text to show current mode
+    deleteActorButton.text = isDeletingMode ? "Cancel Delete" : "Delete Mode";
+}
+  
+void checkDeletionOnClick() {
+    Point g = TileHelper.pixelToGrid(new PVector(mouseX, mouseY), new PVector(camera.x, camera.y), zoom);
+    Tile tile = level.getTile(g);
+    if (tile != null) {
+        PVector clickPos = tile.getCenter();
+        // Find actor at this position (search backwards so higher Y actors get selected first)
+        BaseActor actorToDelete = null;
+        for (int i = actors.size() - 1; i >= 0; i--) {
+            BaseActor actor = actors.get(i);
+            if (dist(actor.position.x, actor.position.y, clickPos.x, clickPos.y) < 45) {
+                actorToDelete = actor;
+                break;
+            }
+        }
+        
+        if (actorToDelete != null) {
+            actors.remove(actorToDelete);
+            // Reset the tile (make it passable again)
+            if (level.getTile(g).TERRAIN == 2) {
+                level.setTile(g, 0);
+                // Recalculate pathfinding
+                pathfinder.findPath(level.getTile(new Point(0, 0)), level.getTile(new Point(14, 15)));
+            }
+            // Sort actors again
+            actors = sortObjectsByHeight();
+            
+            // Optional: Add a sound or visual feedback
+            println("Deleted actor at position: " + clickPos);
+        }
+    }
+}
+
 
   ArrayList<BaseActor> sortObjectsByHeight() {
     /*

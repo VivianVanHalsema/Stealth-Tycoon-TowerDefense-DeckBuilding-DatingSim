@@ -13,6 +13,7 @@ import java.util.Map;
 
 ArrayList<Button> buttons = new ArrayList<Button>(); 
 float dt, prevTime = 0;
+float gdt = 0;// gametime dt
 TitleScreen titleScreen;
 MainScreen mainScreen;
 MovingDashboard uiDashboard;
@@ -24,6 +25,7 @@ BreakRoom breakRoom;
 
 BeatsPerMinute bpm;
 
+float gameSpeed = 1; 
 float zoom;
 static float defaultZoom = 1;
 float targetZoom = defaultZoom;
@@ -281,7 +283,8 @@ void switchToEnding() {
     //Yup, totally the deltarune function
 void calcDeltaTime() {
   float currTime = millis();
-  dt = (currTime - prevTime) / 1000.0;
+  dt = ((currTime - prevTime) / 1000.0);
+  gdt = ((currTime - prevTime) / 1000.0) * gameSpeed;
   prevTime = currTime;
 }
 //HELPER FUNCTIONS

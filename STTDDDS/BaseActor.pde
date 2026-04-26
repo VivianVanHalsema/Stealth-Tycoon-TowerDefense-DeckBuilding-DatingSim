@@ -32,7 +32,7 @@ class BaseActor {
   void update(){
     getAllInRange();
     lookAtFrontGuestInRange();
-    attackCooldown -= dt *attackSpeed;
+    attackCooldown -= gdt *attackSpeed;
     
   }
   
@@ -130,6 +130,7 @@ static enum actorTypes
     CULTIST,
     MUMMY,
     VAMPIRE,
+    WEREWOLF,
     JASON,
     WITCHDOCTOR,
     WALL
