@@ -6,7 +6,7 @@ class BaseGuest {
   /*
     I had to change how speed works when implementing pathfinding.
   */
-  float speed = 2; 
+  float speed = 200; 
   int maxHealth = 100; //change this in children not health itself
   int health = maxHealth;
   color baseColor,currentColor;
@@ -190,7 +190,7 @@ class BaseGuest {
              currentColor = baseColor;
          break;
         case FLEEING:
-            gridT = new Point(15, 14);
+            gridT = new Point(14, 15);
             break;
         }
      } 
@@ -264,8 +264,8 @@ class BaseGuest {
     PVector diff = PVector.sub(pixlT, position);
     PVector normDiff = diff.normalize();
     
-    position.x += normDiff.x * speed * slowness;
-    position.y += normDiff.y * speed * slowness;
+    position.x += normDiff.x * speed * slowness *gdt;
+    position.y += normDiff.y * speed * slowness *gdt;
     
     
     
@@ -441,7 +441,7 @@ class TankGuest extends BaseGuest{
   TankGuest(int x, int y){
     super(x,y);
     maxHealth=300;
-    speed = 1.5;
+    speed = 150;
     baseColor =color(80,80,80);
   }
   

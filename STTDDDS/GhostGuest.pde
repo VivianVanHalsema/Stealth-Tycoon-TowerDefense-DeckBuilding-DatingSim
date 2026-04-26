@@ -4,10 +4,11 @@ class GhostGuest extends BaseGuest {
   float movementDirection;
   float individualFrameMovement;
   
+  
   GhostGuest(int x, int y) {
     super(x, y);
     movementDirection = random(HALF_PI);
-    
+    speed = 2;
   }
   
   @Override void update() {
