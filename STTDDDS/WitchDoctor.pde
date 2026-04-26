@@ -50,7 +50,7 @@ class WitchDoctorProjectile extends CircleProjectile {
    super(x, y, angle);
    this.target = target;
    size.x = 15;
-   projectileSpeed = 3;
+   projectileSpeed = 6;
    lifetime = 4;
    damage = 0;
    isColliding = false;
@@ -60,7 +60,7 @@ class WitchDoctorProjectile extends CircleProjectile {
    //steer towards the target
    if (target != null) {
    float targetAngle = atan2(target.position.y - position.y, target.position.x - position.x);
-   angle = lerp(angle, targetAngle, 0.2);
+   angle = lerp(angle, targetAngle, 0.5);
   }
   //Call projectile's update but not Circle projectiles collision, keeps deleting before hitting target
   lifetime -= dt;
