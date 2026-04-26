@@ -48,6 +48,10 @@ class BaseGuest {
       speed *= 2;
       currentMoney += 10;
   }
+  if (terrified) { 
+    baseColor = color(150,50,150);
+    currentColor = baseColor;
+  }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
     
@@ -268,6 +272,9 @@ class BaseGuest {
   void updateMove() {
     
     float snapThreshold = 3.5;
+    if (this instanceof ChildGuest || gameSpeed > 1) {
+        snapThreshold = 8.0;  // the child tweaks out too much I think we just have to increase it come what may
+    }
     PVector pixlT = level.getTileCenterAt(gridP);
     PVector diff = PVector.sub(pixlT, position);
     PVector normDiff = diff.normalize();

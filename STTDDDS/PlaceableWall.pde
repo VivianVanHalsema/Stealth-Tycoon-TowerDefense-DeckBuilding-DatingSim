@@ -84,6 +84,7 @@ class Blood extends BaseActor  {
   
   
    void draw(){
+     angle=90;
     noStroke();
     imageMode(CENTER);
     pushMatrix();
@@ -108,6 +109,7 @@ class Blood extends BaseActor  {
   
   
    void draw(){
+     angle=90;
     noStroke();
     imageMode(CENTER);
     pushMatrix();
@@ -131,6 +133,7 @@ class Tombstone extends BaseActor  {
   
   
    void draw(){
+     angle=0;
     noStroke();
     imageMode(CENTER);
     pushMatrix();

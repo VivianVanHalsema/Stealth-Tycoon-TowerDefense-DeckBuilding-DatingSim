@@ -31,7 +31,7 @@ class WaveManager {
   THis is some annoying math shit tho so i'll figure it out I guess.
   */
  WaveManager(){
-   currWaveData = waves.get(currWave); //starts with wave 1
+    //starts with wave 1
 
  }
  
@@ -68,7 +68,7 @@ class WaveManager {
       nextSetOfGuests("late");
      lateWaveStarted = true;
      
-   }else if(lateWaveStarted && allTerrified) {
+   }else if(lateWaveStarted && middleWaveStarted && allTerrified) {
     println("all guest have been scared! Wave " + currWave + " is complete!");
      resetWave();
      if (mainScreen != null){
@@ -89,10 +89,10 @@ class WaveManager {
   void waveStart(){
   waveActive = true;
   currWave ++;
+  currWaveData = waves.get(currWave-1);
   nextSetOfGuests("early");
   currWaveTime = maxWaveTime;
   queueDelay = 1.1 - ((currWave-1)/(maxWave -1)); // queue time between spawns will decrease as the waves go on
-  currWaveData = waves.get(currWave-1);
   println("wave " + currWave + " is starting");
   }
   
@@ -100,17 +100,26 @@ class WaveManager {
   void nextSetOfGuests(String currentSet) {
   if(currentSet == "early") {
     for(Map.Entry<String, Integer> w : currWaveData.earlyWave.entrySet()) {
-     addGuestToQueue(w.getKey(), 1);
+      int amount = w.getValue();  
+      if (amount > 0) {  // Only add if there are enemies to spawn
+        addGuestToQueue(w.getKey(), amount);
+      }
     }
   }
   else if(currentSet == "middle") {
     for(Map.Entry<String, Integer> w : currWaveData.middleWave.entrySet()) {
-      addGuestToQueue(w.getKey(), 1);
+      int amount = w.getValue();
+      if (amount > 0) {
+        addGuestToQueue(w.getKey(), amount);
+      }
     }
   }
   else if(currentSet == "late") {
     for(Map.Entry<String, Integer> w : currWaveData.lateWave.entrySet()) {
-      addGuestToQueue(w.getKey(), 1);
+      int amount = w.getValue();
+      if (amount > 0) {
+        addGuestToQueue(w.getKey(), amount);
+      }
     }
   }
 }
@@ -144,7 +153,7 @@ class WaveManager {
         
  
         if (extraGuests > 2 && mainScreen != null) {
-            mainScreen.textDisplay.addNewText("High entertainment attracts " + extraGuests + " even moreGuests!");
+            mainScreen.textDisplay.addNewText("High entertainment value attracts " + " even more Guests! ("+ extraGuests + ")" );
         }
     }
     

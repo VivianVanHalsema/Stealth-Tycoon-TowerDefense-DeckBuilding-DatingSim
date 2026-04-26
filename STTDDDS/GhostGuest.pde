@@ -8,6 +8,8 @@ class GhostGuest extends BaseGuest {
   GhostGuest(int x, int y) {
     super(x, y);
     movementDirection = random(HALF_PI);
+    baseColor = color(200,200,200);
+    currentColor = baseColor;
     speed = 2;
   }
   
@@ -17,6 +19,10 @@ class GhostGuest extends BaseGuest {
       speed *= 2;
       currentMoney += 10;
       onDeath();
+  }
+    if (terrified) { 
+    baseColor = color(150,50,150);
+    currentColor = baseColor;
   }
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;

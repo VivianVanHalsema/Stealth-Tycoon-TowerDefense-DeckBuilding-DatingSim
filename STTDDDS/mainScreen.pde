@@ -4,7 +4,7 @@ class MainScreen {
   
 
   int maxScaractors = 15;
-  int currentScaractorCount;
+
 
   PImage background;
 
@@ -45,10 +45,11 @@ class MainScreen {
   boolean isDeletingMode;
 
   MainScreen() {
-    
+    if (!introPlayed){
     introText = new IntroText(); //initializing the intro text
-
-    //Pathfinding Initialization
+    introPlayed = true;
+    }
+     //Pathfinding Initialization
     TileHelper.app = new STTDDDS();
     level = new Level();
     pathfinder = new Pathfinder();
@@ -133,7 +134,6 @@ class MainScreen {
     //buttonsToAttachToDashboard.add(statsButton);
     //buttonsToAttachToDashboard.add(settingsButton);
     buttonsToAttachToDashboard.add(speedUpButton);
-    
     buttonsToAttachToDashboard.add(vampireButton);
     buttonsToAttachToDashboard.add(werewolfButton);
     //buttonsToAttachToDashboard.add(hireButton);
@@ -330,7 +330,7 @@ class MainScreen {
     
     if (pathfinder.pathBlocked == false && !(g.x == 0 && g.y == 0)) { 
       
-      if (currentMoney >= currentPrice && currentScaractorCount < maxScaractors) {
+      if (currentMoney >= currentPrice && (currentScaractorCount < maxScaractors) || (actorPlacing.actor == actorTypes.WALL || actorPlacing.actor == actorTypes.BLOOD || actorPlacing.actor == actorTypes.TOMBSTONE || actorPlacing.actor == actorTypes.HANDS)) { ///they call it the ugliest condition know to man????
         PVector placingPosition = tile.getCenter();
         PlaceActorSwitch(placingPosition, g); //Gets the actor being placed and places it
         if (!movingVampy) currentMoney -= currentPrice; //Spend money on place
@@ -385,6 +385,7 @@ class MainScreen {
       PlaceableWall wallToAdd = new PlaceableWall(int(placingPosition.x), int(placingPosition.y), actorTypes.WALL);
       actors.add(wallToAdd);
       break;
+      
     case WEREWOLF:
       Werewolf werewolfToAdd = new Werewolf(int(placingPosition.x), int(placingPosition.y), actorTypes.WEREWOLF);
       actors.add(werewolfToAdd);

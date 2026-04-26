@@ -46,7 +46,7 @@ class TextDisplayComponent {
     
     popStyle();
     textOffset -= 30;
-    if (textOffset >=150){ break;}
+    if (textOffset > 150){ break;}
   }
 }
   

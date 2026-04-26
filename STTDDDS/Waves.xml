@@ -16,7 +16,7 @@
 		</middle>
 		<late>
 			<base>3</base>
-			<ghost>0</ghost>
+			<ghost>1</ghost>
 			<kid>0</kid>
 			<tank>0</tank>
 		</late>   
@@ -24,43 +24,43 @@
     <wave>
           <id>2</id>
 		<early> 
-			<base>8</base>
+			<base>5</base>
 			<ghost>0</ghost>
 			<kid>0</kid>
-			<tank>0</tank>
+			<tank>1</tank>
 		</early>
 		<middle> 
 			<base>9</base>
-			<ghost>0</ghost>
+			<ghost>2</ghost>
 			<kid>0</kid>
 			<tank>0</tank>
 		</middle>
 		<late>
-			<base>10</base>
+			<base>5</base>
 			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<kid>2</kid>
+			<tank>2</tank>
 		</late>  
     </wave>
 	    <wave>
           <id>3</id>
 		<early> 
-			<base>8</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<base>2</base>
+			<ghost>2</ghost>
+			<kid>2</kid>
+			<tank>2</tank>
 		</early>
 		<middle> 
-			<base>9</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<base>3</base>
+			<ghost>3</ghost>
+			<kid>3</kid>
+			<tank>3</tank>
 		</middle>
 		<late>
-			<base>10</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<base>0</base>
+			<ghost>1</ghost>
+			<kid>3</kid>
+			<tank>5</tank>
 		</late>  
     </wave>
 	    <wave>
@@ -87,19 +87,19 @@
 	    <wave>
           <id>5</id>
 		<early> 
-			<base>8</base>
+			<base>0</base>
 			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<kid>2</kid>
+			<tank>5</tank>
 		</early>
 		<middle> 
-			<base>9</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
+			<base>0</base>
+			<ghost>8</ghost>
+			<kid>1</kid>
 			<tank>0</tank>
 		</middle>
 		<late>
-			<base>10</base>
+			<base>20</base>
 			<ghost>0</ghost>
 			<kid>0</kid>
 			<tank>0</tank>
@@ -109,63 +109,63 @@
           <id>6</id>
 		<early> 
 			<base>8</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>3</ghost>
+			<kid>2</kid>
+			<tank>1</tank>
 		</early>
 		<middle> 
 			<base>9</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>2</ghost>
+			<kid>2</kid>
+			<tank>4</tank>
 		</middle>
 		<late>
 			<base>10</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>2</ghost>
+			<kid>1</kid>
+			<tank>1</tank>
 		</late>  
     </wave>
 	    <wave>
           <id>7</id>
 		<early> 
-			<base>8</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
+			<base>0</base>
+			<ghost>8</ghost>
+			<kid>12</kid>
 			<tank>0</tank>
 		</early>
 		<middle> 
 			<base>9</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>1</ghost>
+			<kid>2</kid>
+			<tank>8</tank>
 		</middle>
 		<late>
 			<base>10</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>1</ghost>
+			<kid>1</kid>
+			<tank>10</tank>
 		</late>  
     </wave>
 	    <wave>
           <id>8</id>
 		<early> 
 			<base>8</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>1</ghost>
+			<kid>2</kid>
+			<tank>10</tank>
 		</early>
 		<middle> 
 			<base>9</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>1</ghost>
+			<kid>2</kid>
+			<tank>4</tank>
 		</middle>
 		<late>
 			<base>10</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>2</ghost>
+			<kid>4</kid>
+			<tank>3</tank>
 		</late>  
     </wave>
 	    <wave>
@@ -192,22 +192,22 @@
 	    <wave>
           <id>10</id>
 		<early> 
-			<base>8</base>
+			<base>0</base>
 			<ghost>0</ghost>
-			<kid>0</kid>
+			<kid>20</kid>
 			<tank>0</tank>
 		</early>
 		<middle> 
-			<base>9</base>
-			<ghost>0</ghost>
+			<base>0</base>
+			<ghost>20</ghost>
 			<kid>0</kid>
 			<tank>0</tank>
 		</middle>
 		<late>
 			<base>10</base>
-			<ghost>0</ghost>
-			<kid>0</kid>
-			<tank>0</tank>
+			<ghost>10</ghost>
+			<kid>10</kid>
+			<tank>10</tank>
 		</late>  
     </wave>
 	    <wave>

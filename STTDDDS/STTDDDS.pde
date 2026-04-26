@@ -22,7 +22,8 @@ PlacingActor actorPlacing;
 boolean keyEnter = false;
 //test comment change
 BreakRoom breakRoom;
-
+int currentScaractorCount;
+boolean introPlayed = false;
 BeatsPerMinute bpm;
 
 float gameSpeed = 1; 
@@ -32,7 +33,7 @@ float targetZoom = defaultZoom;
 float maxZoom = 2;
 float minZoom = 0.5;
 
-float currentMoney = 1000;
+float currentMoney = 500;
 float entertainmentValue = 1;
 float currentPrice;
 float buttonPlaceCooldown = 0;
@@ -112,33 +113,34 @@ if (reviewsxml.length > 0) {
     Wave thisWave = new Wave();
     
     // Get the wave ID
-    thisWave.id = wavesxml[i].getInt("id");
+    thisWave.id = wavesxml[i].getChild("id").getIntContent();
     
+    // Parse EARLY wave data
     // Parse EARLY wave data
     XML early = wavesxml[i].getChild("early");
     if (early != null) {
-      thisWave.earlyWave.put("base", early.getInt("base"));
-      thisWave.earlyWave.put("ghost", early.getInt("ghost"));
-      thisWave.earlyWave.put("kid", early.getInt("kid"));
-      thisWave.earlyWave.put("tank", early.getInt("tank"));
-    }
-    
-    // Parse MIDDLE wave data
+      thisWave.earlyWave.put("base", early.getChild("base").getIntContent());
+      thisWave.earlyWave.put("ghost", early.getChild("ghost").getIntContent());
+      thisWave.earlyWave.put("kid", early.getChild("kid").getIntContent());
+      thisWave.earlyWave.put("tank", early.getChild("tank").getIntContent());
+}
+
+// Parse MIDDLE wave data
     XML middle = wavesxml[i].getChild("middle");
     if (middle != null) {
-      thisWave.middleWave.put("base", middle.getInt("base"));
-      thisWave.middleWave.put("ghost", middle.getInt("ghost"));
-      thisWave.middleWave.put("kid", middle.getInt("kid"));
-      thisWave.middleWave.put("tank", middle.getInt("tank"));
-    }
-    
-    // Parse LATE wave data
+      thisWave.middleWave.put("base", middle.getChild("base").getIntContent());
+      thisWave.middleWave.put("ghost", middle.getChild("ghost").getIntContent());
+      thisWave.middleWave.put("kid", middle.getChild("kid").getIntContent());
+      thisWave.middleWave.put("tank", middle.getChild("tank").getIntContent());
+}
+
+// Parse LATE wave data
     XML late = wavesxml[i].getChild("late");
     if (late != null) {
-      thisWave.lateWave.put("base", late.getInt("base"));
-      thisWave.lateWave.put("ghost", late.getInt("ghost"));
-      thisWave.lateWave.put("kid", late.getInt("kid"));
-      thisWave.lateWave.put("tank", late.getInt("tank"));
+      thisWave.lateWave.put("base", late.getChild("base").getIntContent());
+      thisWave.lateWave.put("ghost", late.getChild("ghost").getIntContent());
+      thisWave.lateWave.put("kid", late.getChild("kid").getIntContent());
+      thisWave.lateWave.put("tank", late.getChild("tank").getIntContent());
     }
     
     waves.add(thisWave);
