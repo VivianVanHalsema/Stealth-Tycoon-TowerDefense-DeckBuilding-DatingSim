@@ -19,6 +19,12 @@ static class UpgradeDump {
   //Cultist upgrades: 0 = brainwash chance, 1 = attack speed, 2 = range
   static int[] cultistLevels = {0, 0, 0};
   
+  //Vampire upgrades: 0 = damage, 1 = attack speed, 2 = range
+  static int[] vampireLevels = {0, 0, 0};
+  
+  //Werewolf upgrades: 0 = flee chance, 1 = attack speed, 2 = damage boost
+  static int[] werewolfLevels = {0, 0, 0};
+  
   //max level for any single upgrade slot
   static int MAX_LEVEL = 3;
   
@@ -34,6 +40,8 @@ static class UpgradeDump {
       case JASON:      return jasonLevels;
       case WITCHDOCTOR: return witchLevels;
       case CULTIST:    return cultistLevels;
+      case VAMPIRE:    return vampireLevels;
+      case WEREWOLF:    return werewolfLevels;
       default:         return null;
     }
   }
@@ -98,4 +106,20 @@ static class UpgradeDump {
   static float getCultistAttackSpeedBonus() { return cultistLevels[1] * 0.2; }
   // Upgrade 2: +60 range per level
   static float getCultistRangeBonus()       { return cultistLevels[2] * 60; }
+  
+  // VAMPIRE
+  // Upgrade 0: +7 damage per level
+  static float getVampireDamageBonus()   { return vampireLevels[0] * 7; }
+  // Upgrade 1: 10% quicker attacks per level
+  static float getVampireAttackSpeedBonus() { return vampireLevels[1] * 0.1; }
+  // Upgrade 2: +60 range per level
+  static float getVampireRangeBonus()       { return vampireLevels[2] * 60; }
+  
+  // CULTIST
+  // Upgrade 0: +0.15 flee chance per level (stored as 0.0-1.0 probability)
+  static float getWerewolfFleeOddsBonus()   { return werewolfLevels[0] * 5; }
+  // Upgrade 1: +0.2 attack speed multiplier per level
+  static float getWerewolfAttackSpeedBonus() { return werewolfLevels[1] * 0.2; }
+  // Upgrade 2: +5 damage per level
+  static float getWerewolfDamageBonus()       { return werewolfLevels[2] * 5; }
 }

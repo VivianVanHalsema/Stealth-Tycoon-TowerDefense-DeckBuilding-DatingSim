@@ -51,8 +51,7 @@ class BaseGuest {
     // this is just debugging I wanted to make sure that actors could track the position of guests
     //position.y += speed*dt *slowness;
     
-    if (findPath) findPathAndTakeNextStep();
-    updateMove();
+    
     
     
     
@@ -72,7 +71,8 @@ class BaseGuest {
     removeDeadDebuffs();
     removeDeadAttacks();
      
-    
+    if (findPath) findPathAndTakeNextStep();
+    updateMove();
     
     
   }
@@ -132,6 +132,16 @@ class BaseGuest {
        }
        setTargetPosition(new Point(0,0));
      }
+     
+     if (debuff == debuffTypes.FLEEING && currentDebuffs.containsKey(debuffTypes.FLEEING)) return;
+     
+     if (debuff == debuffTypes.FLEEING) {
+       float randomWerewolfChance = random(0,50);
+       if (randomWerewolfChance <= 35 - UpgradeDump.getWerewolfFleeOddsBonus()){ 
+         //if smaller than the number on right, guest is not spooked by the pupper :3
+       continue;
+       }
+     }
        
      currentDebuffs.put(debuff, lengthOfDebuff);
      
@@ -147,6 +157,10 @@ class BaseGuest {
        isCultist = true;
        
        break; 
+       
+       case FLEEING:
+       gridT = new Point(0, 0);
+       break;
 
      }
      
@@ -175,6 +189,9 @@ class BaseGuest {
              
              currentColor = baseColor;
          break;
+        case FLEEING:
+            gridT = new Point(15, 14);
+            break;
         }
      } 
   }
@@ -255,12 +272,19 @@ class BaseGuest {
     if (path != null) {
       if (abs(position.x - pixlT.x) < snapThreshold) position.x = pixlT.x; 
       if (abs(position.y - pixlT.y) < snapThreshold) position.y = pixlT.y;
+      opacity = 255;
       
       if (pixlT.x == position.x && pixlT.y == position.y) findPath = true;
-    } else if (path == null) {
-      if (isCultist){position.y -= speed * 2;}
-      else{position.y += speed * 2;}
-      
+    } else if (path == null && isCultist) {
+      position.y -= speed * 2;
+    } else if (path == null && gridP.x != 0) {
+      position.y += speed * 2;
+      opacity -= 10;
+      if (opacity <= 10) {
+        ExitScreen();
+      }
+    } else if (path == null && gridP.x == 0) {
+      position.y -= speed * 2;
       opacity -= 10;
       if (opacity <= 10) {
         ExitScreen();
@@ -278,7 +302,8 @@ class BaseGuest {
 static enum debuffTypes 
   {
    SLOWNESS,
-   CULTJARGON
+   CULTJARGON,
+   FLEEING
   };
   
   

@@ -16,7 +16,7 @@ class PlaceableWall extends BaseActor  {
   
   
   void update() {
-    super.update();
+    //super.update();
     //if (attackCooldown < 0) { //walls don't attack :3 (...i think)
     //  if (!guestsInRange.isEmpty()) {
     //     exampleAttack();// here is where you put your special custom attack

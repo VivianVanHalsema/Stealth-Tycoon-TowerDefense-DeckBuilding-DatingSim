@@ -70,6 +70,8 @@ class BreakRoom {
   if (actor instanceof Jason) return actorTypes.JASON;
   if (actor instanceof WitchDoctor) return actorTypes.WITCHDOCTOR;
   if (actor instanceof Cultist) return actorTypes.CULTIST;
+  if (actor instanceof Vampire) return actorTypes.VAMPIRE;
+  if (actor instanceof Werewolf) return actorTypes.WEREWOLF;
   //add here if we add more classes
   return null;
     
@@ -285,6 +287,43 @@ class BreakRoomActor {
       upgradeDescriptions[1] = "+20% attack speed";
       upgradeNames[2] = "Spread the word";
       upgradeDescriptions[2] = "+60 range";
+      break;
+      
+      
+      
+      case VAMPIRE : 
+      displayName = "The Vampire"; 
+      loreDescription = "According to his profile, this Vampire is rather well off and does not need the money,"+
+                        "instead of choosing to work here for financial gain he chooses to scare humans just because" +
+                        "it is 'fun to him'. However, he has numerous complaints on his record for actually biting" +
+                        "the guests. Regardless, he is too strong of an asset on the team to let go for a few ounces" +
+                        "of blood lost here and there, right?"+ 
+                        "Fun Fact: He often gets bored on break and flies around as a bat throughout the establishment";
+      upgradeNames[0] = "Vicious Bite";
+      upgradeDescriptions[0] = "+7 Damage to Bites";
+      upgradeNames[1] = "Blood Lust";
+      upgradeDescriptions[1] = "+10% attack speed";
+      upgradeNames[2] = "Intimidating Fangs";
+      upgradeDescriptions[2] = "+60 range";
+      break;
+      
+      
+      
+      case WEREWOLF : 
+      displayName = "The Werewolf"; 
+      loreDescription = "This werewolf has a strange case of lycanthropy that involves a transformation every single night."+
+                        "She often struggles to accept and be open about her condition, so she came to us to allieviate" +
+                        "those struggles. To many of the guests, she is a perfect addition, a big bad scary werewolf," +
+                        "but to us, she is the most harmless person here, being more scared of us not accepting" +
+                        "her than we could ever be scared of her harming us" +
+                        "Fun Fact: She claims she hates it when you scratch behind her ears, but she leans into it"+
+                        "every time, even when she is not transformed.";
+      upgradeNames[0] = "All Bark";
+      upgradeDescriptions[0] = "+10% flee chance";
+      upgradeNames[1] = "Full Moon";
+      upgradeDescriptions[1] = "+20% attack speed";
+      upgradeNames[2] = "All BITE";
+      upgradeDescriptions[2] = "+5 Damage per attack";
       break;
       
      //ADD MORE HERE  

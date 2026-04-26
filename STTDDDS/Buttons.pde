@@ -185,6 +185,11 @@ class ShopButton extends DashBoardButton {
       case WALL:
       text = "Wall";
       price = 5;
+      break;
+      case WEREWOLF:
+      text = "Werewolf";
+      price = 60;
+      break;
       
     }
     actor = scaractor;
