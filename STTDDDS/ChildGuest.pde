@@ -27,7 +27,7 @@ class ChildGuest extends BaseGuest {
    size = 24; //making them smoler cuz baby
    
    //faster movement speed
-   speed = 300; 
+   speed = 150; 
    
    //applies yellow color to both baseColor and currentColor.
    //since baseColor is what gets restored when a debuff wears off, i set both so it still tints correctly and doesn't 

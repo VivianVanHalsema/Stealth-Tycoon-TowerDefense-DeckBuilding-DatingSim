@@ -6,7 +6,7 @@ class BaseGuest {
   /*
     I had to change how speed works when implementing pathfinding.
   */
-  float speed = 200; 
+  float speed = 100; 
   int maxHealth = 100; //change this in children not health itself
   int health = maxHealth;
   color baseColor,currentColor;
@@ -441,7 +441,7 @@ class TankGuest extends BaseGuest{
   TankGuest(int x, int y){
     super(x,y);
     maxHealth=300;
-    speed = 150;
+    speed = 75;
     baseColor =color(80,80,80);
   }
   
